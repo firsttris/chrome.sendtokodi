@@ -13,9 +13,14 @@ You need to install our SendToKodi plugin:
 Since we are using [youtube-dl](https://github.com/rg3/youtube-dl) in there is no other plugin dependency.
 Your are basically playing raw streams in Kodi
 
-## Development
+## Stack
+Chrome Extensions uses
+- [Webpack](https://webpack.github.io/)
+- [Buble](https://buble.surge.sh/)
+- [VueJs](https://github.com/vuejs/vue)
+- [Bootstraps](https://github.com/twbs/bootstrap)
 
-Boilerplate Chrome Extensions using [Buble](https://buble.surge.sh/), [Webpack](https://webpack.github.io/), [VueJs](https://github.com/vuejs/vue) and [Bootstraps](https://github.com/twbs/bootstrap)
+## Development
 
 1. Clone
 2. Install [yarn](https://yarnpkg.com): `npm install -g yarn`.
