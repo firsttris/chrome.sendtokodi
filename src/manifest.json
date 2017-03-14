@@ -1,5 +1,5 @@
 {
-  "name": "Chrome Extension Webpack",
+  "name": "SendToKodi",
   "options_page": "options.html",
   "background": {
     "page": "background.html"
