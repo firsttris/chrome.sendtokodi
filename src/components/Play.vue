@@ -1,21 +1,51 @@
 <template>
   <div class="sendToKodi container">
-    <h1>{{ link }}</h1>
+    <h1>SendToKodi</h1>
     <p>
     <input v-model="link">
     </p>
     <p>
-    <button type="submit" class="btn btn-secondary">SendToKodi</button>
+    <button type="submit" class="btn btn-secondary" v-on:click="sendURL">SendToKodi</button>
     </p>
   </div>
 </template>
 
 <script>
+  import axios from 'axios';
   export default {
     data () {
       return {
-        link: 'www.link!'
+        link: ''
       };
+    },
+    methods: {
+      sendURL: function () {
+        chrome.storage.sync.get(['credentials'], (result) => {
+          const url = 'http://'+result.credentials.user+':'+result.credentials.pw+'@'+result.credentials.ip+':'+result.credentials.port+'/jsonrpc';
+          console.log("Endpoint: "+url);
+          axios.post(url, {
+            'jsonrpc': '2.0',
+            'method': 'Player.Open',
+            'params': {
+              'item': {
+                'file': 'plugin://plugin.video.sendtokodi/?'+this.link
+              }
+            },
+            'id': 1
+          })
+            .then(function (response) {
+              console.log(response);
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        });
+      }
+    },
+    created: function () {
+      chrome.tabs.query({currentWindow: true, active: true}, (tabs) => {
+        this.link = tabs[0].url;
+      });
     }
   };
 </script>

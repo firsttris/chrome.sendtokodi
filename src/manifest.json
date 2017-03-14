@@ -4,6 +4,11 @@
   "background": {
     "page": "background.html"
   },
+  "permissions": [
+    "tabs",
+    "storage",
+    "http://*/"
+  ],
   "browser_action": {
     "default_popup": "popup.html"
   },
