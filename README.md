@@ -1,7 +1,5 @@
 #chrome.sendToKodi
 
-##Features
-
 :tv: sendToKodi Google Chrome Extension let's you send almost every video from chrome to kodi.
 
 - supported [sites](https://rg3.github.io/youtube-dl/supportedsites.html)
@@ -37,4 +35,3 @@ I forked this boilerplate and added Buble, VueJs, Bootstraps
 [chrome-extension-webpack-boilerplate](https://github.com/samuelsimoes/chrome-extension-webpack-boilerplate)
 Samuel Simões ~ [@samuelsimoes](https://twitter.com/samuelsimoes) ~ [Blog](http://blog.samuelsimoes.com/)
 -------------
-
