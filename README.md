@@ -1,11 +1,11 @@
-#sendToKodi chrome
+# sendToKodi chrome
 
 :tv: sendToKodi Google Chrome Extension let's you send almost every video from chrome to kodi.
 
 - supported [sites](https://rg3.github.io/youtube-dl/supportedsites.html)
 - if you send a playlist it will automatically create a playlist and starts playing
 
-##Requirement
+## Requirement
 
 You need to install our SendToKodi plugin:
 [plugin.video.sendtokodi](https://github.com/firsttris/plugin.video.sendtokodi)
@@ -13,7 +13,7 @@ You need to install our SendToKodi plugin:
 Since we are using [youtube-dl](https://github.com/rg3/youtube-dl) in there is no other plugin dependency.
 Your are basically playing raw streams in Kodi
 
-##Development
+## Development
 
 Boilerplate Chrome Extensions using [Buble](https://buble.surge.sh/), [Webpack](https://webpack.github.io/), [VueJs](https://github.com/vuejs/vue) and [Bootstraps](https://github.com/twbs/bootstrap)
 
@@ -30,7 +30,7 @@ Boilerplate Chrome Extensions using [Buble](https://buble.surge.sh/), [Webpack](
     4. Select the `build` folder.
 8. Have fun.
 
-##Sources
+## Sources
 I forked this boilerplate and added Buble, VueJs, Bootstraps   
-[chrome-extension-webpack-boilerplate](https://github.com/samuelsimoes/chrome-extension-webpack-boilerplate)
+[chrome-extension-webpack-boilerplate](https://github.com/samuelsimoes/chrome-extension-webpack-boilerplate)  
 Samuel Simões ~ [@samuelsimoes](https://twitter.com/samuelsimoes) ~ [Blog](http://blog.samuelsimoes.com/)
