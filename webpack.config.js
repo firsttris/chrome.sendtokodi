@@ -39,6 +39,14 @@ module.exports = {
           limit: 10000,
           name: 'fonts/[name].[ext]?[hash]'
         }
+      },
+      {
+        test: /\.(png|jpg|gif)$/,
+        loader: 'url-loader',
+        options: {
+          limit: 1,
+          name: 'icons/[name].[ext]'
+        }
       }
     ]
   },
@@ -66,5 +74,6 @@ module.exports = {
       chunks: ["background"]
     }),
     new WriteFilePlugin()
-  ]
+  ],
+  devtool: 'source-map'
 };

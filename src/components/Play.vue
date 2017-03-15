@@ -21,6 +21,9 @@
     methods: {
       sendURL: function () {
         chrome.storage.sync.get(['credentials'], (result) => {
+          if(!result || !result.credentials || result.credentials.ip === '') {
+            alert("Please enter ip address and credentials of kodi")
+          }
           const url = 'http://'+result.credentials.user+':'+result.credentials.pw+'@'+result.credentials.ip+':'+result.credentials.port+'/jsonrpc';
           console.log("Endpoint: "+url);
           axios.post(url, {

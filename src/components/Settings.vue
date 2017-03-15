@@ -48,10 +48,12 @@
     },
     created: function () {
       chrome.storage.sync.get(["credentials"], (result) => {
-        this.ip = result.credentials.ip;
-        this.port = result.credentials.port;
-        this.user = result.credentials.user;
-        this.pw = result.credentials.pw;
+        if(result && result.credentials) {
+          this.ip = result.credentials.ip;
+          this.port = result.credentials.port;
+          this.user = result.credentials.user;
+          this.pw = result.credentials.pw;
+        }
       });
     }
   };
