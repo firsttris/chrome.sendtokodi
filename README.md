@@ -1,6 +1,6 @@
 # sendToKodi chrome
 
-:tv: SendToKodi google chrome extension let's you send almost every video from chrome to kodi.
+:tv: send almost every video from chrome to kodi with SendToKodi google chrome extension
 
 - supported [sites](https://rg3.github.io/youtube-dl/supportedsites.html)
 - if you send a playlist it will automatically create a playlist and starts playing
