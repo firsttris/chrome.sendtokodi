@@ -1,4 +1,4 @@
-# sendToKodi chrome
+# SendToKodi
 
 :tv: send almost every video from chrome to kodi with SendToKodi google chrome extension
 
@@ -7,7 +7,7 @@
 
 ## Requirements
 
-You need to the SendToKodi Kodi Addon:
+You need to install SendToKodi Kodi Addon:
 [plugin.video.sendtokodi](https://github.com/firsttris/plugin.video.sendtokodi)
 
 Since we are using [youtube-dl](https://github.com/rg3/youtube-dl) in there is no other plugin dependency.
