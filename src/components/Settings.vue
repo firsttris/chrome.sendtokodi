@@ -1,5 +1,5 @@
 <template>
-    <div class="fields container">
+    <div class="fields container-fluid">
         <div class="form-group row">
             <label for="example-text-input" class="col-2 col-form-label">IP</label>
             <div class="col-10">
@@ -26,9 +26,7 @@
         </div>
         <button type="submit" class="btn btn-secondary" v-on:click="saveSettings">Save</button>
     </div>
-
 </template>
-
 <script>
   export default {
     data () {
@@ -63,5 +61,8 @@
 <style scoped>
     .btn {
         margin-bottom: 10px;
+    }
+    .fields {
+        padding: 25px;
     }
 </style>

@@ -1,12 +1,7 @@
 <template>
   <div class="sendToKodi container">
-    <h1>SendToKodi</h1>
-    <p>
-    <input v-model="link">
-    </p>
-    <p>
+    <textarea v-model="link" class="form-control" rows="2" id="comment"></textarea>
     <button type="submit" class="btn btn-secondary" v-on:click="sendURL">SendToKodi</button>
-    </p>
   </div>
 </template>
 
@@ -59,6 +54,10 @@
     color: #e74c3c;
   }
   .sendToKodi {
+    padding: 5px;
     text-align: center;
+  }
+  textarea {
+    margin-bottom: 10px;
   }
 </style>
