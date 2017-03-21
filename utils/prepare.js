@@ -1,4 +1,4 @@
-var fileSystem = require("fs-extra"),
+let fileSystem = require("fs-extra"),
     path = require("path");
 
 // clean de dist folder

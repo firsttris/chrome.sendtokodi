@@ -1,4 +1,4 @@
-var WebpackDevServer = require("webpack-dev-server"),
+let WebpackDevServer = require("webpack-dev-server"),
     webpack = require("webpack"),
     config = require("../webpack.config"),
     env = require("./env"),
@@ -6,10 +6,10 @@ var WebpackDevServer = require("webpack-dev-server"),
 
 require("./prepare");
 
-var options = (config.chromeExtensionBoilerplate || {});
-var excludeEntriesToHotReload = (options.notHotReload || []);
+let options = (config.chromeExtensionBoilerplate || {});
+let excludeEntriesToHotReload = (options.notHotReload || []);
 
-for (var entryName in config.entry) {
+for (let entryName in config.entry) {
   if (excludeEntriesToHotReload.indexOf(entryName) === -1) {
     config.entry[entryName] =
       [
@@ -22,9 +22,9 @@ for (var entryName in config.entry) {
 config.plugins =
   [new webpack.HotModuleReplacementPlugin()].concat(config.plugins || []);
 
-var compiler = webpack(config);
+let compiler = webpack(config);
 
-var server =
+let server =
   new WebpackDevServer(compiler, {
     hot: true,
     contentBase: path.join(__dirname, "../build"),
