@@ -14,7 +14,7 @@ Since we are using [youtube-dl](https://github.com/rg3/youtube-dl) in there is n
 Your are basically playing raw streams in Kodi
 
 ## Install
-[Go to Chrome Webstore](https://chrome.google.com/webstore/detail/removereload/kcjbahochamceejpgjkniopafgdhkplb)
+[Go to Chrome Webstore](https://chrome.google.com/webstore/detail/)
 
 ## Development
 
