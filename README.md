@@ -1,20 +1,20 @@
 # SendToKodi
 
-:tv: send almost every video from chrome to kodi with SendToKodi google chrome extension
+:tv: send almost every video from chrome to kodi with SendToKodi
 
 - supported [sites](https://rg3.github.io/youtube-dl/supportedsites.html)
 - if you send a playlist it will automatically create a playlist and starts playing
 
 ## Requirements
 
-SendToKodi Kodi Addon
+To use this extension your need to install SendToKodi Addon in Kodi
 [plugin.video.sendtokodi](https://github.com/firsttris/plugin.video.sendtokodi)
 
 Since we are using [youtube-dl](https://github.com/rg3/youtube-dl) in there is no other plugin dependency.
 Your are basically playing raw streams in Kodi
 
 ## Install
-[Go to Chrome Webstore](https://chrome.google.com/webstore/detail/)
+[Go to Chrome Webstore](https://chrome.google.com/webstore/detail/sendtokodi/gbcpfpcacakaadapjcdchbdmdnfbnbaf)
 
 ## Development
 

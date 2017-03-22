@@ -24,7 +24,12 @@
                 <input v-model="pw" class="form-control" type="url" placeholder="Pass" id="example-url-input">
             </div>
         </div>
-        <button type="submit" class="btn btn-secondary" v-on:click="saveSettings">Save</button>
+        <div class="form-group row">
+            <label  class="col-2 col-form-label"></label>
+            <div class="col-10">
+                <button type="submit" class="btn btn-secondary" v-on:click="saveSettings">Save</button>
+            </div>
+        </div>
     </div>
 </template>
 <script>
