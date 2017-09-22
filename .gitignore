@@ -1,5 +1,21 @@
-node_modules
-build
-secrets.*.js
-.idea
-bundle.zip
+# dependencies
+node_modules/
+
+# production
+build/
+dist/
+coverage/
+.idea/
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+*npm-debug.log
+*.DS_Store
+yarn-debug.log*
+yarn-error.log*
+src/components/__snapshots__/

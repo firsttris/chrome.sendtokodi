@@ -1,20 +1,6 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-import Play from "./../components/Play.vue"
-import App from "./../components/App.vue"
+import React from 'react';
+import { render } from 'react-dom';
+import 'bootstrap/dist/css/bootstrap.css';
+import Popup from './../components/Popup.jsx';
 
-Vue.use(VueRouter);
-
-const routes = [
-  {path: "*", component: Play}
-];
-
-const router = new VueRouter({
-  routes
-});
-
-new Vue({
-  el: '#app',
-  router,
-  render: h => h(App)
-});
+render(<Popup />, document.getElementById('root'));
