@@ -1,5 +1,5 @@
 {
-  "name": "SendToKodi",
+  "name": "sendtokodi",
   "version": "0.0.3",
   "description": "send almost every stream from chrome to kodi with SendToKodi",
   "scripts": {
@@ -7,6 +7,11 @@
     "build:package": "",
     "zip": "bestzip bundle.zip build/",
     "start": "webpack-dev-server --port 3000 --hot --env.config=dev --colors"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
