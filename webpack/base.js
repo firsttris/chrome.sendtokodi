@@ -1,5 +1,5 @@
 let HtmlWebpackPlugin = require('html-webpack-plugin'),
-  manifest = require('../manifest.json'),
+  manifest = require('../public/manifest.json'),
   fs = require('fs'),
   fsExtra = require('fs-extra'),
   path = require('path'),

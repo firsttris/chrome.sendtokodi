@@ -3,8 +3,7 @@
   "version": "0.0.3",
   "description": "send almost every stream from chrome to kodi with SendToKodi",
   "scripts": {
-    "build": "",
-    "build:package": "",
+    "build": "webpack --env.config=prod --colors",
     "zip": "bestzip bundle.zip build/",
     "start": "webpack-dev-server --port 3000 --hot --env.config=dev --colors"
   },
@@ -20,7 +19,6 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
-    "bestzip": "^1.1.4",
     "bootstrap": "4.0.0-beta",
     "css-loader": "^0.28.7",
     "cz-conventional-changelog": "^2.0.0",
