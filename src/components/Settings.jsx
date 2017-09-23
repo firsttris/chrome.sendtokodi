@@ -8,8 +8,7 @@ class Settings extends Component {
       port: '',
       login: '',
       pw: '',
-      error: '',
-      good: false
+      status: ''
     };
   }
 
@@ -49,17 +48,21 @@ class Settings extends Component {
         if (response.ok) {
           return response.json();
         }
-        this.setState({ good: false, error: 'Unauthorized' });
+        throw Error('Unauthorized');
       })
-      .then(
-        json =>
-          json.result.addon.addonid === 'plugin.video.sendtokodi'
-            ? this.setState({ good: true })
-            : this.setState({ good: false })
-      )
-      .catch(error => {
-        this.setState(error);
-      });
+      .then(json => {
+        if (json.result.addon.addonid === 'plugin.video.sendtokodi') {
+          return this.setStatus('Connected');
+        } else {
+          throw Error('Kodi Plugin not found');
+        }
+      })
+      .catch(error => this.setStatus(error.message));
+  }
+
+  setStatus(message) {
+    this.setState({ status: message });
+    setTimeout(() => this.setState({ status: '' }), 5000);
   }
 
   render() {
@@ -123,8 +126,7 @@ class Settings extends Component {
           >
             Test
           </button>{' '}
-          {this.state.good ? <span style={{ color: 'green' }}>Good</span> : ''}
-          <p>{this.state.error}</p>
+          <span>{this.state.status}</span>
         </div>
       </div>
     );
