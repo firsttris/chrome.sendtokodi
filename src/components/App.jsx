@@ -55,7 +55,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        {this.props.page === 'options' ? (
+        {this.props.page === '/options.html' ? (
           <Settings
             selectedConnection={this.state.selectedConnection}
             connections={this.state.connections}

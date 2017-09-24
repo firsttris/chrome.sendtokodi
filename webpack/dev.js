@@ -1,5 +1,6 @@
-const base = require('./base');
-const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const base = require('./base'),
+  FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin'),
+  WriteFilePlugin = require('write-file-webpack-plugin');
 
 base.module.rules.push({
   test: /\.css$/,
@@ -20,6 +21,7 @@ base.module.rules.push({
 });
 
 base.plugins.push(new FriendlyErrorsWebpackPlugin());
+base.plugins.push(new WriteFilePlugin());
 
 base.devtool = 'inline-source-map';
 module.exports = base;

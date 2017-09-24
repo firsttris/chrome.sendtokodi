@@ -2,8 +2,7 @@ let HtmlWebpackPlugin = require('html-webpack-plugin'),
   manifest = require('../public/manifest.json'),
   fs = require('fs'),
   fsExtra = require('fs-extra'),
-  path = require('path'),
-  WriteFilePlugin = require('write-file-webpack-plugin');
+  path = require('path');
 
 // generates the manifest file using the package.json informations
 manifest.description = process.env.npm_package_description;
@@ -17,9 +16,7 @@ fs.writeFileSync(path.join(__dirname, '../build/manifest.json'), JSON.stringify(
 module.exports = {
   target: 'web',
   entry: {
-    popup: path.join(__dirname, '../src', 'entry', 'popup.js'),
-    options: path.join(__dirname, '../src', 'entry', 'options.js'),
-    background: path.join(__dirname, '../src', 'entry', 'background.js')
+    main: path.join(__dirname, '../src', 'index.js')
   },
   output: {
     path: path.join(__dirname, '../build'),
@@ -52,21 +49,17 @@ module.exports = {
     ]
   },
   plugins: [
-    new WriteFilePlugin(),
     new HtmlWebpackPlugin({
       title: 'SendToKodi',
-      filename: 'popup.html',
-      chunks: ['popup']
+      filename: 'popup.html'
     }),
     new HtmlWebpackPlugin({
       title: 'SendToKodi',
-      filename: 'options.html',
-      chunks: ['options']
+      filename: 'options.html'
     }),
     new HtmlWebpackPlugin({
       title: 'SendToKodi',
-      filename: 'background.html',
-      chunks: ['background']
+      filename: 'background.html'
     })
   ]
 };
