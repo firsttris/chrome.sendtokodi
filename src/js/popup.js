@@ -2,6 +2,6 @@ import React from 'react';
 import { render } from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.css';
-import Popup from './../components/Popup.jsx';
+import App from './../components/App.jsx';
 
-render(<Popup />, document.getElementById('root'));
+render(<App page="popup" />, document.getElementById('root'));

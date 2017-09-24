@@ -45,6 +45,12 @@ class Form extends Component {
     setTimeout(() => this.setState({ status: '' }), 5000);
   }
 
+  handleInputChange(event) {
+    let selectedConnection = { ...this.props.selectedConnection };
+    selectedConnection[event.target.name] = event.target.value;
+    this.props.saveSelectedConnection(selectedConnection);
+  }
+
   render() {
     return (
       <div>
@@ -57,7 +63,7 @@ class Form extends Component {
             placeholder="Connection Name"
             id="name"
             value={this.props.selectedConnection.name}
-            onChange={e => this.props.handleInputChange(e)}
+            onChange={e => this.handleInputChange(e)}
           />
         </div>
         <div className="form-group">
@@ -69,7 +75,7 @@ class Form extends Component {
             placeholder="127.0.0.1"
             id="ip"
             value={this.props.selectedConnection.ip}
-            onChange={e => this.props.handleInputChange(e)}
+            onChange={e => this.handleInputChange(e)}
           />
         </div>
         <div className="form-group">
@@ -81,7 +87,7 @@ class Form extends Component {
             placeholder="8080"
             id="port"
             value={this.props.selectedConnection.port}
-            onChange={e => this.props.handleInputChange(e)}
+            onChange={e => this.handleInputChange(e)}
           />
         </div>
         <div className="form-group">
@@ -93,7 +99,7 @@ class Form extends Component {
             placeholder="kodi"
             id="login"
             value={this.props.selectedConnection.login}
-            onChange={e => this.props.handleInputChange(e)}
+            onChange={e => this.handleInputChange(e)}
           />
         </div>
         <div className="form-group">
@@ -105,13 +111,13 @@ class Form extends Component {
             placeholder="kodi"
             id="pw"
             value={this.props.selectedConnection.pw}
-            onChange={e => this.props.handleInputChange(e)}
+            onChange={e => this.handleInputChange(e)}
           />
         </div>
         <div className="form-group">
           <button
             className="btn btn-secondary"
-            onClick={() => this.props.save()}
+            onClick={() => this.props.saveForm()}
           >
             Save
           </button>{' '}
@@ -129,8 +135,8 @@ class Form extends Component {
 }
 
 Form.propTypes = {
-  handleInputChange: PropTypes.func,
-  save: PropTypes.func,
+  saveSelectedConnection: PropTypes.func,
+  saveForm: PropTypes.func,
   selectedConnection: PropTypes.shape({
     name: PropTypes.string,
     ip: PropTypes.string,

@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import SelectOne from './SelectOne.jsx';
 
 class Popup extends Component {
   constructor() {
     super();
     this.state = {
-      ip: '',
-      port: '',
-      login: '',
-      pw: '',
       url: '',
       loading: false
     };
@@ -21,34 +19,41 @@ class Popup extends Component {
     chrome.tabs.query({ currentWindow: true, active: true }, tabs => {
       this.setState({ url: tabs[0].url });
     });
-    chrome.storage.sync.get('settings', result => {
-      if (Object.values(result).length) {
-        const s = result.settings;
-        this.setState({ ip: s.ip, port: s.port, login: s.login, pw: s.pw });
-      }
-    });
   }
 
   sendToKodi() {
     this.setState({ loading: true });
-    fetch('http://' + this.state.ip + ':' + this.state.port + '/jsonrpc', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: 'Basic ' + btoa(this.state.pw + ':' + this.state.login)
-      },
-      body: JSON.stringify({
-        jsonrpc: '2.0',
-        method: 'Player.Open',
-        id: 0,
-        params: {
-          item: {
-            file: 'plugin://plugin.video.sendtokodi/?' + this.state.url
+    fetch(
+      'http://' +
+        this.props.selectedConnection.ip +
+        ':' +
+        this.props.selectedConnection.port +
+        '/jsonrpc',
+      {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization:
+            'Basic ' +
+            btoa(
+              this.props.selectedConnection.pw +
+                ':' +
+                this.props.selectedConnection.login
+            )
+        },
+        body: JSON.stringify({
+          jsonrpc: '2.0',
+          method: 'Player.Open',
+          id: 0,
+          params: {
+            item: {
+              file: 'plugin://plugin.video.sendtokodi/?' + this.state.url
+            }
           }
-        }
-      })
-    })
+        })
+      }
+    )
       .then(response => {
         if (response.ok) {
           return response.json();
@@ -77,7 +82,12 @@ class Popup extends Component {
           value={this.state.url}
           onChange={event => this.handleInputChange(event)}
         />
-        <div className="text-center m-1">
+        <div className="m-1">
+          <SelectOne
+            connections={this.props.connections}
+            saveSelectedConnection={selectedConnection =>
+              this.props.saveSelectedConnection(selectedConnection, true)}
+          />
           <button
             className="btn btn-light"
             disabled={this.state.loading}
@@ -94,5 +104,27 @@ class Popup extends Component {
     );
   }
 }
+
+Popup.propTypes = {
+  saveSelectedConnection: PropTypes.func,
+  selectedConnection: PropTypes.shape({
+    id: PropTypes.Date,
+    name: PropTypes.string,
+    ip: PropTypes.string,
+    port: PropTypes.string,
+    login: PropTypes.string,
+    pw: PropTypes.string
+  }),
+  connections: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.Date,
+      name: PropTypes.string,
+      ip: PropTypes.string,
+      port: PropTypes.string,
+      login: PropTypes.string,
+      pw: PropTypes.string
+    })
+  )
+};
 
 export default Popup;

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import From from './Form.jsx';
+import SelectOne from './SelectOne.jsx';
+import PropTypes from 'prop-types';
 const newConnection = {
   name: 'Default',
   ip: '',
@@ -9,63 +11,26 @@ const newConnection = {
 };
 
 class Settings extends Component {
-  constructor() {
-    super();
-    this.state = {
-      connections: [newConnection],
-      selectedConnection: newConnection
-    };
-  }
-
-  componentWillMount() {
-    chrome.storage.sync.get('settings', result => {
-      if (Object.values(result).length) {
-        const connections = result.settings.connections;
-        const selectedConnection = result.settings.selectedConnection;
-        this.setState({
-          connections,
-          selectedConnection
-        });
-      }
-    });
-  }
-
-  selectConnection(event) {
-    const index = event.target.selectedIndex;
-    let selectedConnection = { ...this.state.connections[index] };
-    this.setState({ selectedConnection });
-  }
-
-  handleInputChange(event) {
-    let selectedConnection = { ...this.state.selectedConnection };
-    selectedConnection[event.target.name] = event.target.value;
-    this.setState({ selectedConnection });
-  }
-
-  save() {
-    let connections = [...this.state.connections];
-    const selectedConnection = this.state.selectedConnection;
+  saveForm() {
+    let connections = [...this.props.connections];
+    const selectedConnection = this.props.selectedConnection;
     const index = connections.findIndex(
       connection => connection.id === selectedConnection.id
     );
     connections[index] = selectedConnection;
-    this.setState({ connections });
-    this.saveToStorage(connections, selectedConnection);
+    this.props.saveSettings(connections, selectedConnection, true);
   }
 
   create() {
-    let connections = [...this.state.connections];
+    let connections = [...this.props.connections];
     newConnection.id = new Date();
     connections.unshift(newConnection);
-    this.setState({
-      connections,
-      selectedConnection: newConnection
-    });
+    this.props.saveSettings(connections, newConnection, false);
   }
 
   delete() {
-    let connections = [...this.state.connections];
-    let selectedConnection = this.state.selectedConnection;
+    let connections = [...this.props.connections];
+    let selectedConnection = this.props.selectedConnection;
     if (connections.length < 2) {
       connections = [newConnection];
       selectedConnection = newConnection;
@@ -76,30 +41,17 @@ class Settings extends Component {
       connections.splice(index, 1);
       selectedConnection = connections[0];
     }
-    this.setState({ connections, selectedConnection });
-    this.saveToStorage(connections, selectedConnection);
-  }
-
-  saveToStorage(connections, selectedConnection) {
-    const settings = { connections, selectedConnection };
-    chrome.storage.sync.set({ settings });
+    this.props.saveSettings(connections, selectedConnection, true);
   }
 
   render() {
     return (
       <div className="container mt-3" style={{ width: '500px' }}>
-        <div className="form-group">
-          <label htmlFor="connections">Select Connection</label>
-          <select
-            className="form-control"
-            id="connections"
-            onChange={e => this.selectConnection(e)}
-          >
-            {this.state.connections.map((connection, index) => (
-              <option key={index}>{connection.name}</option>
-            ))}
-          </select>
-        </div>
+        <SelectOne
+          connections={this.props.connections}
+          saveSelectedConnection={selectedConnection =>
+            this.props.saveSelectedConnection(selectedConnection, true)}
+        />
         <div className="form-group">
           <button className="btn btn-secondary" onClick={() => this.create()}>
             New
@@ -109,13 +61,38 @@ class Settings extends Component {
           </button>
         </div>
         <From
-          selectedConnection={this.state.selectedConnection}
-          handleInputChange={e => this.handleInputChange(e)}
-          save={() => this.save()}
+          selectedConnection={this.props.selectedConnection}
+          saveSelectedConnection={selectedConnection =>
+            this.props.saveSelectedConnection(selectedConnection, false)}
+          saveForm={() => this.saveForm()}
         />
       </div>
     );
   }
 }
+
+Settings.propTypes = {
+  saveSelectedConnection: PropTypes.func,
+  saveConnections: PropTypes.func,
+  saveSettings: PropTypes.func,
+  selectedConnection: PropTypes.shape({
+    id: PropTypes.Date,
+    name: PropTypes.string,
+    ip: PropTypes.string,
+    port: PropTypes.string,
+    login: PropTypes.string,
+    pw: PropTypes.string
+  }),
+  connections: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.Date,
+      name: PropTypes.string,
+      ip: PropTypes.string,
+      port: PropTypes.string,
+      login: PropTypes.string,
+      pw: PropTypes.string
+    })
+  )
+};
 
 export default Settings;
