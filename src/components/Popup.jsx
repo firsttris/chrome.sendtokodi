@@ -36,11 +36,7 @@ class Popup extends Component {
           'Content-Type': 'application/json',
           Authorization:
             'Basic ' +
-            btoa(
-              this.props.selectedConnection.pw +
-                ':' +
-                this.props.selectedConnection.login
-            )
+            btoa(this.props.selectedConnection.pw + ':' + this.props.selectedConnection.login)
         },
         body: JSON.stringify({
           jsonrpc: '2.0',
@@ -85,7 +81,7 @@ class Popup extends Component {
           onChange={event => this.handleInputChange(event)}
         />
         <div className="row m-1">
-          <div className="col-9 mt-1">
+          <div className="col-9">
             <SelectOne
               connections={this.props.connections}
               selectedConnection={this.props.selectedConnection}
@@ -100,9 +96,9 @@ class Popup extends Component {
               onClick={() => this.sendToKodi()}
             >
               {this.state.loading ? (
-                <i className="fa fa-spinner fa-pulse fa-2x" />
+                <i className="fa fa-spinner fa-pulse fa-1x" />
               ) : (
-                <i className="fa fa-play fa-2x" aria-hidden="true" />
+                <i className="fa fa-play fa-1x" aria-hidden="true" />
               )}
             </button>
           </div>

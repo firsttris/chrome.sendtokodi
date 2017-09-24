@@ -11,11 +11,7 @@ class SelectOne extends Component {
   render() {
     return (
       <div>
-        {this.props.showLabel ? (
-          <label htmlFor="connections">Select Connection</label>
-        ) : (
-          ''
-        )}
+        {this.props.showLabel ? <label htmlFor="connections">Select Connection</label> : ''}
         <select
           className="form-control"
           id="connections"

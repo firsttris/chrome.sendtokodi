@@ -14,9 +14,7 @@ class Settings extends Component {
   saveForm() {
     let connections = [...this.props.connections];
     const selectedConnection = this.props.selectedConnection;
-    const index = connections.findIndex(
-      connection => connection.id === selectedConnection.id
-    );
+    const index = connections.findIndex(connection => connection.id === selectedConnection.id);
     connections[index] = selectedConnection;
     this.props.saveSettings(connections, selectedConnection, true);
   }
@@ -35,9 +33,7 @@ class Settings extends Component {
       connections = [newConnection];
       selectedConnection = newConnection;
     } else {
-      const index = connections.findIndex(
-        connection => connection.id === selectedConnection.id
-      );
+      const index = connections.findIndex(connection => connection.id === selectedConnection.id);
       connections.splice(index, 1);
       selectedConnection = connections[0];
     }

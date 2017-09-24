@@ -12,17 +12,14 @@ manifest.version = process.env.npm_package_version;
 // clean de dist folder
 fsExtra.emptyDirSync(path.join(__dirname, '../build'));
 
-fs.writeFileSync(
-  path.join(__dirname, '../build/manifest.json'),
-  JSON.stringify(manifest)
-);
+fs.writeFileSync(path.join(__dirname, '../build/manifest.json'), JSON.stringify(manifest));
 
 module.exports = {
   target: 'web',
   entry: {
-    popup: path.join(__dirname, '../src', 'js', 'popup.js'),
-    options: path.join(__dirname, '../src', 'js', 'options.js'),
-    background: path.join(__dirname, '../src', 'js', 'background.js')
+    popup: path.join(__dirname, '../src', 'entry', 'popup.js'),
+    options: path.join(__dirname, '../src', 'entry', 'options.js'),
+    background: path.join(__dirname, '../src', 'entry', 'background.js')
   },
   output: {
     path: path.join(__dirname, '../build'),
@@ -57,17 +54,17 @@ module.exports = {
   plugins: [
     new WriteFilePlugin(),
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, '../src', 'html', 'popup.html'),
+      title: 'SendToKodi',
       filename: 'popup.html',
       chunks: ['popup']
     }),
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, '../src', 'html', 'options.html'),
+      title: 'SendToKodi',
       filename: 'options.html',
       chunks: ['options']
     }),
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, '../src', 'html', 'background.html'),
+      title: 'SendToKodi',
       filename: 'background.html',
       chunks: ['background']
     })

@@ -4,7 +4,6 @@
   "description": "send almost every stream from chrome to kodi with SendToKodi",
   "scripts": {
     "build": "webpack --env.config=prod --colors",
-    "zip": "bestzip bundle.zip build/",
     "start": "webpack-dev-server --port 3000 --hot --env.config=dev --colors"
   },
   "config": {

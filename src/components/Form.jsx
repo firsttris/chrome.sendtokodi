@@ -23,11 +23,7 @@ class Form extends Component {
           'Content-Type': 'application/json',
           Authorization:
             'Basic ' +
-            btoa(
-              this.props.selectedConnection.pw +
-                ':' +
-                this.props.selectedConnection.login
-            )
+            btoa(this.props.selectedConnection.pw + ':' + this.props.selectedConnection.login)
         },
         body: JSON.stringify({
           method: 'Addons.GetAddonDetails',
@@ -134,16 +130,10 @@ class Form extends Component {
           />
         </div>
         <div className="form-group">
-          <button
-            className="btn btn-secondary"
-            onClick={() => this.props.saveForm()}
-          >
+          <button className="btn btn-secondary" onClick={() => this.props.saveForm()}>
             Save
           </button>{' '}
-          <button
-            className="btn btn-secondary"
-            onClick={() => this.testConnection()}
-          >
+          <button className="btn btn-secondary" onClick={() => this.testConnection()}>
             Test
           </button>{' '}
           <p>{this.state.status}</p>
