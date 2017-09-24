@@ -61,6 +61,9 @@ class Popup extends Component {
         throw Error('Unauthorized');
       })
       .then(json => {
+        if (json.error) {
+          throw Error(json.error);
+        }
         if (json.result === 'OK') {
           window.close();
         }
@@ -74,31 +77,35 @@ class Popup extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{ width: '300px' }}>
         <textarea
           className="form-control"
           rows="3"
-          style={{ width: '300px' }}
           value={this.state.url}
           onChange={event => this.handleInputChange(event)}
         />
-        <div className="m-1">
-          <SelectOne
-            connections={this.props.connections}
-            saveSelectedConnection={selectedConnection =>
-              this.props.saveSelectedConnection(selectedConnection, true)}
-          />
-          <button
-            className="btn btn-light"
-            disabled={this.state.loading}
-            onClick={() => this.sendToKodi()}
-          >
-            {this.state.loading ? (
-              <i className="fa fa-spinner fa-pulse fa-2x" />
-            ) : (
-              <i className="fa fa-play fa-2x" aria-hidden="true" />
-            )}
-          </button>
+        <div className="row m-1">
+          <div className="col-9 mt-1">
+            <SelectOne
+              connections={this.props.connections}
+              selectedConnection={this.props.selectedConnection}
+              saveSelectedConnection={selectedConnection =>
+                this.props.saveSelectedConnection(selectedConnection, true)}
+            />
+          </div>
+          <div className="col-3">
+            <button
+              className="btn btn-light"
+              disabled={this.state.loading}
+              onClick={() => this.sendToKodi()}
+            >
+              {this.state.loading ? (
+                <i className="fa fa-spinner fa-pulse fa-2x" />
+              ) : (
+                <i className="fa fa-play fa-2x" aria-hidden="true" />
+              )}
+            </button>
+          </div>
         </div>
       </div>
     );

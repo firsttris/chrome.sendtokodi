@@ -59,18 +59,18 @@ class App extends Component {
           <Settings
             selectedConnection={this.state.selectedConnection}
             connections={this.state.connections}
-            saveSelectedConnection={selectedConnection =>
-              this.saveSelectedConnection(selectedConnection)}
+            saveSelectedConnection={(selectedConnection, persist) =>
+              this.saveSelectedConnection(selectedConnection, persist)}
             saveConnections={connections => this.saveConnections(connections)}
-            saveSettings={(connections, selectedConnection) =>
-              this.saveSettings(connections, selectedConnection)}
+            saveSettings={(connections, selectedConnection, persist) =>
+              this.saveSettings(connections, selectedConnection, persist)}
           />
         ) : (
           <Popup
             selectedConnection={this.state.selectedConnection}
             connections={this.state.connections}
-            saveSelectedConnection={selectedConnection =>
-              this.saveSelectedConnection(selectedConnection)}
+            saveSelectedConnection={(selectedConnection, persist) =>
+              this.saveSelectedConnection(selectedConnection, persist)}
           />
         )}
       </div>

@@ -47,11 +47,14 @@ class Settings extends Component {
   render() {
     return (
       <div className="container mt-3" style={{ width: '500px' }}>
-        <SelectOne
-          connections={this.props.connections}
-          saveSelectedConnection={selectedConnection =>
-            this.props.saveSelectedConnection(selectedConnection, true)}
-        />
+        <div className="form-group">
+          <SelectOne
+            connections={this.props.connections}
+            selectedConnection={this.props.selectedConnection}
+            saveSelectedConnection={selectedConnection =>
+              this.props.saveSelectedConnection(selectedConnection, true)}
+          />
+        </div>
         <div className="form-group">
           <button className="btn btn-secondary" onClick={() => this.create()}>
             New

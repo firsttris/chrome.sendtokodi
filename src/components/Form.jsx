@@ -10,20 +10,33 @@ class Form extends Component {
   }
 
   testConnection() {
-    fetch('http://' + this.state.ip + ':' + this.state.port + '/jsonrpc', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: 'Basic ' + btoa(this.state.pw + ':' + this.state.login)
-      },
-      body: JSON.stringify({
-        method: 'Addons.GetAddonDetails',
-        id: 0,
-        jsonrpc: '2.0',
-        params: { addonid: 'plugin.video.sendtokodi' }
-      })
-    })
+    fetch(
+      'http://' +
+        this.props.selectedConnection.ip +
+        ':' +
+        this.props.selectedConnection.port +
+        '/jsonrpc',
+      {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization:
+            'Basic ' +
+            btoa(
+              this.props.selectedConnection.pw +
+                ':' +
+                this.props.selectedConnection.login
+            )
+        },
+        body: JSON.stringify({
+          method: 'Addons.GetAddonDetails',
+          id: 0,
+          jsonrpc: '2.0',
+          params: { addonid: 'plugin.video.sendtokodi' }
+        })
+      }
+    )
       .then(response => {
         if (response.ok) {
           return response.json();
@@ -31,11 +44,17 @@ class Form extends Component {
         throw Error('Unauthorized');
       })
       .then(json => {
-        if (json.result.addon.addonid === 'plugin.video.sendtokodi') {
-          return this.setStatus('Connected');
-        } else {
+        if (json.error) {
           throw Error('Kodi Plugin not found');
         }
+        if (
+          json.result &&
+          json.result.addon &&
+          json.result.addon.addonid === 'plugin.video.sendtokodi'
+        ) {
+          return this.setStatus('Connected');
+        }
+        throw Error('Kodi Plugin not found');
       })
       .catch(error => this.setStatus(error.message));
   }
@@ -127,7 +146,7 @@ class Form extends Component {
           >
             Test
           </button>{' '}
-          <span>{this.state.status}</span>
+          <p>{this.state.status}</p>
         </div>
       </div>
     );

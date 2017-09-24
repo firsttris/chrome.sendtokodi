@@ -10,15 +10,22 @@ class SelectOne extends Component {
 
   render() {
     return (
-      <div className="form-group">
-        <label htmlFor="connections">Select Connection</label>
+      <div>
+        {this.props.showLabel ? (
+          <label htmlFor="connections">Select Connection</label>
+        ) : (
+          ''
+        )}
         <select
           className="form-control"
           id="connections"
           onChange={e => this.handleInputChange(e)}
+          value={this.props.selectedConnection.name}
         >
           {this.props.connections.map((connection, index) => (
-            <option key={index}>{connection.name}</option>
+            <option key={index} value={connection.name}>
+              {connection.name}
+            </option>
           ))}
         </select>
       </div>
@@ -28,7 +35,25 @@ class SelectOne extends Component {
 
 SelectOne.propTypes = {
   saveSelectedConnection: PropTypes.func,
-  connections: PropTypes.array
+  selectedConnection: PropTypes.shape({
+    id: PropTypes.Date,
+    name: PropTypes.string,
+    ip: PropTypes.string,
+    port: PropTypes.string,
+    login: PropTypes.string,
+    pw: PropTypes.string
+  }),
+  connections: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.Date,
+      name: PropTypes.string,
+      ip: PropTypes.string,
+      port: PropTypes.string,
+      login: PropTypes.string,
+      pw: PropTypes.string
+    })
+  ),
+  showLabel: PropTypes.bool
 };
 
 export default SelectOne;
