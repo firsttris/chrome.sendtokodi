@@ -1,133 +1,118 @@
 import React, { Component } from 'react';
+import From from './Form.jsx';
+const newConnection = {
+  name: 'Default',
+  ip: '',
+  port: '',
+  login: '',
+  pw: ''
+};
 
 class Settings extends Component {
   constructor() {
     super();
     this.state = {
-      ip: '',
-      port: '',
-      login: '',
-      pw: '',
-      status: ''
+      connections: [newConnection],
+      selectedConnection: newConnection
     };
-  }
-
-  handleInputChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
   }
 
   componentWillMount() {
     chrome.storage.sync.get('settings', result => {
       if (Object.values(result).length) {
-        const s = result.settings;
-        this.setState({ ip: s.ip, port: s.port, login: s.login, pw: s.pw });
+        const connections = result.settings.connections;
+        const selectedConnection = result.settings.selectedConnection;
+        this.setState({
+          connections,
+          selectedConnection
+        });
       }
     });
   }
 
+  selectConnection(event) {
+    const index = event.target.selectedIndex;
+    let selectedConnection = { ...this.state.connections[index] };
+    this.setState({ selectedConnection });
+  }
+
+  handleInputChange(event) {
+    let selectedConnection = { ...this.state.selectedConnection };
+    selectedConnection[event.target.name] = event.target.value;
+    this.setState({ selectedConnection });
+  }
+
   save() {
-    chrome.storage.sync.set({ settings: this.state });
+    let connections = [...this.state.connections];
+    const selectedConnection = this.state.selectedConnection;
+    const index = connections.findIndex(
+      connection => connection.id === selectedConnection.id
+    );
+    connections[index] = selectedConnection;
+    this.setState({ connections });
+    this.saveToStorage(connections, selectedConnection);
   }
 
-  testConnection() {
-    fetch('http://' + this.state.ip + ':' + this.state.port + '/jsonrpc', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: 'Basic ' + btoa(this.state.pw + ':' + this.state.login)
-      },
-      body: JSON.stringify({
-        method: 'Addons.GetAddonDetails',
-        id: 0,
-        jsonrpc: '2.0',
-        params: { addonid: 'plugin.video.sendtokodi' }
-      })
-    })
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw Error('Unauthorized');
-      })
-      .then(json => {
-        if (json.result.addon.addonid === 'plugin.video.sendtokodi') {
-          return this.setStatus('Connected');
-        } else {
-          throw Error('Kodi Plugin not found');
-        }
-      })
-      .catch(error => this.setStatus(error.message));
+  create() {
+    let connections = [...this.state.connections];
+    newConnection.id = new Date();
+    connections.unshift(newConnection);
+    this.setState({
+      connections,
+      selectedConnection: newConnection
+    });
   }
 
-  setStatus(message) {
-    this.setState({ status: message });
-    setTimeout(() => this.setState({ status: '' }), 5000);
+  delete() {
+    let connections = [...this.state.connections];
+    let selectedConnection = this.state.selectedConnection;
+    if (connections.length < 2) {
+      connections = [newConnection];
+      selectedConnection = newConnection;
+    } else {
+      const index = connections.findIndex(
+        connection => connection.id === selectedConnection.id
+      );
+      connections.splice(index, 1);
+      selectedConnection = connections[0];
+    }
+    this.setState({ connections, selectedConnection });
+    this.saveToStorage(connections, selectedConnection);
+  }
+
+  saveToStorage(connections, selectedConnection) {
+    const settings = { connections, selectedConnection };
+    chrome.storage.sync.set({ settings });
   }
 
   render() {
     return (
       <div className="container mt-3" style={{ width: '500px' }}>
         <div className="form-group">
-          <label htmlFor="ip">IP Adresse</label>
-          <input
+          <label htmlFor="connections">Select Connection</label>
+          <select
             className="form-control"
-            type="text"
-            name="ip"
-            placeholder="127.0.0.1"
-            id="ip"
-            value={this.state.ip}
-            onChange={e => this.handleInputChange(e)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="port">Port</label>
-          <input
-            className="form-control"
-            type="text"
-            name="port"
-            placeholder="8080"
-            id="port"
-            value={this.state.port}
-            onChange={e => this.handleInputChange(e)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="login">Login</label>
-          <input
-            className="form-control"
-            type="text"
-            name="login"
-            placeholder="kodi"
-            id="login"
-            value={this.state.login}
-            onChange={e => this.handleInputChange(e)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="pw">Password</label>
-          <input
-            className="form-control"
-            type="password"
-            name="pw"
-            placeholder="kodi"
-            id="pw"
-            value={this.state.pw}
-            onChange={e => this.handleInputChange(e)}
-          />
-        </div>
-        <div className="form-group">
-          <button className="btn btn-secondary" onClick={() => this.save()}>
-            Save
-          </button>{' '}
-          <button
-            className="btn btn-secondary"
-            onClick={() => this.testConnection()}
+            id="connections"
+            onChange={e => this.selectConnection(e)}
           >
-            Test
-          </button>{' '}
-          <span>{this.state.status}</span>
+            {this.state.connections.map((connection, index) => (
+              <option key={index}>{connection.name}</option>
+            ))}
+          </select>
         </div>
+        <div className="form-group">
+          <button className="btn btn-secondary" onClick={() => this.create()}>
+            New
+          </button>{' '}
+          <button className="btn btn-secondary" onClick={() => this.delete()}>
+            Delete
+          </button>
+        </div>
+        <From
+          selectedConnection={this.state.selectedConnection}
+          handleInputChange={e => this.handleInputChange(e)}
+          save={() => this.save()}
+        />
       </div>
     );
   }

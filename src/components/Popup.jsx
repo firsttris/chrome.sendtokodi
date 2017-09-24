@@ -8,8 +8,8 @@ class Popup extends Component {
       port: '',
       login: '',
       pw: '',
-      status: '',
-      url: ''
+      url: '',
+      loading: false
     };
   }
 
@@ -30,6 +30,7 @@ class Popup extends Component {
   }
 
   sendToKodi() {
+    this.setState({ loading: true });
     fetch('http://' + this.state.ip + ':' + this.state.port + '/jsonrpc', {
       method: 'POST',
       headers: {
@@ -55,14 +56,15 @@ class Popup extends Component {
         throw Error('Unauthorized');
       })
       .then(json => {
-        console.log(json);
+        if (json.result === 'OK') {
+          window.close();
+        }
+        this.setState({ loading: false });
       })
-      .catch(error => this.setStatus(error.message));
-  }
-
-  setStatus(message) {
-    this.setState({ status: message });
-    setTimeout(() => this.setState({ status: '' }), 5000);
+      .catch(error => {
+        this.setState({ loading: false });
+        alert(error.message);
+      });
   }
 
   render() {
@@ -75,13 +77,17 @@ class Popup extends Component {
           value={this.state.url}
           onChange={event => this.handleInputChange(event)}
         />
-        <div className="float-right m-1">
-          <span>{this.state.status}</span>
+        <div className="text-center m-1">
           <button
-            className="btn btn-secondary"
+            className="btn btn-light"
+            disabled={this.state.loading}
             onClick={() => this.sendToKodi()}
           >
-            SendToKodi
+            {this.state.loading ? (
+              <i className="fa fa-spinner fa-pulse fa-2x" />
+            ) : (
+              <i className="fa fa-play fa-2x" aria-hidden="true" />
+            )}
           </button>
         </div>
       </div>
