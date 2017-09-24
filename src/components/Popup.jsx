@@ -21,7 +21,18 @@ class Popup extends Component {
     });
   }
 
+  isValid() {
+    if (this.props.selectedConnection.ip && this.props.selectedConnection.port) {
+      return true;
+    }
+    chrome.tabs.create({ url: chrome.extension.getURL('options.html') });
+    return false;
+  }
+
   sendToKodi() {
+    if (!this.isValid()) {
+      return;
+    }
     this.setState({ loading: true });
     fetch(
       'http://' +

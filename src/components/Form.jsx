@@ -66,13 +66,28 @@ class Form extends Component {
     this.props.saveSelectedConnection(selectedConnection);
   }
 
+  isValid() {
+    if (
+      this.props.selectedConnection.name &&
+      this.props.selectedConnection.ip &&
+      this.props.selectedConnection.port
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  validAndSave() {
+    if (this.isValid()) this.props.saveForm();
+  }
+
   render() {
     return (
       <div>
         <div className="form-group">
           <label htmlFor="name">Name</label>
           <input
-            className="form-control"
+            className={'form-control' + (this.props.selectedConnection.name ? '' : ' is-invalid')}
             type="text"
             name="name"
             placeholder="Connection Name"
@@ -80,11 +95,12 @@ class Form extends Component {
             value={this.props.selectedConnection.name}
             onChange={e => this.handleInputChange(e)}
           />
+          <div className="invalid-feedback">Please provide Name</div>
         </div>
         <div className="form-group">
-          <label htmlFor="ip">IP Adresse</label>
+          <label htmlFor="ip">IP Address</label>
           <input
-            className="form-control"
+            className={'form-control' + (this.props.selectedConnection.ip ? '' : ' is-invalid')}
             type="text"
             name="ip"
             placeholder="127.0.0.1"
@@ -92,11 +108,12 @@ class Form extends Component {
             value={this.props.selectedConnection.ip}
             onChange={e => this.handleInputChange(e)}
           />
+          <div className="invalid-feedback">Please provide IP Address</div>
         </div>
         <div className="form-group">
           <label htmlFor="port">Port</label>
           <input
-            className="form-control"
+            className={'form-control' + (this.props.selectedConnection.port ? '' : ' is-invalid')}
             type="text"
             name="port"
             placeholder="8080"
@@ -104,6 +121,7 @@ class Form extends Component {
             value={this.props.selectedConnection.port}
             onChange={e => this.handleInputChange(e)}
           />
+          <div className="invalid-feedback">Please provide Port</div>
         </div>
         <div className="form-group">
           <label htmlFor="login">Login</label>
@@ -130,13 +148,13 @@ class Form extends Component {
           />
         </div>
         <div className="form-group">
-          <button className="btn btn-secondary" onClick={() => this.props.saveForm()}>
+          <button className="btn btn-secondary" onClick={() => this.validAndSave()}>
             Save
           </button>{' '}
           <button className="btn btn-secondary" onClick={() => this.testConnection()}>
             Test
           </button>{' '}
-          <p>{this.state.status}</p>
+          <p className="mt-3">{this.state.status}</p>
         </div>
       </div>
     );

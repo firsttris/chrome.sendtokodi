@@ -3,6 +3,7 @@ node_modules/
 
 # production
 build/
+build.zip
 dist/
 coverage/
 .idea/
