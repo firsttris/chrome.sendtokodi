@@ -1,7 +1,7 @@
-const base = require('./base');
-const webpack = require('webpack');
-const minify = require('babel-minify-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const base = require('./base'),
+  webpack = require('webpack'),
+  minify = require('babel-minify-webpack-plugin'),
+  ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 base.module.rules.push({
   test: /\.css$/,
