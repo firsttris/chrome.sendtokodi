@@ -47,7 +47,7 @@ class Popup extends Component {
           'Content-Type': 'application/json',
           Authorization:
             'Basic ' +
-            btoa(this.props.selectedConnection.pw + ':' + this.props.selectedConnection.login)
+            btoa(this.props.selectedConnection.login + ':' + this.props.selectedConnection.pw)
         },
         body: JSON.stringify({
           jsonrpc: '2.0',
