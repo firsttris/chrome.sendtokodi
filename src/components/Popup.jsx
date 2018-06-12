@@ -30,6 +30,34 @@ class Popup extends Component {
   }
 
   sendToKodi() {
+    this.post(
+      {
+        jsonrpc: '2.0',
+        method: 'Player.Open',
+        id: 0,
+        params: {
+          item: {
+            file: 'plugin://plugin.video.sendtokodi/?' + this.state.url
+          }
+        }
+      },
+      true
+    );
+  }
+
+  stop() {
+    this.post(
+      {
+        jsonrpc: '2.0',
+        method: 'Player.Stop',
+        params: { playerid: 1 },
+        id: 0
+      },
+      false
+    );
+  }
+
+  post(body, close) {
     if (!this.isValid()) {
       return;
     }
@@ -49,16 +77,7 @@ class Popup extends Component {
             'Basic ' +
             btoa(this.props.selectedConnection.login + ':' + this.props.selectedConnection.pw)
         },
-        body: JSON.stringify({
-          jsonrpc: '2.0',
-          method: 'Player.Open',
-          id: 0,
-          params: {
-            item: {
-              file: 'plugin://plugin.video.sendtokodi/?' + this.state.url
-            }
-          }
-        })
+        body: JSON.stringify(body)
       }
     )
       .then(response => {
@@ -72,7 +91,9 @@ class Popup extends Component {
           throw Error(json.error);
         }
         if (json.result === 'OK') {
-          window.close();
+          if (close) {
+            window.close();
+          }
         }
         this.setState({ loading: false });
       })
@@ -92,7 +113,7 @@ class Popup extends Component {
           onChange={event => this.handleInputChange(event)}
         />
         <div className="row m-1">
-          <div className="col-9">
+          <div className="col-7">
             <SelectOne
               connections={this.props.connections}
               selectedConnection={this.props.selectedConnection}
@@ -101,7 +122,7 @@ class Popup extends Component {
               }
             />
           </div>
-          <div className="col-3">
+          <div className="col-5">
             <button
               className="btn btn-light"
               disabled={this.state.loading}
@@ -112,6 +133,13 @@ class Popup extends Component {
               ) : (
                 <i className="fa fa-play fa-1x" aria-hidden="true" />
               )}
+            </button>
+            <button
+              className="btn btn-light"
+              disabled={this.state.loading}
+              onClick={() => this.stop()}
+            >
+              <i className="fa fa-stop fa-1x" aria-hidden="true" />
             </button>
           </div>
         </div>
