@@ -1,32 +1,19 @@
 const base = require('./base'),
-  webpack = require('webpack'),
-  minify = require('babel-minify-webpack-plugin'),
-  ExtractTextPlugin = require('extract-text-webpack-plugin');
+  webpack = require('webpack');
 
-base.module.rules.push({
-  test: /\.css$/,
-  use: ExtractTextPlugin.extract({
-    use: 'css-loader?minimize',
-    fallback: 'style-loader'
-  })
-});
+base.mode = "production";  
+
 base.plugins.push(
-  new webpack.optimize.CommonsChunkPlugin({
-    name: 'vendor',
-    minChunks: function(module) {
-      // This prevents stylesheet resources with the .css or .scss extension
-      // from being moved from their original chunk to the vendor chunk
-      if (module.resource && /^.*\.(css|scss)$/.test(module.resource)) {
-        return false;
-      }
-      return module.context && module.context.indexOf('node_modules') !== -1;
-    }
-  }),
   new webpack.DefinePlugin({
     'process.env.NODE_ENV': JSON.stringify('production')
-  }),
-  new minify(),
-  new ExtractTextPlugin('styles.css')
+  })
 );
-base.devtool = 'source-map';
+
+base.optimization = {
+  splitChunks: {
+      chunks: 'all',
+  },
+  runtimeChunk: true,
+};
+
 module.exports = base;

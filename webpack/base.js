@@ -1,4 +1,4 @@
-let HtmlWebpackPlugin = require('html-webpack-plugin'),
+let htmlWebpackPlugin = require('html-webpack-plugin'),
   manifest = require('../public/manifest.json'),
   fs = require('fs'),
   fsExtra = require('fs-extra'),
@@ -39,6 +39,23 @@ module.exports = {
         }
       },
       {
+        test: /\.css$/,
+        use: [
+          {
+            loader: 'style-loader',
+            options: {
+              sourceMap: true
+            }
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true
+            }
+          }
+        ]
+      },
+      {
         test: /\.(jpe?g|png|gif)$/,
         use: [{ loader: 'file-loader?name=img/[name].[ext]' }]
       },
@@ -49,15 +66,15 @@ module.exports = {
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin({
+    new htmlWebpackPlugin({
       title: 'SendToKodi',
       filename: 'popup.html'
     }),
-    new HtmlWebpackPlugin({
+    new htmlWebpackPlugin({
       title: 'SendToKodi',
       filename: 'options.html'
     }),
-    new HtmlWebpackPlugin({
+    new htmlWebpackPlugin({
       title: 'SendToKodi',
       filename: 'background.html'
     })
