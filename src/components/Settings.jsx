@@ -48,7 +48,8 @@ class Settings extends Component {
             connections={this.props.connections}
             selectedConnection={this.props.selectedConnection}
             saveSelectedConnection={selectedConnection =>
-              this.props.saveSelectedConnection(selectedConnection, true)}
+              this.props.saveSelectedConnection(selectedConnection, true)
+            }
           />
         </div>
         <div className="form-group">
@@ -62,7 +63,8 @@ class Settings extends Component {
         <From
           selectedConnection={this.props.selectedConnection}
           saveSelectedConnection={selectedConnection =>
-            this.props.saveSelectedConnection(selectedConnection, false)}
+            this.props.saveSelectedConnection(selectedConnection, false)
+          }
           saveForm={() => this.saveForm()}
         />
       </div>

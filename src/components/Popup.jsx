@@ -15,7 +15,7 @@ class Popup extends Component {
     this.setState({ url: event.target.value });
   }
 
-  componentWillMount() {
+  componentDidMount() {
     chrome.tabs.query({ currentWindow: true, active: true }, tabs => {
       this.setState({ url: tabs[0].url });
     });
@@ -97,7 +97,8 @@ class Popup extends Component {
               connections={this.props.connections}
               selectedConnection={this.props.selectedConnection}
               saveSelectedConnection={selectedConnection =>
-                this.props.saveSelectedConnection(selectedConnection, true)}
+                this.props.saveSelectedConnection(selectedConnection, true)
+              }
             />
           </div>
           <div className="col-3">

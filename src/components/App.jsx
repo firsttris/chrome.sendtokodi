@@ -20,7 +20,7 @@ class App extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     chrome.storage.sync.get('connections', result => {
       if (result.connections) {
         this.setState({ connections: result.connections });
@@ -60,17 +60,20 @@ class App extends Component {
             selectedConnection={this.state.selectedConnection}
             connections={this.state.connections}
             saveSelectedConnection={(selectedConnection, persist) =>
-              this.saveSelectedConnection(selectedConnection, persist)}
+              this.saveSelectedConnection(selectedConnection, persist)
+            }
             saveConnections={connections => this.saveConnections(connections)}
             saveSettings={(connections, selectedConnection, persist) =>
-              this.saveSettings(connections, selectedConnection, persist)}
+              this.saveSettings(connections, selectedConnection, persist)
+            }
           />
         ) : (
           <Popup
             selectedConnection={this.state.selectedConnection}
             connections={this.state.connections}
             saveSelectedConnection={(selectedConnection, persist) =>
-              this.saveSelectedConnection(selectedConnection, persist)}
+              this.saveSelectedConnection(selectedConnection, persist)
+            }
           />
         )}
       </div>
