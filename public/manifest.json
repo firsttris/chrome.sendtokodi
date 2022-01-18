@@ -1,7 +1,9 @@
 {
   "name": "SendToKodi",
   "short_name": "SendToKodi",
-  "options_page": "options.html",
+  "options_ui": {
+     "page": "options.html"
+  },
   "background": {
     "page": "background.html"
   },
