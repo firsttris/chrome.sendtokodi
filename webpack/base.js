@@ -8,6 +8,14 @@ let htmlWebpackPlugin = require('html-webpack-plugin'),
 manifest.description = process.env.npm_package_description;
 manifest.version = process.env.npm_package_version;
 
+if (process.env?.TARGET_PLATFORM === 'firefox') {
+    manifest.browser_specific_settings = {
+        gecko: {
+            id: "sendtokodi@firsttris.github.io"
+        }
+    };
+}
+
 // clean de dist folder
 fsExtra.emptyDirSync(path.join(__dirname, '../build'));
 
