@@ -38,7 +38,7 @@ jobs:
       id: create_release
 
     - name: Upload Release
-      uses: ncipollo/release-action@v1.12.0
+      uses: actions/upload-artifact@v3
       with:
-        artifacts: 'sendToKodi-${{ steps.packagejson.outputs.current-version }}.zip'
-        token: ${{ secrets.GITHUB_TOKEN }}
+        name: sendToKodi-${{ steps.packagejson.outputs.current-version }}
+        path: sendToKodi-${{ steps.packagejson.outputs.current-version }}.zip
