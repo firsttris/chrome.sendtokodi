@@ -1,5 +1,6 @@
 {
   "name": "SendToKodi",
+  "description": "send almost every stream from chrome to kodi with SendToKodi",
   "short_name": "SendToKodi",
   "options_page": "options.html",
   "background": {

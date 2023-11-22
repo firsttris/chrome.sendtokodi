@@ -1,17 +1,8 @@
 let HtmlWebpackPlugin = require('html-webpack-plugin'),
-    manifest = require('./public/manifest.json'),
-    fs = require('fs'),
-    fsExtra = require('fs-extra'),
-    path = require('path');
+    path = require('path'),
+    CopyWebpackPlugin = require('copy-webpack-plugin');
 
-// generates the manifest file using the package.json informations
-manifest.description = process.env.npm_package_description;
-manifest.version = process.env.npm_package_version;
 
-// clean de dist folder
-fsExtra.emptyDirSync(path.join(__dirname, './build'));
-
-fs.writeFileSync(path.join(__dirname, './build/manifest.json'), JSON.stringify(manifest));
 
 module.exports = {
     entry: './src/index.js',
@@ -61,6 +52,19 @@ module.exports = {
             title: 'SendToKodi',
             filename: 'background.html'
         }),
+        new CopyWebpackPlugin({
+            patterns: [
+              {
+                from: './public/manifest.json',
+                to: 'manifest.json',
+                transform(content) {
+                  const manifest = JSON.parse(content.toString());
+                  manifest.version = process.env.npm_package_version;
+                  return JSON.stringify(manifest, null, 2);
+                },
+              },
+            ],
+          }),
     ],
     devServer: {
         devMiddleware: {

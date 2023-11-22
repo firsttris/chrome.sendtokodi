@@ -33,11 +33,6 @@ jobs:
       id: packagejson
       uses: martinbeentjes/npm-get-version-action@v1.1.0
 
-    - name: push Tag
-      run: |
-        git tag ${{ steps.packagejson.outputs.current-version }}
-        git push --tags
-
     - name: Create Release
       run: zip -j -r sendToKodi-${{ steps.packagejson.outputs.current-version }}.zip build/*
       id: create_release
