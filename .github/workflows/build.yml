@@ -34,7 +34,7 @@ jobs:
       uses: martinbeentjes/npm-get-version-action@v1.1.0
 
     - name: Create Release
-      run: git archive --format=zip HEAD:./build -o sendToKodi-${{ steps.packagejson.outputs.current-version }}.zip
+      run: zip -j -r sendToKodi-${{ steps.packagejson.outputs.current-version }}.zip build/*
       id: create_release
 
     - name: Upload Release
