@@ -6,7 +6,7 @@ let HtmlWebpackPlugin = require('html-webpack-plugin'),
 
 module.exports = (env, argv) => {
     return {
-        entry: './src/index.js',
+        entry: './src/index.tsx',
         output: {
             path: path.join(__dirname, 'build'),
             filename: 'bundle.js',
@@ -14,16 +14,6 @@ module.exports = (env, argv) => {
         },
         module: {
             rules: [
-                {
-                    test: /\.(js|jsx)$/,
-                    exclude: /node_modules/,
-                    use: {
-                        loader: 'babel-loader',
-                        options: {
-                            presets: ['@babel/preset-env', '@babel/preset-react'],
-                        },
-                    },
-                },
                 {
                     test: /\.css$/,
                     use: ['style-loader', 'css-loader'],
@@ -35,10 +25,19 @@ module.exports = (env, argv) => {
                         filename: '[path][name][ext]'
                     }
                 },
+                // all files with a `.ts`, `.cts`, `.mts` or `.tsx` extension will be handled by `ts-loader`
+                { test: /\.([cm]?ts|tsx)$/, loader: "ts-loader" }
             ],
         },
         resolve: {
-            extensions: ['.js', '.jsx'],
+            // Add `.ts` and `.tsx` as a resolvable extension.
+            extensions: [".ts", ".tsx", ".js"],
+            // Add support for TypeScripts fully qualified ESM imports.
+            extensionAlias: {
+                ".js": [".js", ".ts"],
+                ".cjs": [".cjs", ".cts"],
+                ".mjs": [".mjs", ".mts"]
+            }
         },
         plugins: [
             new HtmlWebpackPlugin({

@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.css';
 import React from 'react';
 import { render } from 'react-dom';
-import App from './components/App.jsx';
+import { App } from './components/App';
 
 let root = document.createElement('div');
 root.id = 'root';
