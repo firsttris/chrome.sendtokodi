@@ -47,3 +47,4 @@ jobs:
       with:
         artifacts: 'sendToKodi-${{ steps.packagejson.outputs.current-version }}.zip'
         token: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ steps.packagejson.outputs.current-version }}
