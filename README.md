@@ -20,14 +20,20 @@ To use this extension your need to install SendToKodi Addon in Kodi
 
 ## Development
 
-1. Clone `git clone https://github.com/firsttris/chrome.sendtokodi.git`
-2. Install `npm install / yarn`
-6. Run `npm run start /  yarn start`
-7. Load your extension on Chrome following:
-    1. Access `chrome://extensions/`
-    2. Check `Developer mode`
-    3. Click on `Load unpacked extension`
-    4. Select the `build` folder
+1. Install `npm install`
+1. Run `npm run start`
+   - Run `npm run start:firefox` for Firefox compatibility
+1. Load your extension:
+   - Chrome
+     1. Access `chrome://extensions/`
+     1. Check `Developer mode`
+     1. Click on `Load unpacked extension`
+     1. Select the `build` folder
+   - Firefox
+     1. Access `about:debugging`
+     1. Click `This Firefox`
+     1. Click `Load temporary Add-on...`
+     1. Select the `build` folder
 
 ## License
 See the [LICENSE](LICENSE.md) file for license rights and limitations (MIT).

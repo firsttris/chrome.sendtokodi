@@ -2,23 +2,23 @@
   "name": "SendToKodi",
   "description": "send almost every stream from chrome to kodi with SendToKodi",
   "short_name": "SendToKodi",
-  "options_page": "options.html",
-  "background": {
-    "page": "background.html"
+  "options_ui": {
+    "page": "options.html"
   },
   "permissions": [
     "tabs",
-    "storage",
-    "http://*/"
+    "storage"
+  ],
+  "host_permissions": [
+    "http://*/*"
   ],
   "icons": {
     "16": "public/icons/icon16.png",
     "48": "public/icons/icon48.png",
     "128": "public/icons/icon128.png"
   },
-  "browser_action": {
+  "action": {
     "default_popup": "popup.html"
   },
-  "manifest_version": 2,
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+  "manifest_version": 3
 }

@@ -4,7 +4,9 @@
   "description": "send almost every stream from chrome to kodi with SendToKodi",
   "scripts": {
     "build": "webpack --mode production",
-    "start": "webpack serve --mode development"
+    "build:firefox": "webpack --mode production --env TARGET_PLATFORM=firefox",
+    "start": "webpack serve --mode development",
+    "start:firefox": "webpack serve --mode development --env TARGET_PLATFORM=firefox"
   },
   "devDependencies": {
     "@babel/core": "^7.23.3",
