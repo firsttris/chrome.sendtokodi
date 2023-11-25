@@ -43,12 +43,7 @@ module.exports = (env, argv) => {
             ],
         },
         resolve: {
-            extensions: [".ts", ".tsx", ".js", ".jsx"],
-            extensionAlias: {
-                ".js": [".js", ".ts", ".jsx"],
-                ".cjs": [".cjs", ".cts"],
-                ".mjs": [".mjs", ".mts"]
-            }
+            extensions: [".ts", ".tsx", ".js", ".jsx"]
         },
         plugins: [
             new CopyWebpackPlugin({
