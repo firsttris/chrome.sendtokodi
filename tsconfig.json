@@ -19,6 +19,11 @@
     "allowSyntheticDefaultImports": true,
     "allowJs": true
   },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  },
   "include": [
     "src"
   ]

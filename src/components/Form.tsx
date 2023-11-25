@@ -2,7 +2,14 @@ import { Connection } from './types';
 import { useApi } from ".././provider/ApiProvider";
 import { useStore } from './../provider/StoreProvider';
 
-const InputField = ({ name, type, placeholder, label }: { name: keyof Connection, type: string, placeholder: string, label: string }) => {
+type InputFieldProps = {
+  name: keyof Connection;
+  type: string;
+  placeholder: string;
+  label: string;
+};
+
+const InputField = (props: InputFieldProps) => {
   const { getSelectedConnection, updateConnectionAttribute } = useStore();
   
   
@@ -11,21 +18,21 @@ const InputField = ({ name, type, placeholder, label }: { name: keyof Connection
     updateConnectionAttribute(htmlInputElement.name as keyof Connection, htmlInputElement.value);
   };
 
-  const value = () => getSelectedConnection()?.[name] ?? '';
+  const value = () => getSelectedConnection()?.[props.name] ?? '';
 
   return (
     <div class="form-group">
-      <label for={name}>{label}</label>
+      <label for={props.name}>{props.label}</label>
       <input
-        class={`form-control ${value() || name === 'pw' ? '' : 'is-invalid'}`}
-        type={type}
-        name={name}
-        placeholder={placeholder}
-        id={name}
+        class={`form-control ${value() || props.name === 'pw' ? '' : 'is-invalid'}`}
+        type={props.type}
+        name={props.name}
+        placeholder={props.placeholder}
+        id={props.name}
         value={value()}
         onChange={handleInputChange}
       />
-      <div class={`invalid-feedback ${value() || name === 'pw' ? 'd-none' : ''}`}>Please provide {label}</div>
+      <div class={`invalid-feedback ${value() || props.name === 'pw' ? 'd-none' : ''}`}>Please provide {props.label}</div>
     </div>
   );
 };

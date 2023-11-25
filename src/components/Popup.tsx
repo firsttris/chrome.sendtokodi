@@ -3,9 +3,9 @@ import { useApi } from './../provider/ApiProvider';
 
 type ButtonProps = { loading: boolean, onClick: () => void, icon: string }
 
-const Button = ({ loading, onClick, icon }: ButtonProps) => (
-  <button class="btn btn-light" disabled={loading} onClick={onClick}>
-    {loading ? <i class="fa fa-spinner fa-pulse fa-1x" /> : <i class={icon} aria-hidden={true} />}
+const Button = (props: ButtonProps) => (
+  <button class="btn btn-light" disabled={props.loading} onClick={() => props.onClick()}>
+    {props.loading ? <i class="fa fa-spinner fa-pulse fa-1x" /> : <i class={props.icon} aria-hidden={true} />}
   </button>
 );
 

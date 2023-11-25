@@ -1,8 +1,9 @@
+import path from 'path';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
+import { Configuration, WebpackOptionsNormalized } from 'webpack';
 
-const path = require('path')
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-
-module.exports = (env, argv) => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const config: (env: Record<string, boolean | string>, argv: WebpackOptionsNormalized) => Configuration = (env, argv) => {
     return {
         entry: {
             popup: './src/popup.tsx',
@@ -83,4 +84,9 @@ module.exports = (env, argv) => {
         },
         devtool: 'source-map'
     }
-};
+}
+
+
+
+
+export default config;

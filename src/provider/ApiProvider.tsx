@@ -8,23 +8,21 @@ interface Body {
   jsonrpc: string;
   method: string;
   id: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   params: any;
 }
 
-type Api = {
+type ContextType = {
   loading: () => boolean;
-  setLoading: (loading: boolean) => void;
   url: () => string;
   setUrl: (url: string) => void;
   status: () => string;
-  setStatus: (status: string) => void;
-  fetchDataFromServer: (selectedConnection: Connection | undefined, body: Body) => Promise<any>;
   testConnection: () => Promise<void>;
   stop: () => void;
   sendToKodi: () => void;
 };
 
-const ApiContext = createContext<Api>();
+const ApiContext = createContext<ContextType>();
 
 type StoreProviderProps = {
   children: JSX.Element;
@@ -54,12 +52,11 @@ export const ApiProvider = (props: StoreProviderProps) => {
       `http://${selectedConnection?.ip}:${selectedConnection?.port}/jsonrpc`,
       createFetchOptions(selectedConnection, body)
     );
-
-    if (!response.ok) {
-      throw Error('Unauthorized');
+    const json = await response.json();
+    if (json.error) {
+      throw Error(json.error);
     }
-
-    return await response.json();
+    return json;
   };
 
   const testConnection = async () => {
@@ -67,6 +64,7 @@ export const ApiProvider = (props: StoreProviderProps) => {
 
     if (!selectedConnection) {
       console.error('No connection selected')
+      setStatus('No connection selected')
       return
     }
 
@@ -78,11 +76,15 @@ export const ApiProvider = (props: StoreProviderProps) => {
     };
 
     try {
-      const response = await fetchDataFromServer(selectedConnection, body);
-      console.log(response);
+      const response = await fetchDataFromServer(selectedConnection, body)
+      if (response.ok) {
+        setStatus('Connection successful')
+      }
     } catch (error) {
-      console.error(error);
+      console.log(error)
+      setStatus((error as Error).message);
     }
+
   };
 
   const sendToKodi = () => {
@@ -100,7 +102,7 @@ export const ApiProvider = (props: StoreProviderProps) => {
       true
     );
   };
-  
+
   const stop = () => {
     handleRequest(
       {
@@ -112,51 +114,54 @@ export const ApiProvider = (props: StoreProviderProps) => {
       false
     );
   };
-  
+
   const handleRequest = async (body: Body, close: boolean) => {
     const selectedConnection = getSelectedConnection();
-    if (!isValid()) {
+    if (!selectedConnection) {
+      console.error('No connection selected')
+      openSettings();
       return;
     }
     setLoading(true);
     try {
-      const json = await fetchDataFromServer(selectedConnection, body);
-      if (json.error) {
-        throw Error(json.error);
-      }
-      if (json.result === 'OK' && close) {
+      const response = await fetchDataFromServer(selectedConnection, body);
+      if (response.result === 'OK' && close) {
         window.close();
       }
     } catch (error) {
+      console.log(error)
       alert((error as Error).message);
     } finally {
       setLoading(false);
     }
   };
-  
-  const isValid = () => {
-    const selectedConnection = getSelectedConnection();
-    if (selectedConnection?.ip && selectedConnection?.port) {
-      return true;
-    }
-    if(!chrome?.tabs) {
-      return false;
+
+  const openSettings = () => {
+    if (!chrome?.tabs) {
+      return;
     }
     chrome.tabs.create({ url: chrome.extension.getURL('options.html') });
-    return false;
   };
-  
+
   onMount(() => {
-      if(!chrome?.tabs) {
-        return;
-      }
-      chrome.tabs.query({ currentWindow: true, active: true }, tabs => {
-        setUrl(tabs[0].url ?? '');
-      });
+    if (!chrome?.tabs) {
+      return;
+    }
+    chrome.tabs.query({ currentWindow: true, active: true }, tabs => {
+      setUrl(tabs[0].url ?? '');
     });
+  });
 
   return (
-    <ApiContext.Provider value={{ stop, sendToKodi, loading, setLoading, url, setUrl, status, setStatus, fetchDataFromServer, testConnection }}>
+    <ApiContext.Provider value={{
+      stop,
+      sendToKodi,
+      loading,
+      url,
+      setUrl,
+      status,
+      testConnection
+    }}>
       {props.children}
     </ApiContext.Provider>
   );

@@ -1,10 +1,11 @@
+import { For } from "solid-js";
 import { useStore } from './../provider/StoreProvider';
 
 interface SelectOneProps {
   showLabel?: boolean;
 }
 
-export const SelectOne = ({ showLabel = false }: SelectOneProps) => {
+export const SelectOne = (props: SelectOneProps) => {
 
   const { getConnections, getSelectedConnection, setSelectedConnectionId } = useStore();
   
@@ -12,18 +13,18 @@ export const SelectOne = ({ showLabel = false }: SelectOneProps) => {
 
   return (
     <div>
-      {showLabel ? <label for="connections">Select Connection</label> : null}
+      {props.showLabel ? <label for="connections">Select Connection</label> : null}
       <select
         class="form-control"
         id="connections"
         onChange={handleInputChange}
         value={getSelectedConnection()?.id}
       >
-        {getConnections().map((connection) => (
+        <For each={getConnections()}>{(connection) => (
           <option value={connection.id}>
             {connection.name}
           </option>
-        ))}
+        )}</For>
       </select>
     </div>
   );
