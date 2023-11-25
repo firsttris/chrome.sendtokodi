@@ -1,14 +1,17 @@
-let HtmlWebpackPlugin = require('html-webpack-plugin'),
-    path = require('path'),
-    CopyWebpackPlugin = require('copy-webpack-plugin');
+
+const path = require('path')
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = (env, argv) => {
     return {
-        entry: './src/index.tsx',
+        entry: {
+            popup: './src/popup.tsx',
+            options: './src/options.tsx',
+        },
         output: {
-            path: path.join(__dirname, 'build'),
-            filename: 'bundle.js',
-            clean: true
+            filename: '[name].js',
+            path: path.resolve(__dirname, 'dist'),
+            clean: true,
         },
         module: {
             rules: [
@@ -40,9 +43,7 @@ module.exports = (env, argv) => {
             ],
         },
         resolve: {
-            // Add `.ts` and `.tsx` as a resolvable extension.
             extensions: [".ts", ".tsx", ".js", ".jsx"],
-            // Add support for TypeScripts fully qualified ESM imports.
             extensionAlias: {
                 ".js": [".js", ".ts", ".jsx"],
                 ".cjs": [".cjs", ".cts"],
@@ -50,22 +51,11 @@ module.exports = (env, argv) => {
             }
         },
         plugins: [
-            new HtmlWebpackPlugin({
-                title: 'SendToKodi',
-                filename: 'popup.html'
-            }),
-            new HtmlWebpackPlugin({
-                title: 'SendToKodi',
-                filename: 'options.html'
-            }),
-            new HtmlWebpackPlugin({
-                title: 'SendToKodi',
-                filename: 'background.html'
-            }),
             new CopyWebpackPlugin({
                 patterns: [
+                    { from: 'static' },
                     {
-                        from: './public/manifest.json',
+                        from: './manifest.json',
                         to: 'manifest.json',
                         transform(content) {
                             const manifest = JSON.parse(content.toString());
@@ -85,5 +75,16 @@ module.exports = (env, argv) => {
                 ],
             }),
         ],
+        devServer: {
+            devMiddleware: {
+                writeToDisk: true,
+            },
+            static: {
+                directory: path.join(__dirname, 'dist'),
+            },
+            compress: true,
+            port: 3000,
+            hot: true,
+        },
     }
 };
