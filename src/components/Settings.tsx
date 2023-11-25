@@ -13,7 +13,7 @@ export const Settings = () => {
         <SelectOne
         />
       </div>
-      <div class="form-group">
+      <div class="form-group my-2">
         <button class="btn btn-secondary" onClick={createNewConnection}>
           New
         </button>{' '}

@@ -86,5 +86,6 @@ module.exports = (env, argv) => {
             port: 3000,
             hot: true,
         },
+        devtool: 'source-map'
     }
 };

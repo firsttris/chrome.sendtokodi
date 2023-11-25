@@ -40,7 +40,7 @@ export const Form = () => {
       <InputField name="port" type="text" placeholder="8080" label="Port" />
       <InputField name="login" type="text" placeholder="kodi" label="Login" />
       <InputField name="pw" type="password" placeholder="kodi" label="Password" />
-      <div class="form-group">
+      <div class="form-group mt-2">
         <button class="btn btn-secondary" onClick={testConnection}>
           Test
         </button>{' '}

@@ -66,32 +66,34 @@ export const StoreProvider = (props: StoreProviderProps) => {
             }
             return;
         }
-        chrome.storage.sync.get('connections', result => {
+    
+        chrome.storage.sync.get(['connections', 'selectedConnectionId'], result => {
             if (result.connections && result.connections.length > 0) {
                 setConnections(result.connections);
             } else {
                 createNewConnection();
             }
-        });
-        chrome.storage.sync.get('selectedConnection', result => {
+    
             if (result.selectedConnectionId) {
                 setSelectedConnectionId(result.selectedConnectionId);
             }
         });
     });
-
+    
     createEffect(() => {
-        if (!chrome?.storage || getConnections().length === 0) {
+        if (!chrome?.storage) {
             return;
         }
-        chrome.storage.sync.set({ connections: getConnections() });
-    });
-
-    createEffect(() => {
-        if (!chrome?.storage || !getSelectedConnectionId()) {
-            return;
+    
+        const connections = getConnections();
+        if (connections.length > 0) {
+            chrome.storage.sync.set({ connections });
         }
-        chrome.storage.sync.set({ selectedConnectionId: getSelectedConnectionId() });
+    
+        const selectedConnectionId = getSelectedConnectionId();
+        if (selectedConnectionId) {
+            chrome.storage.sync.set({ selectedConnectionId });
+        }
     });
 
     return (
