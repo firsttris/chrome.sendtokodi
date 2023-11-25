@@ -1,31 +1,24 @@
-import React from 'react';
-import { Connection } from './types';
+import { getConnections, getSelectedConnection, setSelectedConnectionId } from './globalState';
 
 interface SelectOneProps {
-  connections: Connection[];
-  saveSelectedConnection: (connection: Connection, presist: boolean) => void;
-  selectedConnection: Connection;
   showLabel?: boolean;
 }
 
-export const SelectOne: React.FC<SelectOneProps> = ({ connections, saveSelectedConnection, selectedConnection, showLabel = false }) => {
-  const handleInputChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const index = event.target.selectedIndex;
-    let selectedConnection = { ...connections[index] };
-    saveSelectedConnection(selectedConnection, true);
-  };
+export const SelectOne = ({ showLabel = false }: SelectOneProps) => {
+  
+  const handleInputChange = (event: Event) => setSelectedConnectionId((event.target as HTMLSelectElement).value);
 
   return (
     <div>
-      {showLabel ? <label htmlFor="connections">Select Connection</label> : null}
+      {showLabel ? <label for="connections">Select Connection</label> : null}
       <select
-        className="form-control"
+        class="form-control"
         id="connections"
         onChange={handleInputChange}
-        value={selectedConnection.name}
+        value={getSelectedConnection()?.id}
       >
-        {connections.map((connection, index) => (
-          <option key={index} value={connection.name}>
+        {getConnections().map((connection) => (
+          <option value={connection.id}>
             {connection.name}
           </option>
         ))}

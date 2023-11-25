@@ -2,8 +2,6 @@ let HtmlWebpackPlugin = require('html-webpack-plugin'),
     path = require('path'),
     CopyWebpackPlugin = require('copy-webpack-plugin');
 
-
-
 module.exports = (env, argv) => {
     return {
         entry: './src/index.tsx',
@@ -25,16 +23,28 @@ module.exports = (env, argv) => {
                         filename: '[path][name][ext]'
                     }
                 },
-                // all files with a `.ts`, `.cts`, `.mts` or `.tsx` extension will be handled by `ts-loader`
-                { test: /\.([cm]?ts|tsx)$/, loader: "ts-loader" }
+                {
+                    test: /\.(t|j)sx?$/,
+                    exclude: /node_modules/,
+                    use: {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: [
+                                '@babel/preset-env',
+                                'babel-preset-solid',
+                                '@babel/preset-typescript'
+                            ]
+                        }
+                    }
+                }
             ],
         },
         resolve: {
             // Add `.ts` and `.tsx` as a resolvable extension.
-            extensions: [".ts", ".tsx", ".js"],
+            extensions: [".ts", ".tsx", ".js", ".jsx"],
             // Add support for TypeScripts fully qualified ESM imports.
             extensionAlias: {
-                ".js": [".js", ".ts"],
+                ".js": [".js", ".ts", ".jsx"],
                 ".cjs": [".cjs", ".cts"],
                 ".mjs": [".mjs", ".mts"]
             }
@@ -75,16 +85,5 @@ module.exports = (env, argv) => {
                 ],
             }),
         ],
-        devServer: {
-            devMiddleware: {
-                writeToDisk: true,
-            },
-            static: {
-                directory: path.join(__dirname, 'dist'),
-            },
-            compress: true,
-            port: 3000,
-            hot: true,
-        },
     }
 };

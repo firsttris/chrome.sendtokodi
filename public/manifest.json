@@ -20,5 +20,6 @@
   "action": {
     "default_popup": "popup.html"
   },
-  "manifest_version": 3
+  "manifest_version": 3,
+  "version": "0.0.17"
 }
