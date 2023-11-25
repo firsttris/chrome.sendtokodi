@@ -1,9 +1,11 @@
 import { Form } from './Form';
 import { SelectOne } from './SelectOne';
-import { createNewConnection, deleteConnection } from './globalState';
+import { useStore } from './StoreProvider';
 
 
 export const Settings = () => {
+
+  const { createNewConnection, deleteConnection } = useStore();
 
   return (
     <div class="container mt-3" style={{ width: '500px' }}>

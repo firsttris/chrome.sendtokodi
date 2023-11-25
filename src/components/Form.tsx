@@ -1,8 +1,11 @@
 import { Connection } from './types';
-import { getSelectedConnection, updateConnectionAttribute } from './globalState';
-import { status, testConnection } from "./api";
+import { useApi } from "./ApiProvider";
+import { useStore } from './StoreProvider';
 
 const InputField = ({ name, type, placeholder, label }: { name: keyof Connection, type: string, placeholder: string, label: string }) => {
+  const { getSelectedConnection, updateConnectionAttribute } = useStore();
+  
+  
   const handleInputChange = (event: Event) => {
     const htmlInputElement = (event.target as HTMLInputElement);
     updateConnectionAttribute(htmlInputElement.name as keyof Connection, htmlInputElement.value);
@@ -29,7 +32,7 @@ const InputField = ({ name, type, placeholder, label }: { name: keyof Connection
 
 export const Form = () => {
   
-
+  const { status, testConnection } = useApi();
   return (
     <div>
       <InputField name="name" type="text" placeholder="Connection Name" label="Name" />

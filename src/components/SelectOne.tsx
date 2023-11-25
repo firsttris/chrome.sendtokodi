@@ -1,10 +1,12 @@
-import { getConnections, getSelectedConnection, setSelectedConnectionId } from './globalState';
+import { useStore } from './StoreProvider';
 
 interface SelectOneProps {
   showLabel?: boolean;
 }
 
 export const SelectOne = ({ showLabel = false }: SelectOneProps) => {
+
+  const { getConnections, getSelectedConnection, setSelectedConnectionId } = useStore();
   
   const handleInputChange = (event: Event) => setSelectedConnectionId((event.target as HTMLSelectElement).value);
 

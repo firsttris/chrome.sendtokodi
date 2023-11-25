@@ -1,5 +1,5 @@
 import { SelectOne } from './SelectOne';
-import { loading, sendToKodi, setUrl, url } from './api';
+import { useApi } from './ApiProvider';
 
 type ButtonProps = { loading: boolean, onClick: () => void, icon: string }
 
@@ -10,6 +10,8 @@ const Button = ({ loading, onClick, icon }: ButtonProps) => (
 );
 
 export const Popup = () => {
+
+  const { loading, sendToKodi, setUrl, url } = useApi();
 
   const handleInputChange = (event: Event) => {
     setUrl((event.target as HTMLTextAreaElement).value);
