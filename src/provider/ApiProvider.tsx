@@ -1,6 +1,6 @@
 import { createContext, onMount, useContext } from 'solid-js';
 import { createSignal } from 'solid-js';
-import { Connection } from "./types";
+import { Connection } from "../components/types";
 import { useStore } from "./StoreProvider";
 import type { JSX } from 'solid-js';
 
@@ -44,7 +44,7 @@ export const ApiProvider = (props: StoreProviderProps) => {
       'Content-Type': 'application/json',
       Authorization:
         'Basic ' +
-        btoa(`${selectedConnection?.login}:${selectedConnection?.pw}`)
+        btoa(`${selectedConnection?.login}:${selectedConnection?.pw ?? ''}`)
     },
     body: JSON.stringify(body)
   });

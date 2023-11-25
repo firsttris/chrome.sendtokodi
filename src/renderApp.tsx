@@ -1,8 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.css';
 import { render } from 'solid-js/web';
-import { StoreProvider } from './components/StoreProvider';
-import { ApiProvider } from './components/ApiProvider';
+import { StoreProvider } from './provider/StoreProvider';
+import { ApiProvider } from './provider/ApiProvider';
 import type { JSX } from 'solid-js';
 
 interface ProviderWrapperProps {

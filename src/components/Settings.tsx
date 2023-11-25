@@ -1,6 +1,6 @@
 import { Form } from './Form';
 import { SelectOne } from './SelectOne';
-import { useStore } from './StoreProvider';
+import { useStore } from './../provider/StoreProvider';
 
 
 export const Settings = () => {

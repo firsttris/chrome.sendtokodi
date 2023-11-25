@@ -1,4 +1,4 @@
-import { useStore } from './StoreProvider';
+import { useStore } from './../provider/StoreProvider';
 
 interface SelectOneProps {
   showLabel?: boolean;

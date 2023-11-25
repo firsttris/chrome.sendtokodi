@@ -1,6 +1,6 @@
 import { Connection } from './types';
-import { useApi } from "./ApiProvider";
-import { useStore } from './StoreProvider';
+import { useApi } from ".././provider/ApiProvider";
+import { useStore } from './../provider/StoreProvider';
 
 const InputField = ({ name, type, placeholder, label }: { name: keyof Connection, type: string, placeholder: string, label: string }) => {
   const { getSelectedConnection, updateConnectionAttribute } = useStore();
@@ -17,7 +17,7 @@ const InputField = ({ name, type, placeholder, label }: { name: keyof Connection
     <div class="form-group">
       <label for={name}>{label}</label>
       <input
-        class={`form-control ${value() ? '' : 'is-invalid'}`}
+        class={`form-control ${value() || name === 'pw' ? '' : 'is-invalid'}`}
         type={type}
         name={name}
         placeholder={placeholder}
@@ -25,7 +25,7 @@ const InputField = ({ name, type, placeholder, label }: { name: keyof Connection
         value={value()}
         onChange={handleInputChange}
       />
-      <div class={`invalid-feedback ${value() ? 'd-none' : ''}`}>Please provide {label}</div>
+      <div class={`invalid-feedback ${value() || name === 'pw' ? 'd-none' : ''}`}>Please provide {label}</div>
     </div>
   );
 };

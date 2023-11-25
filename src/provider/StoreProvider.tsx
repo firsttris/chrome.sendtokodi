@@ -1,5 +1,5 @@
 import { createContext, useContext, createSignal, createMemo, onMount, createEffect } from 'solid-js';
-import { Connection } from './types';
+import { Connection } from '../components/types';
 import type { JSX } from 'solid-js';
 
 const emptyNewConnection: Connection = {
@@ -35,9 +35,10 @@ export const StoreProvider = (props: StoreProviderProps) => {
     const getSelectedConnection = createMemo(() => getConnections().find(c => c.id === getSelectedConnectionId()));
 
     const createNewConnection = () => {
+        const connections = getConnections();
         const id = new Date().getTime().toString();
-        const newConnection = { ...emptyNewConnection, id, name: `New Connection with id ${id}` };
-        setConnections([...getConnections(), newConnection]);
+        const newConnection = { ...emptyNewConnection, id, name: `New ${connections.length + 1}` };
+        setConnections([...connections, newConnection]);
         setSelectedConnectionId(newConnection.id);
     };
 
