@@ -21,7 +21,7 @@ const InputField = (props: InputFieldProps) => {
   const value = () => getSelectedConnection()?.[props.name] ?? '';
 
   return (
-    <div class="form-group">
+    <div class="form-group mt-2">
       <label for={props.name}>{props.label}</label>
       <input
         class={`form-control ${value() || props.name === 'pw' ? '' : 'is-invalid'}`}
@@ -32,7 +32,6 @@ const InputField = (props: InputFieldProps) => {
         value={value()}
         onChange={handleInputChange}
       />
-      <div class={`invalid-feedback ${value() || props.name === 'pw' ? 'd-none' : ''}`}>Please provide {props.label}</div>
     </div>
   );
 };

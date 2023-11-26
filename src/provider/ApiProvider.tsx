@@ -82,7 +82,8 @@ export const ApiProvider = (props: StoreProviderProps) => {
       }
     } catch (error) {
       console.log(error)
-      setStatus((error as Error).message);
+      const errorMessage = typeof (error as Error).message === 'object' ? JSON.stringify((error as Error).message) : (error as Error).message;
+      setStatus(errorMessage);
     }
 
   };
