@@ -17,7 +17,7 @@ type ContextType = {
   url: () => string;
   setUrl: (url: string) => void;
   status: () => string;
-  testConnection: () => Promise<void>;
+  sendPing: () => Promise<void>;
   stop: () => void;
   sendToKodi: () => void;
 };
@@ -56,10 +56,10 @@ export const ApiProvider = (props: StoreProviderProps) => {
     if (json.error) {
       throw Error(json.error);
     }
-    return json;
+    return json as { id: number, result: string};
   };
 
-  const testConnection = async () => {
+  const sendPing = async () => {
     const selectedConnection = getSelectedConnection();
 
     if (!selectedConnection) {
@@ -70,20 +70,19 @@ export const ApiProvider = (props: StoreProviderProps) => {
 
     const body: Body = {
       jsonrpc: "2.0",
-      method: "test",
+      method: "JSONRPC.Ping",
       id: 1,
       params: {}
     };
 
     try {
       const response = await fetchDataFromServer(selectedConnection, body)
-      if (response.ok) {
-        setStatus('Connection successful')
+      if (response.result) {
+        setStatus(response.result)
       }
     } catch (error) {
       console.log(error)
-      const errorMessage = typeof (error as Error).message === 'object' ? JSON.stringify((error as Error).message) : (error as Error).message;
-      setStatus(errorMessage);
+      setStatus((error as Error).message);
     }
 
   };
@@ -161,7 +160,7 @@ export const ApiProvider = (props: StoreProviderProps) => {
       url,
       setUrl,
       status,
-      testConnection
+      sendPing
     }}>
       {props.children}
     </ApiContext.Provider>
