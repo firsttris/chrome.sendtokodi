@@ -35,18 +35,16 @@ jobs:
       id: commits
       run: |
         chmod +x ./.github/scripts/get_commits.sh
-        echo "COMMIT_LOG=$(./.github/scripts/get_commits.sh | base64)" >> $GITHUB_ENV
+        ./.github/scripts/get_commits.sh > commit_log.txt
 
     - name: Create Release
       run: cd dist && zip -r ../sendToKodi-${{ steps.packagejson.outputs.current-version }}.zip *
       id: create_release
 
     - name: Upload Release
-      uses: ncipollo/release-action@v1.12.0
+      uses: ncipollo/release-action@v1.13.0
       with:
         artifacts: 'sendToKodi-${{ steps.packagejson.outputs.current-version }}.zip'
         token: ${{ secrets.GITHUB_TOKEN }}
         tag: ${{ steps.packagejson.outputs.current-version }}
-        body: |
-          Changes:
-          $(echo "${{ env.COMMIT_LOG }}" | base64 --decode)
+        bodyFile: commit_log.txt
