@@ -12,16 +12,15 @@ jobs:
         id: packagejson
         uses: martinbeentjes/npm-get-version-action@v1.1.0        
 
-      - name: Download latest release
-        uses: actions/download-artifact@v3
+      - uses: robinraju/release-downloader@v1.8
         with:
-          name: sendToKodi-${{ steps.packagejson.outputs.current-version }}.zip
-          path: ./release
+          latest: true
+          fileName: sendToKodi-${{ steps.packagejson.outputs.current-version }}.zip         
 
       - name: Upload & release
         uses: mnao305/chrome-extension-upload@v4.0.1
         with:
-          file-path: ./release/sendToKodi-${{ steps.packagejson.outputs.current-version }}.zip
+          file-path: sendToKodi-${{ steps.packagejson.outputs.current-version }}.zip
           extension-id: ${{ secrets.CHROME_EXTENSION_ID }}
           client-id: ${{ secrets.CHROME_CLIENT_ID }}
           client-secret: ${{ secrets.CHROME_CLIENT_SECRET }}
