@@ -1,0 +1,27 @@
+name: 4 Publish to Edge store
+
+on: [workflow_dispatch]
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Get version
+        id: packagejson
+        uses: martinbeentjes/npm-get-version-action@v1.1.0        
+
+      - uses: robinraju/release-downloader@v1.8
+        with:
+          latest: true
+          fileName: sendToKodi-chrome-${{ steps.packagejson.outputs.current-version }}.zip         
+
+      - name: Upload & release
+        uses: wdzeng/edge-addon@v1
+        with:
+          product-id: ${{ secrets.EDGE_PRODUCT_ID }}
+          zip-path: sendToKodi-chrome-${{ steps.packagejson.outputs.current-version }}.zip
+          client-id: ${{ secrets.EDGE_CLIENT_ID }}
+          client-secret: ${{ secrets.EDGE_CLIENT_SECRET }}
+          access-token-url: ${{ secrets.EDGE_ACCESS_TOKEN_URL }}          
