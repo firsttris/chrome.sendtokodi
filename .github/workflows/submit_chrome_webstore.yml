@@ -1,4 +1,4 @@
-name: Publish to Chrome Webstore
+name: 4 Publish to Chrome Webstore
 
 on: [workflow_dispatch]
 jobs:

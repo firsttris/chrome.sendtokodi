@@ -1,4 +1,4 @@
-name: Release Chrome Addon
+name: 3 Release Chrome Addon
 
 on: [workflow_dispatch]
 jobs:

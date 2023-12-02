@@ -1,4 +1,4 @@
-name: Bump Version
+name: 2 Bump Version
 
 on: [workflow_dispatch]
 jobs:

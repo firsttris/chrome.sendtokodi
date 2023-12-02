@@ -1,4 +1,4 @@
-name: Release Firefox Addon
+name: 3 Release Firefox Addon
 
 on: [workflow_dispatch]
 jobs:
