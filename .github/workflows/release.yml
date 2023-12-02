@@ -32,19 +32,26 @@ jobs:
     - name: Get last release tag
       id: last_release
       run: |
-        echo "::set-output name=tag::$(curl --silent "https://api.github.com/repos/firsttris/chrome.sendtokodi/releases/latest" | jq -r .tag_name)"
+        echo "tag=$(curl --silent "https://api.github.com/repos/firsttris/chrome.sendtokodi/releases/latest" | jq -r .tag_name)" >> $GITHUB_ENV
+        echo "Tag: $tag"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
     - name: Get SHA of last release
       id: last_release_sha
       run: |
-        echo "::set-output name=sha::$(git rev-list -n 1 ${{ steps.last_release.outputs.tag }})"
+        echo "sha=$(git rev-list -n 1 $tag)" >> $GITHUB_ENV
+        echo "SHA: $sha"
+      env:
+        tag: ${{ env.tag }}
     
     - name: Get commits since last release
       id: commits
       run: |
-          echo "::set-output name=list::$(git log --pretty=format:"%h %s" ${{ steps.last_release_sha.outputs.sha }}..HEAD)"
+        echo "list=$(git log --pretty=format:"%h %s" $sha..HEAD)" >> $GITHUB_ENV
+        echo "List: $list"
+      env:
+        sha: ${{ env.sha }}
 
     - name: Create Release
       run: cd dist && zip -r ../sendToKodi-${{ steps.packagejson.outputs.current-version }}.zip *
