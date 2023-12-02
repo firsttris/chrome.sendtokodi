@@ -35,7 +35,8 @@ jobs:
       id: commits
       run: |
         chmod +x ./.github/scripts/get_commits.sh
-        echo "COMMIT_LOG=$(./.github/scripts/get_commits.sh)" >> $GITHUB_ENV
+        ./.github/scripts/get_commits.sh > commit_log.txt
+        echo "COMMIT_LOG=$(cat commit_log.txt)" >> $GITHUB_ENV
 
     - name: Create Release
       run: cd dist && zip -r ../sendToKodi-${{ steps.packagejson.outputs.current-version }}.zip *
