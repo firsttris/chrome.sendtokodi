@@ -2,17 +2,17 @@ name: Release Addon
 
 on: [workflow_dispatch]
 jobs:
-  bump-version:
+  bumpVersion:
     uses: ./.github/workflows/bump_version.yml
 
-  release-chrome:
-    needs: bump-version
+  releaseChrome:
+    needs: bumpVersion
     uses: ./.github/workflows/release_chrome.yml
     with:
-      version: ${{ needs.bump-version.outputs.version }}
+      version: ${{ needs.bumpVersion.outputs.version }}
 
-  release-firefox:
-    needs: bump-version
+  releaseFirefox:
+    needs: bumpVersion
     uses: ./.github/workflows/release_firefox.yml
     with:
-      version: ${{ needs.bump-version.outputs.version }}
+      version: ${{ needs.bumpVersion.outputs.version }}
