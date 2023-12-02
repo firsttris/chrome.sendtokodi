@@ -29,26 +29,9 @@ jobs:
       id: packagejson
       uses: martinbeentjes/npm-get-version-action@v1.1.0
 
-    - name: Get last release tag
-      id: last_release
-      run: |
-        echo "tag=$(curl --silent "https://api.github.com/repos/firsttris/chrome.sendtokodi/releases/latest" | jq -r .tag_name)" >> $GITHUB_ENV
-    
-    - name: Get SHA of last release
-      id: last_release_sha
-      run: |
-        echo "sha=$(git rev-list -n 1 $tag)" >> $GITHUB_ENV
-        echo "tag: $tag"
-      env:
-        tag: ${{ env.tag }}
-    
     - name: Get commits since last release
       id: commits
-      run: |
-        echo "list=$(git log --pretty=format:"%h %s" $sha..HEAD)" >> $GITHUB_ENV
-        echo "sha: $sha"
-      env:
-        sha: ${{ env.sha }}
+      run: ./../scripts/get_commits.sh
 
     - name: Create Release
       run: cd dist && zip -r ../sendToKodi-${{ steps.packagejson.outputs.current-version }}.zip *
@@ -62,4 +45,4 @@ jobs:
         tag: ${{ steps.packagejson.outputs.current-version }}
         body: |
           Changes:
-          ${{ steps.commits.outputs.list }}
+          ${{ env.COMMIT_LIST }}
