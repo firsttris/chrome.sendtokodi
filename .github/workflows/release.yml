@@ -35,8 +35,7 @@ jobs:
       id: commits
       run: |
         chmod +x ./.github/scripts/get_commits.sh
-        ./.github/scripts/get_commits.sh > commit_log.txt
-        echo "COMMIT_LOG=$(cat commit_log.txt)" >> $GITHUB_ENV
+        echo "COMMIT_LOG=$(./.github/scripts/get_commits.sh | base64)" >> $GITHUB_ENV
 
     - name: Create Release
       run: cd dist && zip -r ../sendToKodi-${{ steps.packagejson.outputs.current-version }}.zip *
@@ -50,4 +49,4 @@ jobs:
         tag: ${{ steps.packagejson.outputs.current-version }}
         body: |
           Changes:
-          ${{ env.COMMIT_LOG }}
+          $(echo "${{ env.COMMIT_LOG }}" | base64 --decode)
