@@ -140,7 +140,7 @@ export const ApiProvider = (props: StoreProviderProps) => {
     if (!chrome?.tabs) {
       return;
     }
-    chrome.tabs.create({ url: chrome.extension.getURL('options.html') });
+    chrome.tabs.create({ url: chrome.runtime.getURL('options.html') });
   };
 
   onMount(() => {
