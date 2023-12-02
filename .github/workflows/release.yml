@@ -33,15 +33,12 @@ jobs:
       id: last_release
       run: |
         echo "tag=$(curl --silent "https://api.github.com/repos/firsttris/chrome.sendtokodi/releases/latest" | jq -r .tag_name)" >> $GITHUB_ENV
-        echo "Tag: $tag"
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
     - name: Get SHA of last release
       id: last_release_sha
       run: |
         echo "sha=$(git rev-list -n 1 $tag)" >> $GITHUB_ENV
-        echo "SHA: $sha"
+        echo "tag: $tag"
       env:
         tag: ${{ env.tag }}
     
@@ -49,7 +46,7 @@ jobs:
       id: commits
       run: |
         echo "list=$(git log --pretty=format:"%h %s" $sha..HEAD)" >> $GITHUB_ENV
-        echo "List: $list"
+        echo "sha: $sha"
       env:
         sha: ${{ env.sha }}
 
