@@ -41,4 +41,5 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         tag: ${{ steps.packagejson.outputs.current-version }}
         allowUpdates: true
+        omitBodyDuringUpdate: true
         bodyFile: commit_log.txt
