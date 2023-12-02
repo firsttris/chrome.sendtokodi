@@ -17,5 +17,5 @@ jobs:
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        echo "version=$(npm version patch -m "Bump to %s")" >> $GITHUB_OUTPUT
+        echo "version=$(npm version patch -m "Bump to %s")" >> "$GITHUB_OUTPUT"
 
