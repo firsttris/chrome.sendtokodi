@@ -15,12 +15,12 @@ jobs:
       - uses: robinraju/release-downloader@v1.8
         with:
           latest: true
-          fileName: sendToKodi-${{ steps.packagejson.outputs.current-version }}.zip         
+          fileName: sendToKodi-chrome-${{ steps.packagejson.outputs.current-version }}.zip         
 
       - name: Upload & release
         uses: mnao305/chrome-extension-upload@v4.0.1
         with:
-          file-path: sendToKodi-${{ steps.packagejson.outputs.current-version }}.zip
+          file-path: sendToKodi-chrome-${{ steps.packagejson.outputs.current-version }}.zip
           extension-id: ${{ secrets.CHROME_EXTENSION_ID }}
           client-id: ${{ secrets.CHROME_CLIENT_ID }}
           client-secret: ${{ secrets.CHROME_CLIENT_SECRET }}

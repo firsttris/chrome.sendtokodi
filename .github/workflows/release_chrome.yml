@@ -1,0 +1,44 @@
+name: Release Chrome Addon
+
+on: [workflow_dispatch]
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Build app
+      run: npm run build
+
+    - name: Get version
+      id: packagejson
+      uses: martinbeentjes/npm-get-version-action@v1.1.0
+
+    - name: Get commits since last release
+      id: commits
+      run: |
+        chmod +x ./.github/scripts/get_commits.sh
+        ./.github/scripts/get_commits.sh > commit_log.txt
+
+    - name: Create Release
+      run: cd dist && zip -r ../sendToKodi-chrome-${{ steps.packagejson.outputs.current-version }}.zip *
+      id: create_release
+
+    - name: Upload Release
+      uses: ncipollo/release-action@v1.13.0
+      with:
+        artifacts: 'sendToKodi-chrome-${{ steps.packagejson.outputs.current-version }}.zip'
+        token: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ steps.packagejson.outputs.current-version }}
+        allowUpdates: true
+        bodyFile: commit_log.txt

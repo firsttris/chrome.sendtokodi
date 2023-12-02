@@ -1,0 +1,30 @@
+name: Build and Upload to Mozilla Add-on Store
+
+on: [workflow_dispatch]
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Get version
+        id: packagejson
+        uses: martinbeentjes/npm-get-version-action@v1.1.0        
+
+      - uses: robinraju/release-downloader@v1.8
+        with:
+          latest: true
+          fileName: sendToKodi-firefox-${{ steps.packagejson.outputs.current-version }}.zip
+      - name: Unzip artifact
+        run: unzip sendToKodi-firefox-${{ steps.packagejson.outputs.current-version }}.zip -d addon
+        
+      - name: Install web-ext
+        run: npm install --global web-ext
+        
+      - name: Sign addon
+        run: web-ext sign --api-key=$AMO_JWT_ISSUER --api-secret=$AMO_JWT_SECRET
+        env:
+          AMO_JWT_ISSUER: ${{ secrets.AMO_JWT_ISSUER }}
+          AMO_JWT_SECRET: ${{ secrets.AMO_JWT_SECRET }}
+        working-directory: addon

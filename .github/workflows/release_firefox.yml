@@ -1,4 +1,4 @@
-name: Manual Release
+name: Release Firefox Addon
 
 on: [workflow_dispatch]
 jobs:
@@ -17,15 +17,8 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
-    - name: Bump version
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        npm version patch -m "Bump to %s"
-        git push
-
     - name: Build app
-      run: npm run build
+      run: npm run build:firefox
 
     - name: Get version
       id: packagejson
@@ -38,13 +31,14 @@ jobs:
         ./.github/scripts/get_commits.sh > commit_log.txt
 
     - name: Create Release
-      run: cd dist && zip -r ../sendToKodi-${{ steps.packagejson.outputs.current-version }}.zip *
+      run: cd dist && zip -r ../sendToKodi-firefox-${{ steps.packagejson.outputs.current-version }}.zip *
       id: create_release
 
     - name: Upload Release
       uses: ncipollo/release-action@v1.13.0
       with:
-        artifacts: 'sendToKodi-${{ steps.packagejson.outputs.current-version }}.zip'
+        artifacts: 'sendToKodi-firefox-${{ steps.packagejson.outputs.current-version }}.zip'
         token: ${{ secrets.GITHUB_TOKEN }}
         tag: ${{ steps.packagejson.outputs.current-version }}
+        allowUpdates: true
         bodyFile: commit_log.txt
