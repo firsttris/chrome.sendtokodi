@@ -35,7 +35,7 @@ jobs:
       run: cd dist && zip -r ../sendToKodi-chrome-${{ steps.packageVersion.outputs.current-version }}.zip *
 
     - name: Update manifest.json for Firefox
-      run: npx ts-node updateManifest.ts
+      run: npx ts-node ./.github/scripts/updateManifest.ts
     
     - name: Create Release Firefox
       run: cd dist && zip -r ../sendToKodi-firefox-${{ steps.packageVersion.outputs.current-version }}.zip *
