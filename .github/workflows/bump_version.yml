@@ -1,6 +1,6 @@
-name: 2 Bump Version
+name: Bump Version
 
-on: [workflow_dispatch]
+on: workflow_call
 jobs:
   release:
     runs-on: ubuntu-latest

@@ -1,4 +1,4 @@
-name: 4 Publish to Edge store
+name: Publish to Edge store
 
 on: [workflow_dispatch]
 jobs:

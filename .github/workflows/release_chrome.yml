@@ -1,6 +1,6 @@
-name: 3 Release Chrome Addon
+name: Release Chrome Addon
 
-on: [workflow_dispatch]
+on: workflow_call
 jobs:
   release:
     runs-on: ubuntu-latest

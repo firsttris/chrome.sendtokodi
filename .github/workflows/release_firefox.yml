@@ -1,6 +1,6 @@
-name: 3 Release Firefox Addon
+name: Release Firefox Addon
 
-on: [workflow_dispatch]
+on: workflow_call
 jobs:
   release:
     runs-on: ubuntu-latest
