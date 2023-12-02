@@ -3,12 +3,12 @@ name: Release Addon
 on: [workflow_dispatch]
 jobs:
   bump-version:
-    uses: ./.github/workflows/bump-version.yml
+    uses: ./.github/workflows/bump_version.yml
 
   release-chrome:
     needs: bump-version
-    uses: ./.github/workflows/release-chrome.yml
+    uses: ./.github/workflows/release_chrome.yml
 
   release-firefox:
     needs: bump-version
-    uses: ./.github/workflows/release-firefox.yml
+    uses: ./.github/workflows/release_firefox.yml
