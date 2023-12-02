@@ -32,7 +32,7 @@ jobs:
     - name: Get last release tag
       id: last_release
       run: |
-        echo "::set-output name=tag::$(curl --silent "https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest" | jq -r .tag_name)"
+        echo "::set-output name=tag::$(curl --silent "https://api.github.com/repos/firsttris/chrome.sendtokodi/releases/latest" | jq -r .tag_name)"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
