@@ -1,6 +1,13 @@
 name: Release Chrome Addon
 
-on: workflow_call
+on: 
+  workflow_call:
+     inputs:
+       version:
+         description: 'Version to release'
+         required: true
+         default: '0.0.0'
+         type: string
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -20,10 +27,6 @@ jobs:
     - name: Build app
       run: npm run build
 
-    - name: Get version
-      id: packagejson
-      uses: martinbeentjes/npm-get-version-action@v1.1.0
-
     - name: Get commits since last release
       id: commits
       run: |
@@ -31,15 +34,15 @@ jobs:
         ./.github/scripts/get_commits.sh > commit_log.txt
 
     - name: Create Release
-      run: cd dist && zip -r ../sendToKodi-chrome-${{ steps.packagejson.outputs.current-version }}.zip *
+      run: cd dist && zip -r ../sendToKodi-chrome-${{ inputs.version }}.zip *
       id: create_release
 
     - name: Upload Release
       uses: ncipollo/release-action@v1.13.0
       with:
-        artifacts: 'sendToKodi-chrome-${{ steps.packagejson.outputs.current-version }}.zip'
+        artifacts: 'sendToKodi-chrome-${{ inputs.version }}.zip'
         token: ${{ secrets.GITHUB_TOKEN }}
-        tag: ${{ steps.packagejson.outputs.current-version }}
+        tag: ${{ inputs.version }}
         allowUpdates: true
         omitBodyDuringUpdate: true
         bodyFile: commit_log.txt

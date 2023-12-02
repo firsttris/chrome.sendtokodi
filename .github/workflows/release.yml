@@ -8,7 +8,11 @@ jobs:
   release-chrome:
     needs: bump-version
     uses: ./.github/workflows/release_chrome.yml
+    with:
+      version: ${{ needs.bump-version.outputs.version }}
 
   release-firefox:
     needs: bump-version
     uses: ./.github/workflows/release_firefox.yml
+    with:
+      version: ${{ needs.bump-version.outputs.version }}
