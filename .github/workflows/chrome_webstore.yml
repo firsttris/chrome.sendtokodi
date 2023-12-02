@@ -1,0 +1,28 @@
+name: Publish to Chrome Webstore
+
+on: [workflow_dispatch]
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Get version
+        id: packagejson
+        uses: martinbeentjes/npm-get-version-action@v1.1.0        
+
+      - name: Download latest release
+        uses: actions/download-artifact@v2
+        with:
+          name: sendToKodi-${{ steps.packagejson.outputs.current-version }}.zip
+          path: ./release
+
+      - name: Publish to Chrome Webstore
+        uses: GoogleChrome/webstore-upload-cli@v1
+        with:
+          extensionId: YOUR_EXTENSION_ID
+          clientId: ${{ secrets.CLIENT_ID }}
+          clientSecret: ${{ secrets.CLIENT_SECRET }}
+          refreshToken: ${{ secrets.REFRESH_TOKEN }}
+          zipPath: ./release/sendToKodi-${{ steps.packagejson.outputs.current-version }}.zip

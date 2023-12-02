@@ -31,7 +31,9 @@ jobs:
 
     - name: Get commits since last release
       id: commits
-      run: ./.github/scripts/get_commits.sh
+      run: |
+        chmod +x ./.github/scripts/get_commits.sh
+        ./.github/scripts/get_commits.sh
 
     - name: Create Release
       run: cd dist && zip -r ../sendToKodi-${{ steps.packagejson.outputs.current-version }}.zip *
