@@ -1,4 +1,4 @@
-name: Build and Upload to Mozilla Add-on Store
+name: Publish to Mozilla Add-on Store
 
 on: [workflow_dispatch]
 jobs:
