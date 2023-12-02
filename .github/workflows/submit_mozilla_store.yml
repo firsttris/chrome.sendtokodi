@@ -9,15 +9,16 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Get version
-        id: packagejson
-        uses: martinbeentjes/npm-get-version-action@v1.1.0        
+        id: packageVersion
+        uses: martinbeentjes/npm-get-version-action@v1.3.1        
 
       - uses: robinraju/release-downloader@v1.8
         with:
           latest: true
-          fileName: sendToKodi-firefox-${{ steps.packagejson.outputs.current-version }}.zip
+          fileName: sendToKodi-firefox-${{ steps.packageVersion.outputs.current-version }}.zip
+          
       - name: Unzip artifact
-        run: unzip sendToKodi-firefox-${{ steps.packagejson.outputs.current-version }}.zip -d addon
+        run: unzip sendToKodi-firefox-${{ steps.packageVersion.outputs.current-version }}.zip -d addon
         
       - name: Install web-ext
         run: npm install --global web-ext
