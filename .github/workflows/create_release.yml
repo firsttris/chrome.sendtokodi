@@ -1,0 +1,56 @@
+name: 3 Release Chrome Addon
+
+on: [workflow_dispatch]
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Bump version
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        npm version patch -m "Bump to %s"
+        git push
+
+    - name: Get version
+      id: packageVersion
+      uses: martinbeentjes/npm-get-version-action@v1.3.1           
+
+    - name: Build app
+      run: npm run build
+
+    - name: Create Release Chrome
+      run: cd dist && zip -r ../sendToKodi-chrome-${{ steps.packageVersion.outputs.current-version }}.zip *
+
+    - name: Update manifest.json for Firefox
+      run: ts-node updateManifest.ts
+    
+    - name: Create Release Firefox
+      run: cd dist && zip -r ../sendToKodi-firefox-${{ steps.packageVersion.outputs.current-version }}.zip *
+
+    - name: Get commits since last release
+      run: |
+        chmod +x ./.github/scripts/get_commits.sh
+        ./.github/scripts/get_commits.sh > commit_log.txt
+
+    - name: Upload Release
+      uses: ncipollo/release-action@v1.13.0
+      with:
+        artifacts: 'sendToKodi-chrome-${{ steps.packageVersion.outputs.current-version }}.zip,sendToKodi-firefox-${{ steps.packageVersion.outputs.current-version }}.zip'
+        token: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ steps.packageVersion.outputs.current-version }}
+        allowUpdates: true
+        omitBodyDuringUpdate: true
+        bodyFile: commit_log.txt
