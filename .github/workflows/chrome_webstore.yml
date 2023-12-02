@@ -6,23 +6,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Get version
         id: packagejson
         uses: martinbeentjes/npm-get-version-action@v1.1.0        
 
       - name: Download latest release
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: sendToKodi-${{ steps.packagejson.outputs.current-version }}.zip
           path: ./release
 
-      - name: Publish to Chrome Webstore
-        uses: GoogleChrome/webstore-upload-cli@v1
+      - name: Upload & release
+        uses: mnao305/chrome-extension-upload@v4.0.1
         with:
-          extensionId: YOUR_EXTENSION_ID
-          clientId: ${{ secrets.CLIENT_ID }}
-          clientSecret: ${{ secrets.CLIENT_SECRET }}
-          refreshToken: ${{ secrets.REFRESH_TOKEN }}
-          zipPath: ./release/sendToKodi-${{ steps.packagejson.outputs.current-version }}.zip
+          file-path: ./release/sendToKodi-${{ steps.packagejson.outputs.current-version }}.zip
+          extension-id: ${{ secrets.CHROME_EXTENSION_ID }}
+          client-id: ${{ secrets.CHROME_CLIENT_ID }}
+          client-secret: ${{ secrets.CHROME_CLIENT_SECRET }}
+          refresh-token: ${{ secrets.CHROME_REFRESH_TOKEN }}
