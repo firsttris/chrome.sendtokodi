@@ -1,5 +1,7 @@
 import fs from 'fs';
+import path from 'path';
 
-const manifest = JSON.parse(fs.readFileSync(new URL('./dist/manifest.json', import.meta.url), 'utf-8'));
+const manifestPath = path.resolve(__dirname, './../../dist/manifest.json');
+const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
 manifest['browser_specific_settings'] = { 'gecko': { 'id': 'sendtokodi@firsttris.github.io' } };
-fs.writeFileSync(new URL('./dist/manifest.json', import.meta.url), JSON.stringify(manifest, null, 2));
+fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
