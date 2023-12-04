@@ -15,7 +15,9 @@ To use this extension, you need to install the SendToKodi Addon in Kodi. You can
 
 ## Installation
 
-You can install the extension from the [Chrome Webstore](https://chrome.google.com/webstore/detail/sendtokodi/gbcpfpcacakaadapjcdchbdmdnfbnbaf)
+You can install the extension from:
+- [Chrome Webstore](https://chrome.google.com/webstore/detail/sendtokodi/gbcpfpcacakaadapjcdchbdmdnfbnbaf)
+- [Mozilla Store](https://addons.mozilla.org/de/firefox/addon/sendtokodi/)
 
 ## Development
 
@@ -35,6 +37,10 @@ Follow these steps to get the extension ready for development:
      2. Click on `This Firefox`.
      3. Click on `Load temporary Add-on...`.
      4. Select the `build` folder.
+
+## Thanks to Our Contributors
+
+- thanks to [eeshugerman](https://github.com/eeshugerman) for providing Mozilla support [3](https://github.com/firsttris/chrome.sendtokodi/pull/3)
 
 ## License
 
