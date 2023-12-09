@@ -1,6 +1,6 @@
 {
   "name": "SendToKodi",
-  "description": "SendToKodi allows you to send almost any stream from Chrome to Kodi.",
+  "description": "Send almost every stream from your Browser to Kodi with SendToKodi",
   "short_name": "SendToKodi",
   "options_ui": {
     "page": "options.html"
