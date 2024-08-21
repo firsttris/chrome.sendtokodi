@@ -61,6 +61,7 @@ const config: (env: Record<string, boolean | string>, argv: WebpackOptionsNormal
                                 manifest.browser_specific_settings = {
                                     gecko: {
                                         id: "sendtokodi@firsttris.github.io",
+                                        "permissions": ["<all_urls>"],
                                     }
                                 };
                             }
