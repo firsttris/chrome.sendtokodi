@@ -17,7 +17,7 @@ To use this extension, you need to install the SendToKodi Addon in Kodi. You can
 
 You can install the extension from:
 - [Chrome Webstore](https://chrome.google.com/webstore/detail/sendtokodi/gbcpfpcacakaadapjcdchbdmdnfbnbaf)
-- [Mozilla Store](https://addons.mozilla.org/de/firefox/addon/sendtokodi/)
+- [Mozilla Store](https://addons.mozilla.org/firefox/addon/sendtokodi/)
 - [Edge Store](https://microsoftedge.microsoft.com/addons/detail/sendtokodi/cfaaejdnkempodfadjkjfblimmakeaij)
 
 ## Development
