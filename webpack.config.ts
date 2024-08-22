@@ -63,7 +63,7 @@ const config: (env: Record<string, boolean | string>, argv: WebpackOptionsNormal
                                         id: "sendtokodi@firsttris.github.io",
                                     }
                                 };
-                                manifest.permissions = [...manifest.permissions, "<all_urls>"];
+                                manifest.host_permissions = [...manifest.host_permissions, "<all_urls>"];
                             }
 
                             return JSON.stringify(manifest, null, 2);
