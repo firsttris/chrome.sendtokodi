@@ -39,9 +39,10 @@ Follow these steps to get the extension ready for development:
      3. Click on `Load temporary Add-on...`.
      4. Select the `build` folder.
 
-## Thanks to Our Contributors
+## Thanks to Contributors
 
 - thanks to [eeshugerman](https://github.com/eeshugerman) for providing Mozilla support [3](https://github.com/firsttris/chrome.sendtokodi/pull/3)
+- thanks to [mauman](https://github.com/mauman) for fixing manifest in Firefox [14](https://github.com/firsttris/chrome.sendtokodi/pull/14)
 
 ## License
 
