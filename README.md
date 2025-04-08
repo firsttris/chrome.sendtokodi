@@ -20,6 +20,19 @@ You can install the extension from:
 - [Mozilla Store](https://addons.mozilla.org/firefox/addon/sendtokodi/)
 - [Edge Store](https://microsoftedge.microsoft.com/addons/detail/sendtokodi/cfaaejdnkempodfadjkjfblimmakeaij)
 
+## Configuration for Firefox
+
+After installing the extension in Firefox, you need to configure permissions to allow access to all website URLs. This is required for the extension to function properly with all supported sites.
+
+1. Open the Firefox Add-ons Manager by navigating to `about:addons`.
+2. Locate the **SendToKodi** extension and click on the gear icon or the settings button.
+3. Go to the **Permissions** tab.
+4. Enable the option **Access your data for all websites**.
+
+Here’s an example of how the permissions screen should look:
+
+![Firefox Settings](./firefox-settings.png)
+
 ## Development
 
 Follow these steps to get the extension ready for development:
