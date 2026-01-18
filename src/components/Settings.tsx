@@ -17,36 +17,6 @@ export const Settings = () => {
           <p class="text-gray-400">{t('settingsSubtitle')}</p>
         </div>
 
-        {/* Kodi HTTP Remote Control Instructions */}
-        <div class="bg-gradient-to-r from-blue-900/40 to-cyan-900/40 backdrop-blur-sm rounded-xl p-6 mb-6 border border-blue-500/20">
-          <div class="flex items-start space-x-3">
-            <svg class="w-6 h-6 text-kodi-blue flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
-            <div class="flex-1">
-              <h3 class="text-lg font-semibold text-white mb-3">{t('httpRemoteTitle')}</h3>
-              <ol class="space-y-2 text-sm text-gray-300">
-                <li class="flex items-start">
-                  <span class="text-kodi-blue font-bold mr-2">1.</span>
-                  <span>{t('httpRemoteStep1')} <span class="font-medium text-white">{t('httpRemoteStep1Path')}</span></span>
-                </li>
-                <li class="flex items-start">
-                  <span class="text-kodi-blue font-bold mr-2">2.</span>
-                  <span>{t('httpRemoteStep2')} <span class="font-medium text-white">"{t('httpRemoteStep2Setting')}"</span></span>
-                </li>
-                <li class="flex items-start">
-                  <span class="text-kodi-blue font-bold mr-2">3.</span>
-                  <span>{t('httpRemoteStep3')} <span class="font-medium text-white">{t('httpRemoteStep3Port')}</span> ({t('httpRemoteStep3PortDefault')}), <span class="font-medium text-white">{t('httpRemoteStep3Username')}</span> {t('httpRemoteStep3Password').toLowerCase()}</span>
-                </li>
-                <li class="flex items-start">
-                  <span class="text-kodi-blue font-bold mr-2">4.</span>
-                  <span>{t('httpRemoteStep4')}</span>
-                </li>
-              </ol>
-            </div>
-          </div>
-        </div>
-
         {/* Connection Management Card */}
         <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-2xl border border-gray-700/50 overflow-hidden">
           <div class="p-6">
@@ -82,6 +52,36 @@ export const Settings = () => {
 
             {/* Connection Form */}
             <Form />
+          </div>
+        </div>
+
+        {/* Kodi HTTP Remote Control Instructions */}
+        <div class="bg-gradient-to-r from-blue-900/40 to-cyan-900/40 backdrop-blur-sm rounded-xl p-6 mt-6 border border-blue-500/20">
+          <div class="flex items-start space-x-3">
+            <svg class="w-6 h-6 text-kodi-blue flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <div class="flex-1">
+              <h3 class="text-lg font-semibold text-white mb-3">{t('httpRemoteTitle')}</h3>
+              <ol class="space-y-2 text-sm text-gray-300">
+                <li class="flex items-start">
+                  <span class="text-kodi-blue font-bold mr-2">1.</span>
+                  <span>{t('httpRemoteStep1')} <span class="font-medium text-white">{t('httpRemoteStep1Path')}</span></span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-kodi-blue font-bold mr-2">2.</span>
+                  <span>{t('httpRemoteStep2')} <span class="font-medium text-white">"{t('httpRemoteStep2Setting')}"</span></span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-kodi-blue font-bold mr-2">3.</span>
+                  <span>{t('httpRemoteStep3')} <span class="font-medium text-white">{t('httpRemoteStep3Port')}</span> ({t('httpRemoteStep3PortDefault')}), <span class="font-medium text-white">{t('httpRemoteStep3Username')}</span> {t('httpRemoteStep3Password').toLowerCase()}</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-kodi-blue font-bold mr-2">4.</span>
+                  <span>{t('httpRemoteStep4')}</span>
+                </li>
+              </ol>
+            </div>
           </div>
         </div>
 
