@@ -52,6 +52,47 @@ Follow these steps to get the extension ready for development:
      3. Click on `Load temporary Add-on...`.
      4. Select the `build` folder.
 
+## Publishing to Chrome Web Store
+
+To publish the extension to the Chrome Web Store, you need to set up API credentials:
+
+1. Follow the guide at [chrome-webstore-upload-keys](https://github.com/fregante/chrome-webstore-upload-keys) to generate `CLIENT_ID` and `CLIENT_SECRET`
+2. Generate a `REFRESH_TOKEN` by running:
+   ```bash
+   npx chrome-webstore-upload-keys
+   ```
+3. Add the following secrets to your GitHub repository:
+   - `CHROME_EXTENSION_ID`
+   - `CHROME_CLIENT_ID`
+   - `CHROME_CLIENT_SECRET`
+   - `CHROME_REFRESH_TOKEN`
+4. Run the workflow to upload your extension
+
+## Publishing to Mozilla Add-ons
+
+To publish the extension to the Mozilla Add-ons store, you need to set up API credentials:
+
+1. Go to [https://addons.mozilla.org/developers/addon/api/key/](https://addons.mozilla.org/developers/addon/api/key/)
+2. Generate your API credentials (JWT issuer and JWT secret)
+3. Add the following secrets to your GitHub repository:
+   - `FIREFOX_EXTENSION_ID`
+   - `FIREFOX_JWT_ISSUER`
+   - `FIREFOX_JWT_SECRET`
+4. Run the workflow to upload your extension
+
+## Publishing to Microsoft Edge Add-ons
+
+To publish the extension to the Microsoft Edge Add-ons store, you need to set up API credentials:
+
+1. Go to the [Microsoft Partner Center - Publish API](https://partner.microsoft.com/de-de/dashboard/microsoftedge/publishapi)
+2. Generate your API credentials (Client ID, Client Secret, and Access Token)
+3. Add the following secrets to your GitHub repository:
+   - `EDGE_PRODUCT_ID`
+   - `EDGE_CLIENT_ID`
+   - `EDGE_CLIENT_SECRET`
+   - `EDGE_ACCESS_TOKEN`
+4. Run the workflow to upload your extension
+
 ## Contributors
 
 Thanks to all contributors who have helped improve SendToKodi:
