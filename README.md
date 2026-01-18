@@ -1,6 +1,6 @@
 # SendToKodi
 
-SendToKodi is a Chrome extension that allows you to send almost any stream from Chrome to Kodi.
+SendToKodi is a Chrome extension that allows you to send almost any stream from your Browser to Kodi.
 
 ## Features
 
