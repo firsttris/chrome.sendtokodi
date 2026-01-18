@@ -3,6 +3,7 @@ import solidPlugin from 'vite-plugin-solid';
 import { crx } from '@crxjs/vite-plugin';
 import tailwindcss from '@tailwindcss/vite';
 import manifest from './manifest.json' with { type: 'json' };
+import pkg from './package.json' with { type: 'json' };
 
 export default defineConfig(({ mode }) => {
   const isFirefox = process.env.TARGET_PLATFORM === 'firefox';
@@ -10,7 +11,7 @@ export default defineConfig(({ mode }) => {
   // Manifest anpassen für Firefox
   const finalManifest = {
     ...manifest,
-    version: process.env.npm_package_version || manifest.version,
+    version: pkg.version,
     ...(isFirefox && {
       browser_specific_settings: {
         gecko: {

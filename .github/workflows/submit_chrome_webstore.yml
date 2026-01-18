@@ -13,14 +13,18 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build extension
+        run: npm run build
+
       - name: Get version
         id: packageVersion
         run: echo "current-version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
 
-      - uses: robinraju/release-downloader@v1
-        with:
-          latest: true
-          fileName: sendToKodi-chrome-${{ steps.packageVersion.outputs.current-version }}.zip         
+      - name: Create ZIP
+        run: cd dist && zip -r ../sendToKodi-chrome-${{ steps.packageVersion.outputs.current-version }}.zip . && cd ..
 
       - name: Upload & release
         uses: mnao305/chrome-extension-upload@v5.0.0
