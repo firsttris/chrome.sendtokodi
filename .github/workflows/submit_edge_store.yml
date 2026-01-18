@@ -6,22 +6,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
       - name: Get version
         id: packageVersion
-        uses: martinbeentjes/npm-get-version-action@v1.3.1        
+        run: echo "current-version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
 
-      - uses: robinraju/release-downloader@v1.8
+      - uses: robinraju/release-downloader@v1
         with:
           latest: true
           fileName: sendToKodi-chrome-${{ steps.packageVersion.outputs.current-version }}.zip         
 
       - name: Upload & release
-        uses: wdzeng/edge-addon@v1
+        uses: wdzeng/edge-addon@v2
         with:
           product-id: ${{ secrets.EDGE_PRODUCT_ID }}
           zip-path: sendToKodi-chrome-${{ steps.packageVersion.outputs.current-version }}.zip
-          client-id: ${{ secrets.EDGE_CLIENT_ID }}
-          client-secret: ${{ secrets.EDGE_CLIENT_SECRET }}
-          access-token-url: ${{ secrets.EDGE_ACCESS_TOKEN_URL }}          
+          api-key: ${{ secrets.EDGE_API_KEY }}
+          client-id: ${{ secrets.EDGE_CLIENT_ID }}          

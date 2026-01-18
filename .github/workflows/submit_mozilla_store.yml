@@ -6,26 +6,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
       - name: Get version
         id: packageVersion
-        uses: martinbeentjes/npm-get-version-action@v1.3.1        
+        run: echo "current-version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
 
-      - uses: robinraju/release-downloader@v1.8
+      - uses: robinraju/release-downloader@v1
         with:
           latest: true
           fileName: sendToKodi-firefox-${{ steps.packageVersion.outputs.current-version }}.zip
           
-      - name: Unzip artifact
-        run: unzip sendToKodi-firefox-${{ steps.packageVersion.outputs.current-version }}.zip -d addon
-        
-      - name: Install web-ext
-        run: npm install --global web-ext
-        
-      - name: Sign addon
-        run: web-ext sign --api-key=$AMO_JWT_ISSUER --api-secret=$AMO_JWT_SECRET --use-submission-api --channel=listed
-        env:
-          AMO_JWT_ISSUER: ${{ secrets.AMO_JWT_ISSUER }}
-          AMO_JWT_SECRET: ${{ secrets.AMO_JWT_SECRET }}
-        working-directory: addon
+      - name: Upload & release
+        uses: wdzeng/firefox-addon@v1
+        with:
+          addon-guid: sendtokodi@firsttris.github.io
+          xpi-path: sendToKodi-firefox-${{ steps.packageVersion.outputs.current-version }}.zip
+          self-hosted: false
+          jwt-issuer: ${{ secrets.AMO_JWT_ISSUER }}
+          jwt-secret: ${{ secrets.AMO_JWT_SECRET }}
