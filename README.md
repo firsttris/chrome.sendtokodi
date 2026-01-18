@@ -4,8 +4,6 @@
 [![Chrome Web Store Users](https://img.shields.io/chrome-web-store/users/gbcpfpcacakaadapjcdchbdmdnfbnbaf?label=Chrome%20Users)](https://chrome.google.com/webstore/detail/sendtokodi/gbcpfpcacakaadapjcdchbdmdnfbnbaf)
 [![Mozilla Add-on](https://img.shields.io/amo/v/sendtokodi?label=Firefox&logo=firefox)](https://addons.mozilla.org/firefox/addon/sendtokodi/)
 [![Mozilla Add-on Users](https://img.shields.io/amo/users/sendtokodi?label=Firefox%20Users)](https://addons.mozilla.org/firefox/addon/sendtokodi/)
-[![License](https://img.shields.io/github/license/firsttris/chrome.sendtokodi)](LICENSE.md)
-[![GitHub Stars](https://img.shields.io/github/stars/firsttris/chrome.sendtokodi?style=social)](https://github.com/firsttris/chrome.sendtokodi)
 
 > Stream almost any video from your browser directly to Kodi - Simple, powerful, and open source.
 
