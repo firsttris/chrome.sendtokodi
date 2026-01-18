@@ -7,7 +7,7 @@ SendToKodi is a Chrome extension that allows you to send almost any stream from 
 - Send various types of streams to Kodi
 - Support for playlists
 - Ability to save multiple connections
-- [Supported Sites](https://rg3.github.io/youtube-dl/supportedsites.html)
+- [Supported Sites](https://github.com/yt-dlp/yt-dlp#supported-sites)
 
 ## Requirements
 
@@ -52,11 +52,13 @@ Follow these steps to get the extension ready for development:
      3. Click on `Load temporary Add-on...`.
      4. Select the `build` folder.
 
-## Thanks to Contributors
+## Contributors
 
-- thanks to [eeshugerman](https://github.com/eeshugerman) for providing Mozilla support [3](https://github.com/firsttris/chrome.sendtokodi/pull/3)
-- thanks to [mauman](https://github.com/mauman) for fixing manifest in Firefox [14](https://github.com/firsttris/chrome.sendtokodi/pull/14)
+Thanks to all contributors who have helped improve SendToKodi:
+
+- [@eeshugerman](https://github.com/eeshugerman) - Mozilla support [#3](https://github.com/firsttris/chrome.sendtokodi/pull/3)
+- [@mauman](https://github.com/mauman) - Firefox manifest fixes [#14](https://github.com/firsttris/chrome.sendtokodi/pull/14)
 
 ## License
 
-For license rights and limitations, see the [LICENSE](LICENSE.md) file (MIT).
+This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details.
