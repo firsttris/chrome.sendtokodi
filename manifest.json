@@ -1,7 +1,8 @@
 {
-  "name": "SendToKodi",
-  "description": "Send almost every stream from your Browser to Kodi with SendToKodi",
-  "short_name": "SendToKodi",
+  "name": "__MSG_extName__",
+  "description": "__MSG_extDescription__",
+  "short_name": "__MSG_extName__",
+  "default_locale": "en",
   "options_ui": {
     "page": "options.html"
   },

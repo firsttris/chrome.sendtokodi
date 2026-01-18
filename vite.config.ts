@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import solidPlugin from 'vite-plugin-solid';
 import { crx } from '@crxjs/vite-plugin';
+import tailwindcss from '@tailwindcss/vite';
 import manifest from './manifest.json' with { type: 'json' };
 
 export default defineConfig(({ mode }) => {
@@ -23,6 +24,7 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [
       solidPlugin(),
+      tailwindcss(),
       crx({ manifest: finalManifest as any }),
     ],
     resolve: {

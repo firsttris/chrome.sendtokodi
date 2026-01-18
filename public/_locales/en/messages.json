@@ -1,0 +1,154 @@
+{
+  "extName": {
+    "message": "SendToKodi",
+    "description": "Extension name"
+  },
+  "extDescription": {
+    "message": "Send almost every stream from your Browser to Kodi with SendToKodi",
+    "description": "Extension description"
+  },
+  "appTitle": {
+    "message": "SendToKodi",
+    "description": "App title"
+  },
+  "appSubtitle": {
+    "message": "Send stream to Kodi",
+    "description": "App subtitle"
+  },
+  "streamUrl": {
+    "message": "Stream URL",
+    "description": "Stream URL label"
+  },
+  "streamUrlPlaceholder": {
+    "message": "https://example.com/video.mp4",
+    "description": "Stream URL placeholder"
+  },
+  "kodiConnection": {
+    "message": "Kodi Connection",
+    "description": "Kodi connection label"
+  },
+  "activeConnection": {
+    "message": "Active Connection",
+    "description": "Active connection label"
+  },
+  "btnStop": {
+    "message": "Stop",
+    "description": "Stop button label"
+  },
+  "btnPlay": {
+    "message": "Play",
+    "description": "Play button label"
+  },
+  "btnNew": {
+    "message": "New",
+    "description": "New button label"
+  },
+  "btnDelete": {
+    "message": "Delete",
+    "description": "Delete button label"
+  },
+  "btnTest": {
+    "message": "Test Connection",
+    "description": "Test connection button label"
+  },
+  "settingsTitle": {
+    "message": "SendToKodi",
+    "description": "Settings title"
+  },
+  "settingsSubtitle": {
+    "message": "Configure your Kodi connections",
+    "description": "Settings subtitle"
+  },
+  "httpRemoteTitle": {
+    "message": "Enable Kodi HTTP Remote Control",
+    "description": "HTTP remote control title"
+  },
+  "httpRemoteStep1": {
+    "message": "Open Kodi and navigate to",
+    "description": "HTTP remote step 1"
+  },
+  "httpRemoteStep1Path": {
+    "message": "Settings → Services → Control",
+    "description": "HTTP remote step 1 path"
+  },
+  "httpRemoteStep2": {
+    "message": "Enable",
+    "description": "HTTP remote step 2"
+  },
+  "httpRemoteStep2Setting": {
+    "message": "Allow remote control via HTTP",
+    "description": "HTTP remote step 2 setting"
+  },
+  "httpRemoteStep3": {
+    "message": "Set",
+    "description": "HTTP remote step 3"
+  },
+  "httpRemoteStep3Port": {
+    "message": "Port",
+    "description": "Port"
+  },
+  "httpRemoteStep3PortDefault": {
+    "message": "default: 8080",
+    "description": "Default port"
+  },
+  "httpRemoteStep3Username": {
+    "message": "Username",
+    "description": "Username"
+  },
+  "httpRemoteStep3Password": {
+    "message": "Password",
+    "description": "Password"
+  },
+  "httpRemoteStep4": {
+    "message": "Enter these credentials in the form below",
+    "description": "HTTP remote step 4"
+  },
+  "fieldName": {
+    "message": "Name",
+    "description": "Name field"
+  },
+  "fieldNamePlaceholder": {
+    "message": "My Kodi",
+    "description": "Name placeholder"
+  },
+  "fieldIp": {
+    "message": "IP Address",
+    "description": "IP field"
+  },
+  "fieldIpPlaceholder": {
+    "message": "192.168.1.100",
+    "description": "IP placeholder"
+  },
+  "fieldPort": {
+    "message": "Port",
+    "description": "Port field"
+  },
+  "fieldPortPlaceholder": {
+    "message": "8080",
+    "description": "Port placeholder"
+  },
+  "fieldLogin": {
+    "message": "Username",
+    "description": "Login field"
+  },
+  "fieldLoginPlaceholder": {
+    "message": "kodi",
+    "description": "Login placeholder"
+  },
+  "fieldPassword": {
+    "message": "Password",
+    "description": "Password field"
+  },
+  "fieldPasswordPlaceholder": {
+    "message": "•••••••",
+    "description": "Password placeholder"
+  },
+  "fieldRequired": {
+    "message": "This field is required",
+    "description": "Required field error message"
+  },
+  "footerText": {
+    "message": "SendToKodi Chrome Extension",
+    "description": "Footer text"
+  }
+}

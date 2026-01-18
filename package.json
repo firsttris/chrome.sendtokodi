@@ -1,6 +1,7 @@
 {
   "name": "sendtokodi",
   "version": "0.0.47",
+  "type": "module",
   "description": "send almost every stream from chrome to kodi with SendToKodi",
   "scripts": {
     "build": "vite build",
@@ -13,10 +14,11 @@
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@crxjs/vite-plugin": "^2.3.0",
+    "@tailwindcss/forms": "^0.5.11",
+    "@tailwindcss/vite": "^4.1.18",
     "@types/chrome": "^0.1.33",
     "@types/node": "^25.0.9",
-    "bootstrap": "^5.3.8",
-    "font-awesome": "^4.7.0",
+    "tailwindcss": "^4.0.0",
     "typescript": "^5.9.3",
     "vite": "^7.3.1",
     "vite-plugin-solid": "^2.11.10"
