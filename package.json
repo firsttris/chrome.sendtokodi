@@ -3,39 +3,25 @@
   "version": "0.0.47",
   "description": "send almost every stream from chrome to kodi with SendToKodi",
   "scripts": {
-    "build": "webpack --mode production",
-    "build:firefox": "webpack --mode production --env TARGET_PLATFORM=firefox",
-    "start": "webpack serve --mode development",
-    "start:firefox": "webpack serve --mode development --env TARGET_PLATFORM=firefox"
+    "build": "vite build",
+    "build:firefox": "TARGET_PLATFORM=firefox vite build",
+    "start": "vite",
+    "start:firefox": "TARGET_PLATFORM=firefox vite",
+    "check": "biome check .",
+    "format": "biome format --write ."
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.23.3",
-    "@types/chrome": "^0.0.253",
-    "@types/node": "^20.9.4",
-    "@types/webpack": "^5.28.5",
-    "@typescript-eslint/eslint-plugin": "^6.12.0",
-    "@typescript-eslint/parser": "^6.12.0",
-    "babel-loader": "^9.1.3",
-    "babel-preset-solid": "^1.8.6",
-    "bootstrap": "^5.3.2",
-    "copy-webpack-plugin": "^11.0.0",
-    "css-loader": "^6.8.1",
-    "eslint": "^8.54.0",
-    "eslint-plugin-solid": "^0.13.0",
+    "@biomejs/biome": "^1.9.4",
+    "@crxjs/vite-plugin": "^2.3.0",
+    "@types/chrome": "^0.1.33",
+    "@types/node": "^25.0.9",
+    "bootstrap": "^5.3.8",
     "font-awesome": "^4.7.0",
-    "fs-extra": "^11.1.1",
-    "prettier": "^3.1.0",
-    "style-loader": "^3.3.3",
-    "ts-loader": "^9.5.1",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.3.2",
-    "webpack": "^5.89.0",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^4.15.1"
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1",
+    "vite-plugin-solid": "^2.11.10"
   },
   "dependencies": {
-    "@babel/preset-typescript": "^7.23.3",
-    "solid-js": "^1.8.6",
-    "solid-jsx": "^1.1.4"
+    "solid-js": "^1.9.10"
   }
 }
