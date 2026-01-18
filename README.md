@@ -52,9 +52,9 @@ Here’s an example of how the permissions screen should look:
 
 ## 🛠️ Tech Stack
 
-- **Framework**: [React](https://react.dev/) - UI library
+- **Framework**: [Solid.js](https://www.solidjs.com/) - Reactive UI library
 - **Build Tool**: [Vite](https://vitejs.dev/) - Fast build tool
-- **Styling**: Custom CSS
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS
 - **Linting**: [Biome](https://biomejs.dev/) - Fast formatter and linter
 - **Language**: TypeScript
 
