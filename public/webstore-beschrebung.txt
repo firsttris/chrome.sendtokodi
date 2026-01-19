@@ -1,0 +1,19 @@
+🚀 SendToKodi is a powerful Chrome extension that transforms your media streaming experience. With a single click, send any video or audio stream from your browser directly to your Kodi media center.
+
+✨ KEY FEATURES:
+• 🎯 One-click streaming from browser to Kodi
+• 🌐 Works with virtually any website - YouTube, Vimeo, SoundCloud, and thousands more
+• 🔗 Seamless integration with your Kodi setup
+• ⚡ Fast and lightweight - no performance impact on your browsing
+• ⚙️ Easy configuration and connection management
+
+🎬 HOW IT WORKS:
+SendToKodi automatically detects media streams on any webpage you visit. Simply click the extension icon, and your content starts playing on Kodi instantly - no copying URLs or manual setup required.
+
+📋 REQUIREMENTS:
+To use SendToKodi, you'll need to install the companion plugin on your Kodi device. Both components work together to provide a smooth, reliable streaming experience.
+
+💬 SUPPORT:
+Encountering issues or have a feature request? Visit the SendToKodi GitHub page to report bugs, request features, or contribute to the project.
+
+🎉 Enjoy effortless streaming from your browser to your big screen with SendToKodi!
