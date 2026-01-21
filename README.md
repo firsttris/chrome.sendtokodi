@@ -19,7 +19,7 @@
 - 🔄 **Multiple Connections** - Save and manage different Kodi instances
 - 🚀 **One-Click Send** - Stream instantly from your browser
 - 🔒 **Privacy-Focused** - No data collection, fully open source
-- 🎨 **Modern UI** - Built with React and modern web technologies
+- 🎨 **Modern UI** - Built with modern web technologies
 
 ## 📦 Installation
 <div align="center">
