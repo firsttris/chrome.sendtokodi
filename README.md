@@ -22,6 +22,7 @@
 - 🎨 **Modern UI** - Built with React and modern web technologies
 
 ## 📦 Installation
+<div align="center">
 
 ### Chrome Web Store
 [![Available in the Chrome Web Store](https://img.shields.io/badge/Chrome%20Web%20Store-Available-brightgreen?style=for-the-badge&logo=googlechrome)](https://chrome.google.com/webstore/detail/sendtokodi/gbcpfpcacakaadapjcdchbdmdnfbnbaf)
@@ -31,6 +32,7 @@
 
 ### Microsoft Edge Add-ons
 [![Get the Add-On](https://img.shields.io/badge/Edge%20Add--ons-Available-blue?style=for-the-badge&logo=microsoftedge)](https://microsoftedge.microsoft.com/addons/detail/sendtokodi/cfaaejdnkempodfadjkjfblimmakeaij)
+</div>
 
 ## 📋 Requirements
 
@@ -55,11 +57,26 @@ Here’s an example of how the permissions screen should look:
 
 ## 🛠️ Tech Stack
 
-- **Framework**: [Solid.js](https://www.solidjs.com/) - Reactive UI library
-- **Build Tool**: [Vite](https://vitejs.dev/) - Fast build tool
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS
-- **Linting**: [Biome](https://biomejs.dev/) - Fast formatter and linter
-- **Language**: TypeScript
+<table>
+<tr>
+<td align="center" width="150">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" width="48" height="48" alt="TypeScript" />
+<br>TypeScript
+</td>
+<td align="center" width="150">
+<img src="https://www.solidjs.com/img/logo/without-wordmark/logo.svg" width="48" height="48" alt="Solid.js" />
+<br>Solid.js
+</td>
+<td align="center" width="150">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vitejs/vitejs-original.svg" width="48" height="48" alt="Vite" />
+<br>Vite
+</td>
+<td align="center" width="150">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" width="48" height="48" alt="Tailwind CSS" />
+<br>Tailwind CSS
+</td>
+</tr>
+</table>
 
 ## 💻 Development
 
