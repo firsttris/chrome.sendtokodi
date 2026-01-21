@@ -100,7 +100,26 @@ npm run start:firefox
 
 The extension will hot-reload as you make changes.
 
+
+## 🔐 Privacy & Security
+
+- **100% Open Source** - All code is available for review
+- **No Tracking** - We don't collect any data
+- **Local Processing** - Everything runs on your device
+- **Transparent Permissions** - Only uses necessary browser APIs
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+**Special thanks to our contributors:**
+
+- [@eeshugerman](https://github.com/eeshugerman) - Mozilla support [#3](https://github.com/firsttris/chrome.sendtokodi/pull/3)
+- [@mauman](https://github.com/mauman) - Firefox manifest fixes [#14](https://github.com/firsttris/chrome.sendtokodi/pull/14)
+
 ## 📤 Publishing
+<details>
+<summary><b>How to get the secrets for publishing</b></summary>
 
 ### Chrome Web Store
 
@@ -159,23 +178,14 @@ GitHub Actions workflow automates publishing to Edge Add-ons store.
 # Trigger via GitHub Actions workflow
 gh workflow run submit_edge_store.yml
 ```
+</details>
 
-## 🔐 Privacy & Security
+---
 
-- **100% Open Source** - All code is available for review
-- **No Tracking** - We don't collect any data
-- **Local Processing** - Everything runs on your device
-- **Transparent Permissions** - Only uses necessary browser APIs
+<div align="center">
 
-## 🤝 Contributing
+**Made by the open source community**
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+⭐ Star us on [GitHub](https://github.com/firsttris/chrome.sendtokodi) • 🐛 [Report a Bug](https://github.com/firsttris/chrome.sendtokodi/issues) • 💡 [Request a Feature](https://github.com/firsttris/chrome.sendtokodi/issues)
 
-**Special thanks to our contributors:**
-
-- [@eeshugerman](https://github.com/eeshugerman) - Mozilla support [#3](https://github.com/firsttris/chrome.sendtokodi/pull/3)
-- [@mauman](https://github.com/mauman) - Firefox manifest fixes [#14](https://github.com/firsttris/chrome.sendtokodi/pull/14)
-
-## 📄 License
-
-See the [LICENSE](LICENSE.md) file for license rights and limitations.
+</div>
