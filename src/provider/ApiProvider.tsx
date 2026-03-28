@@ -23,6 +23,7 @@ type Api = {
   sendPing: () => Promise<void>;
   stop: () => void;
   sendToKodi: () => void;
+  addToQueue: () => void;
 };
 
 const ApiContext = createContext<Api>();
@@ -118,6 +119,18 @@ export const ApiProvider = (props: ApiProviderProps) => {
     }, true);
   };
 
+  const addToQueue = () => {
+    executeRequest({
+      jsonrpc: '2.0',
+      method: 'Playlist.Add',
+      id: 0,
+      params: {
+        playlistid: 1,
+        item: { file: `plugin://plugin.video.sendtokodi/?${url()}` }
+      }
+    });
+  };
+
   const stop = () => {
     executeRequest({
       jsonrpc: '2.0',
@@ -149,6 +162,7 @@ export const ApiProvider = (props: ApiProviderProps) => {
       status,
       sendPing,
       sendToKodi,
+      addToQueue,
       stop
     }}>
       {props.children}

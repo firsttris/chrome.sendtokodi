@@ -39,6 +39,10 @@
     "message": "Play",
     "description": "Play button label"
   },
+  "btnQueue": {
+    "message": "Add to Queue",
+    "description": "Queue button label"
+  },
   "btnNew": {
     "message": "New",
     "description": "New button label"

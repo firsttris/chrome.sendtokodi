@@ -39,6 +39,10 @@
     "message": "Abspielen",
     "description": "Play Button Label"
   },
+  "btnQueue": {
+    "message": "Zur Warteschlange",
+    "description": "Queue Button Label"
+  },
   "btnNew": {
     "message": "Neu",
     "description": "New Button Label"

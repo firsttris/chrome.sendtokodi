@@ -24,7 +24,7 @@ const Button = (props: ButtonProps) => (
 
 export const Popup = () => {
 
-  const { loading, sendToKodi, setUrl, url, stop } = useApi();
+  const { loading, sendToKodi, addToQueue, setUrl, url, stop } = useApi();
 
   const handleInputChange = (event: Event) => {
     setUrl((event.target as HTMLTextAreaElement).value);
@@ -62,12 +62,18 @@ export const Popup = () => {
         </div>
 
         {/* Action Buttons */}
-        <div class="grid grid-cols-2 gap-3">
+        <div class="grid grid-cols-3 gap-3">
           <Button 
             loading={loading()} 
             onClick={stop} 
             icon='<rect x="8" y="8" width="8" height="8" rx="1" stroke-linecap="round" stroke-linejoin="round"/>'
             label={t('btnStop')}
+          />
+          <Button 
+            loading={loading()} 
+            onClick={addToQueue} 
+            icon='<path stroke-linecap="round" stroke-linejoin="round" d="M4 7h10M4 12h10M4 17h10"/><path stroke-linecap="round" stroke-linejoin="round" d="M17 12h3m-1.5-1.5v3"/>'
+            label={t('btnQueue')}
           />
           <Button 
             loading={loading()} 

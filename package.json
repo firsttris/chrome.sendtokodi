@@ -12,18 +12,18 @@
     "format": "biome format --write ."
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.9.4",
-    "@crxjs/vite-plugin": "^2.3.0",
+    "@biomejs/biome": "^2.4.9",
+    "@crxjs/vite-plugin": "^2.4.0",
     "@tailwindcss/forms": "^0.5.11",
-    "@tailwindcss/vite": "^4.1.18",
-    "@types/chrome": "^0.1.33",
-    "@types/node": "^25.0.9",
-    "tailwindcss": "^4.0.0",
-    "typescript": "^5.9.3",
-    "vite": "^7.3.1",
-    "vite-plugin-solid": "^2.11.10"
+    "@tailwindcss/vite": "^4.2.2",
+    "@types/chrome": "^0.1.38",
+    "@types/node": "^25.5.0",
+    "tailwindcss": "^4.2.2",
+    "typescript": "^6.0.2",
+    "vite": "^8.0.3",
+    "vite-plugin-solid": "^2.11.11"
   },
   "dependencies": {
-    "solid-js": "^1.9.10"
+    "solid-js": "^1.9.12"
   }
 }
