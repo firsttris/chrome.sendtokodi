@@ -60,18 +60,22 @@ export const Popup = () => {
             <h2 class="text-lg font-bold text-white leading-tight">{t('appTitle')}</h2>
             <p class="text-xs text-gray-400">{settingsMode() ? t('settingsSubtitle') : t('appSubtitle')}</p>
           </div>
-          <button
-            class="btn-icon h-8 w-8"
-            title="Open full settings"
-            onClick={() => chrome.runtime.openOptionsPage()}
-          >
-            <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M14 3h7v7" />
-              <path stroke-linecap="round" stroke-linejoin="round" d="M10 14L21 3" />
-              <path stroke-linecap="round" stroke-linejoin="round" d="M21 14v7h-7" />
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3 10V3h7" />
-            </svg>
-          </button>
+          {settingsMode() ? (
+            <button
+              class="btn-icon h-8 w-8"
+              title="Open full settings"
+              onClick={() => chrome.runtime.openOptionsPage()}
+            >
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M14 3h7v7" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10 14L21 3" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 14v7h-7" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 10V3h7" />
+              </svg>
+            </button>
+          ) : (
+            <div class="h-8 w-8" aria-hidden="true"></div>
+          )}
         </div>
 
         {settingsMode() ? (
