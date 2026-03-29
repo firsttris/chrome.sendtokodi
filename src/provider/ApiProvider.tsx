@@ -35,6 +35,7 @@ type ApiProviderProps = {
 export const ApiProvider = (props: ApiProviderProps) => {
   const [loading, setLoading] = createSignal(false);
   const [url, setUrl] = createSignal('');
+  const [title, setTitle] = createSignal('');
   const [status, setStatus] = createSignal('');
   const { selectedConnection } = useStore();
 
@@ -135,14 +136,38 @@ export const ApiProvider = (props: ApiProviderProps) => {
     }, true);
   };
 
+  const buildQueuePluginUrl = ({
+    mediaUrl,
+    title
+  }: {
+    mediaUrl: string;
+    title?: string;
+  }) => {
+    const params = new URLSearchParams({
+      action: 'queue',
+      url: mediaUrl
+    });
+
+    const trimmedTitle = title?.trim();
+    if (trimmedTitle) {
+      params.set('title', trimmedTitle);
+    }
+
+    return `plugin://plugin.video.sendtokodi/?${params.toString()}`;
+  };
+
   const addToQueue = () => {
+    const file = buildQueuePluginUrl({
+      mediaUrl: url(),
+      title: title()
+    });
+
     executeRequest({
       jsonrpc: '2.0',
-      method: 'Playlist.Add',
+      method: 'Player.Open',
       id: 0,
       params: {
-        playlistid: 1,
-        item: { file: `plugin://plugin.video.sendtokodi/?${url()}` }
+        item: { file }
       }
     });
   };
@@ -166,6 +191,7 @@ export const ApiProvider = (props: ApiProviderProps) => {
     if (chrome?.tabs) {
       chrome.tabs.query({ currentWindow: true, active: true }, tabs => {
         setUrl(tabs[0]?.url ?? '');
+        setTitle(tabs[0]?.title ?? '');
       });
     }
   });
