@@ -38,6 +38,14 @@ export const ApiProvider = (props: ApiProviderProps) => {
   const [status, setStatus] = createSignal('');
   const { selectedConnection } = useStore();
 
+  const getReadableErrorMessage = (error: unknown) => {
+    const message = (error as Error)?.message || 'Unbekannter Fehler';
+    if (message.includes('Failed to fetch')) {
+      return '✗ Verbindung fehlgeschlagen - Kodi nicht erreichbar';
+    }
+    return `✗ Fehler: ${message}`;
+  };
+
   const createAuthHeader = (connection: Connection) => 
     'Basic ' + btoa(`${connection.login}:${connection.pw || ''}`);
 
@@ -61,36 +69,47 @@ export const ApiProvider = (props: ApiProviderProps) => {
   };
 
   const executeRequest = async (body: JsonRpcBody, closeOnSuccess = false) => {
+    if (loading()) return;
+
     const connection = selectedConnection();
     if (!connection) {
       console.error('No connection selected');
+      setStatus('✗ Keine Verbindung ausgewählt');
       openSettings();
       return;
     }
 
+    setStatus('');
     setLoading(true);
     try {
       const response = await sendJsonRpc(connection, body);
+      if (response.result === 'OK' && !closeOnSuccess) {
+        setStatus('✓ Erfolgreich');
+      }
       if (response.result === 'OK' && closeOnSuccess) {
         window.close();
       }
     } catch (error) {
       console.error(error);
-      alert((error as Error).message);
+      setStatus(getReadableErrorMessage(error));
     } finally {
       setLoading(false);
     }
   };
 
   const sendPing = async () => {
+    if (loading()) return;
+
     const connection = selectedConnection();
     if (!connection) {
-      setStatus('Keine Verbindung ausgewählt');
+      setStatus('✗ Keine Verbindung ausgewählt');
       return;
     }
 
+    setStatus('');
+    setLoading(true);
     try {
-      const response = await sendJsonRpc(connection, {
+      await sendJsonRpc(connection, {
         jsonrpc: '2.0',
         method: 'JSONRPC.Ping',
         id: 1,
@@ -99,12 +118,9 @@ export const ApiProvider = (props: ApiProviderProps) => {
       setStatus('✓ Verbindung erfolgreich');
     } catch (error) {
       console.error(error);
-      const message = (error as Error).message;
-      if (message.includes('Failed to fetch')) {
-        setStatus('✗ Verbindung fehlgeschlagen - Kodi nicht erreichbar');
-      } else {
-        setStatus(`✗ Fehler: ${message}`);
-      }
+      setStatus(getReadableErrorMessage(error));
+    } finally {
+      setLoading(false);
     }
   };
 

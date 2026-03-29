@@ -39,6 +39,11 @@ type StoreProviderProps = {
     children: JSX.Element;
 };
 
+type StoredState = {
+    connections?: Connection[];
+    selectedConnectionId?: string;
+};
+
 export const StoreProvider = (props: StoreProviderProps) => {
     const [connections, setConnections] = createSignal<Connection[]>([]);
     const [selectedConnectionId, setSelectedConnectionId] = createSignal<string | undefined>();
@@ -135,16 +140,20 @@ export const StoreProvider = (props: StoreProviderProps) => {
             return;
         }
     
-        chrome.storage.sync.get(['connections', 'selectedConnectionId'], result => {
-            if (result.connections?.length > 0) {
+        chrome.storage.sync.get(['connections', 'selectedConnectionId'], (result: StoredState) => {
+            const storedConnections = Array.isArray(result.connections) ? result.connections : [];
+            const storedSelectedId = typeof result.selectedConnectionId === 'string'
+                ? result.selectedConnectionId
+                : undefined;
+
+            if (storedConnections.length > 0) {
                 // Behebe existierende doppelte Namen
-                const fixedConnections = fixDuplicateNames(result.connections);
+                const fixedConnections = fixDuplicateNames(storedConnections);
                 setConnections(fixedConnections);
                 
                 // Stelle sicher, dass eine gültige Connection ausgewählt ist
-                const selectedId = result.selectedConnectionId;
-                const validId = fixedConnections.find(c => c.id === selectedId) 
-                    ? selectedId 
+                const validId = fixedConnections.find(c => c.id === storedSelectedId)
+                    ? storedSelectedId
                     : fixedConnections[0]?.id;
                 setSelectedConnectionId(validId);
             } else {

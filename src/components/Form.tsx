@@ -53,7 +53,7 @@ const InputField = (props: InputFieldProps) => {
 
 export const Form = () => {
   
-  const { status, sendPing: testConnection } = useApi();
+  const { loading, status, sendPing: testConnection } = useApi();
   return (
     <div>
       <InputField name="name" type="text" placeholder={t('fieldNamePlaceholder')} label={t('fieldName')} />
@@ -62,7 +62,7 @@ export const Form = () => {
       <InputField name="login" type="text" placeholder={t('fieldLoginPlaceholder')} label={t('fieldLogin')} />
       <InputField name="pw" type="password" placeholder={t('fieldPasswordPlaceholder')} label={t('fieldPassword')} />
       <div class="pt-4 border-t border-gray-700">
-        <button class="btn-primary flex items-center gap-2" onClick={testConnection}>
+        <button class="btn-primary flex items-center gap-2" onClick={testConnection} disabled={loading()}>
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
           </svg>

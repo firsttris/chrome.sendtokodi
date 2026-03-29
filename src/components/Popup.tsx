@@ -27,7 +27,7 @@ const Button = (props: ButtonProps) => (
 
 export const Popup = () => {
 
-  const { loading, sendToKodi, addToQueue, setUrl, url, stop } = useApi();
+  const { loading, sendToKodi, addToQueue, setUrl, url, stop, status } = useApi();
   const { createNewConnection, deleteConnection } = useStore();
   const [settingsMode, setSettingsMode] = createSignal(false);
 
@@ -129,6 +129,12 @@ export const Popup = () => {
               </label>
               <SelectOne compact />
             </div>
+
+            {status() ? (
+              <div class={`mb-2.5 rounded-lg border px-2.5 py-1.5 text-xs ${status().startsWith('✓') ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300' : 'border-rose-500/30 bg-rose-500/10 text-rose-300'}`}>
+                {status()}
+              </div>
+            ) : null}
 
             {/* Action Buttons */}
             <div class="grid grid-cols-3 gap-2">
