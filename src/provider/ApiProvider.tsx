@@ -80,6 +80,12 @@ export const ApiProvider = (props: ApiProviderProps) => {
       return;
     }
 
+    if (!connection.ip) {
+      setStatus('✗ Keine IP-Adresse konfiguriert – bitte Verbindung in den Einstellungen einrichten');
+      openSettings();
+      return;
+    }
+
     setStatus('');
     setLoading(true);
     try {
@@ -104,6 +110,11 @@ export const ApiProvider = (props: ApiProviderProps) => {
     const connection = selectedConnection();
     if (!connection) {
       setStatus('✗ Keine Verbindung ausgewählt');
+      return;
+    }
+
+    if (!connection.ip) {
+      setStatus('✗ Keine IP-Adresse konfiguriert – bitte IP-Adresse eintragen');
       return;
     }
 

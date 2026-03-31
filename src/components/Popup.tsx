@@ -28,7 +28,7 @@ const Button = (props: ButtonProps) => (
 export const Popup = () => {
 
   const { loading, sendToKodi, addToQueue, setUrl, url, stop, status } = useApi();
-  const { createNewConnection, deleteConnection } = useStore();
+  const { createNewConnection, deleteConnection, selectedConnection } = useStore();
   const [settingsMode, setSettingsMode] = createSignal(false);
 
   const handleInputChange = (event: Event) => {
@@ -130,6 +130,12 @@ export const Popup = () => {
               <SelectOne compact />
             </div>
 
+            {!selectedConnection()?.ip && !status() ? (
+              <div class="mb-2.5 rounded-lg border border-amber-500/30 bg-amber-500/10 px-2.5 py-1.5 text-xs text-amber-300">
+                Keine Verbindung konfiguriert – bitte IP-Adresse in den Einstellungen eintragen.{' '}
+                <button class="underline" onClick={() => setSettingsMode(true)}>Einstellungen öffnen</button>
+              </div>
+            ) : null}
             {status() ? (
               <div class={`mb-2.5 rounded-lg border px-2.5 py-1.5 text-xs ${status().startsWith('✓') ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300' : 'border-rose-500/30 bg-rose-500/10 text-rose-300'}`}>
                 {status()}
