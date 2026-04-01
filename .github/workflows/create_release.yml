@@ -3,9 +3,15 @@ name: Create Release
 on: 
   workflow_dispatch:
   workflow_call:
+    outputs:
+      version:
+        description: Version created by the release workflow
+        value: ${{ jobs.release.outputs.version }}
 jobs:
   release:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.packageVersion.outputs.current-version }}
 
     steps:
     - name: Checkout code

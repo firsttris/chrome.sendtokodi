@@ -17,7 +17,7 @@ jobs:
   submit:
     runs-on: ubuntu-latest
     needs: [create_release]
-    if: always()
+    if: ${{ inputs.version != '' || needs.create_release.result == 'success' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -33,7 +33,7 @@ jobs:
           if [ -n "${{ inputs.version }}" ]; then
             echo "current-version=${{ inputs.version }}" >> $GITHUB_OUTPUT
           else
-            echo "current-version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+            echo "current-version=${{ needs.create_release.outputs.version }}" >> $GITHUB_OUTPUT
           fi
 
       - name: Download release asset
