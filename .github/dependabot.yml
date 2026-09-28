@@ -7,6 +7,10 @@ updates:
     groups:
       dependencies:
         update-types: [minor, patch]
+    ignore:
+      # Keep the Node typings in line with the Node version in .nvmrc.
+      - dependency-name: '@types/node'
+        update-types: [version-update:semver-major]
 
   - package-ecosystem: github-actions
     directory: /
