@@ -1,28 +1,38 @@
 {
+  "manifest_version": 3,
   "name": "__MSG_extName__",
   "description": "__MSG_extDescription__",
   "short_name": "__MSG_extName__",
   "default_locale": "en",
-  "options_ui": {
-    "page": "options.html"
-  },
-  "permissions": [
-    "tabs",
-    "storage"
-  ],
-  "host_permissions": [
-    "http://*/*"
-  ],
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
   },
   "action": {
-    "default_popup": "popup.html"
+    "default_popup": "popup.html",
+    "default_title": "__MSG_extName__"
   },
-  "manifest_version": 3,
-
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "src/background.ts",
+    "type": "module"
+  },
+  "permissions": ["activeTab", "storage", "contextMenus"],
+  "optional_host_permissions": ["http://*/*", "https://*/*"],
+  "commands": {
+    "play-current-tab": {
+      "suggested_key": { "default": "Alt+Shift+K" },
+      "description": "__MSG_commandPlay__"
+    },
+    "queue-current-tab": {
+      "suggested_key": { "default": "Alt+Shift+Q" },
+      "description": "__MSG_commandQueue__"
+    }
+  },
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self';"
   }

@@ -9,21 +9,26 @@
     "start": "vite",
     "start:firefox": "TARGET_PLATFORM=firefox vite",
     "check": "biome check .",
-    "format": "biome format --write ."
+    "format": "biome format --write .",
+    "test": "vitest run",
+    "typecheck": "tsc -p ."
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.9",
-    "@crxjs/vite-plugin": "^2.4.0",
-    "@tailwindcss/forms": "^0.5.11",
-    "@tailwindcss/vite": "^4.2.2",
-    "@types/chrome": "^0.1.38",
-    "@types/node": "^25.5.0",
-    "tailwindcss": "^4.2.2",
-    "typescript": "^6.0.2",
-    "vite": "^8.0.3",
-    "vite-plugin-solid": "^2.11.11"
+    "@biomejs/biome": "^2.5.14",
+    "@crxjs/vite-plugin": "^3.0.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/chrome": "^0.3.0",
+    "@types/node": "^24.19.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^6.0.3",
+    "vite": "^8.3.1",
+    "vite-plugin-solid": "^2.11.14",
+    "vitest": "^5.0.2"
   },
   "dependencies": {
-    "solid-js": "^1.9.12"
+    "solid-js": "^1.9.15"
+  },
+  "engines": {
+    "node": ">=22.12"
   }
 }

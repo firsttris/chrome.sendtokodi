@@ -84,27 +84,11 @@
     "description": "HTTP remote step 2 setting"
   },
   "httpRemoteStep3": {
-    "message": "Set",
+    "message": "Set a port (default: 8080), username and password",
     "description": "HTTP remote step 3"
   },
-  "httpRemoteStep3Port": {
-    "message": "Port",
-    "description": "Port"
-  },
-  "httpRemoteStep3PortDefault": {
-    "message": "default: 8080",
-    "description": "Default port"
-  },
-  "httpRemoteStep3Username": {
-    "message": "Username",
-    "description": "Username"
-  },
-  "httpRemoteStep3Password": {
-    "message": "Password",
-    "description": "Password"
-  },
   "httpRemoteStep4": {
-    "message": "Enter these credentials in the form below",
+    "message": "Enter these details in the form above and test the connection",
     "description": "HTTP remote step 4"
   },
   "fieldName": {
@@ -152,7 +136,131 @@
     "description": "Required field error message"
   },
   "footerText": {
-    "message": "SendToKodi Chrome Extension",
-    "description": "Footer text"
+    "message": "SendToKodi browser extension",
+    "description": "Footer"
+  },
+  "fieldSecure": {
+    "message": "Use HTTPS (e.g. behind a reverse proxy)",
+    "description": "HTTPS checkbox label"
+  },
+  "fieldPortInvalid": {
+    "message": "Please enter a port between 1 and 65535",
+    "description": "Invalid port hint"
+  },
+  "nameTaken": {
+    "message": "A connection with this name already exists",
+    "description": "Duplicate name hint"
+  },
+  "newConnectionName": {
+    "message": "New connection",
+    "description": "Default name for new connections"
+  },
+  "btnDeleteConfirm": {
+    "message": "Really delete?",
+    "description": "Delete confirmation button"
+  },
+  "btnBack": {
+    "message": "Back",
+    "description": "Back button label"
+  },
+  "btnSettings": {
+    "message": "Settings",
+    "description": "Settings button label"
+  },
+  "btnOpenFullSettings": {
+    "message": "Open settings in a tab",
+    "description": "Open options page button"
+  },
+  "noConnectionConfigured": {
+    "message": "No Kodi configured yet – please enter the IP address of your Kodi.",
+    "description": "Hint when no IP is configured"
+  },
+  "openSettings": {
+    "message": "Open settings",
+    "description": "Link to settings"
+  },
+  "statusOnline": {
+    "message": "Kodi reachable",
+    "description": "Connection status online"
+  },
+  "statusOffline": {
+    "message": "Kodi not reachable",
+    "description": "Connection status offline"
+  },
+  "statusUnknown": {
+    "message": "Connection status unknown",
+    "description": "Connection status unknown"
+  },
+  "successPlay": {
+    "message": "✓ Playback started",
+    "description": "Play success"
+  },
+  "successQueue": {
+    "message": "✓ Added to queue",
+    "description": "Queue success"
+  },
+  "successStop": {
+    "message": "✓ Playback stopped",
+    "description": "Stop success"
+  },
+  "successPing": {
+    "message": "✓ Connection successful",
+    "description": "Ping success"
+  },
+  "noUrl": {
+    "message": "Please enter a URL",
+    "description": "Missing URL"
+  },
+  "error_noHost": {
+    "message": "No IP address configured – please set up the connection in the settings",
+    "description": "Error: no host"
+  },
+  "error_permission": {
+    "message": "Access to Kodi was not granted. Please allow access when asked.",
+    "description": "Error: host permission missing"
+  },
+  "error_timeout": {
+    "message": "Kodi did not respond in time – check IP address and port",
+    "description": "Error: timeout"
+  },
+  "error_unreachable": {
+    "message": "Connection failed – Kodi not reachable",
+    "description": "Error: unreachable"
+  },
+  "error_unauthorized": {
+    "message": "Wrong username or password",
+    "description": "Error: 401"
+  },
+  "error_http": {
+    "message": "Kodi responded with an error ($1)",
+    "description": "Error: HTTP"
+  },
+  "error_rpc": {
+    "message": "Kodi error: $1 – is the SendToKodi addon installed?",
+    "description": "Error: JSON-RPC"
+  },
+  "error_unknown": {
+    "message": "Unknown error: $1",
+    "description": "Error: unknown"
+  },
+  "menuPlay": {
+    "message": "Play on Kodi",
+    "description": "Context menu: play"
+  },
+  "menuQueue": {
+    "message": "Add to Kodi queue",
+    "description": "Context menu: queue"
+  },
+  "commandPlay": {
+    "message": "Play the current tab on Kodi",
+    "description": "Keyboard shortcut: play"
+  },
+  "commandQueue": {
+    "message": "Add the current tab to the Kodi queue",
+    "description": "Keyboard shortcut: queue"
+  },
+  "hintShortcuts": {
+    "message": "Tip: right-click a link or video to send it to Kodi, or use Alt+Shift+K to play the current tab.",
+    "description": "Feature hint"
   }
 }

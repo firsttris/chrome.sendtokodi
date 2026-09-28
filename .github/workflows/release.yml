@@ -1,0 +1,165 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Existing release to publish (leave empty to create a new patch release)'
+        required: false
+        type: string
+      chrome:
+        description: 'Upload to Chrome Web Store'
+        type: boolean
+        default: true
+      firefox:
+        description: 'Publish to Mozilla Add-ons'
+        type: boolean
+        default: true
+      edge:
+        description: 'Publish to Microsoft Edge Add-ons'
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    if: ${{ !inputs.version }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      version: ${{ steps.bump.outputs.version }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint, typecheck & test
+        run: npm run check && npm run typecheck && npm test
+
+      # The version is only committed after both builds succeeded, so a broken build leaves no orphaned bump.
+      - name: Bump version
+        id: bump
+        run: echo "version=$(npm version patch --no-git-tag-version | sed 's/^v//')" >> "$GITHUB_OUTPUT"
+
+      - name: Build Chrome extension
+        run: |
+          npm run build
+          (cd dist && zip -r "../sendToKodi-chrome-${VERSION}.zip" .)
+        env:
+          VERSION: ${{ steps.bump.outputs.version }}
+
+      - name: Build Firefox extension
+        run: |
+          npm run build:firefox
+          (cd dist && zip -r "../sendToKodi-firefox-${VERSION}.zip" .)
+        env:
+          VERSION: ${{ steps.bump.outputs.version }}
+
+      - name: Commit and tag version
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "Bump to ${VERSION}"
+          git tag "${VERSION}"
+          git push origin "HEAD:${GITHUB_REF_NAME}" "${VERSION}"
+        env:
+          VERSION: ${{ steps.bump.outputs.version }}
+
+      - name: Create GitHub release
+        uses: ncipollo/release-action@339a81892b84b4eeb0f6e744e4574d79d0d9b8dd # v1.21.0
+        with:
+          tag: ${{ steps.bump.outputs.version }}
+          artifacts: sendToKodi-chrome-${{ steps.bump.outputs.version }}.zip,sendToKodi-firefox-${{ steps.bump.outputs.version }}.zip
+          generateReleaseNotes: true
+
+  chrome:
+    needs: release
+    if: ${{ !cancelled() && !failure() && inputs.chrome }}
+    runs-on: ubuntu-latest
+    env:
+      VERSION: ${{ inputs.version || needs.release.outputs.version }}
+
+    steps:
+      - name: Download release asset
+        run: gh release download "$VERSION" --repo "$GITHUB_REPOSITORY" --pattern "sendToKodi-chrome-${VERSION}.zip"
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Upload to Chrome Web Store
+        uses: mnao305/chrome-extension-upload@f549d5d654694a7722d6abfa64c97409ad5e64c1 # v7.0.0
+        with:
+          file-path: sendToKodi-chrome-${{ env.VERSION }}.zip
+          extension-id: ${{ secrets.CHROME_EXTENSION_ID }}
+          publisher-id: d115d63f-be46-4c44-8b9f-dbb5bdaf9fe2
+          client-id: ${{ secrets.CHROME_CLIENT_ID }}
+          client-secret: ${{ secrets.CHROME_CLIENT_SECRET }}
+          refresh-token: ${{ secrets.CHROME_REFRESH_TOKEN }}
+          publish: false
+
+  firefox:
+    needs: release
+    if: ${{ !cancelled() && !failure() && inputs.firefox }}
+    runs-on: ubuntu-latest
+    env:
+      VERSION: ${{ inputs.version || needs.release.outputs.version }}
+
+    steps:
+      - name: Checkout released sources
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ env.VERSION }}
+
+      # Mozilla reviewers need the sources of bundled code to reproduce the build.
+      - name: Prepare release assets
+        run: |
+          gh release download "$VERSION" --repo "$GITHUB_REPOSITORY" --pattern "sendToKodi-firefox-${VERSION}.zip"
+          git archive --format zip --output "sendToKodi-source-${VERSION}.zip" HEAD
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Publish to Mozilla Add-ons
+        uses: wdzeng/firefox-addon@3184ee491b500e080885e046051366a4228c6e5d # v1.2.1
+        with:
+          addon-guid: sendtokodi@firsttris.github.io
+          xpi-path: sendToKodi-firefox-${{ env.VERSION }}.zip
+          source-file-path: sendToKodi-source-${{ env.VERSION }}.zip
+          self-hosted: false
+          jwt-issuer: ${{ secrets.AMO_JWT_ISSUER }}
+          jwt-secret: ${{ secrets.AMO_JWT_SECRET }}
+
+  edge:
+    needs: release
+    if: ${{ !cancelled() && !failure() && inputs.edge }}
+    runs-on: ubuntu-latest
+    env:
+      VERSION: ${{ inputs.version || needs.release.outputs.version }}
+
+    steps:
+      - name: Download release asset
+        run: gh release download "$VERSION" --repo "$GITHUB_REPOSITORY" --pattern "sendToKodi-chrome-${VERSION}.zip"
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Publish to Microsoft Edge Add-ons
+        uses: wdzeng/edge-addon@9881f57720358040d079eaa06a4596dc9c273eb6 # v2.1.1
+        with:
+          product-id: ${{ secrets.EDGE_PRODUCT_ID }}
+          zip-path: sendToKodi-chrome-${{ env.VERSION }}.zip
+          api-key: ${{ secrets.EDGE_API_KEY }}
+          client-id: ${{ secrets.EDGE_CLIENT_ID }}

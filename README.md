@@ -1,7 +1,7 @@
 <div align="center">
 
   # SendToKodi
-  <img src="./public/banner/1280x800.png" alt="SendToKodi Banner" width="100%" />
+  <img src="./store-assets/banner/1280x800.png" alt="SendToKodi Banner" width="100%" />
 
   [![Check Build](https://github.com/firsttris/chrome.sendtokodi/actions/workflows/check_build.yml/badge.svg)](https://github.com/firsttris/chrome.sendtokodi/actions/workflows/check_build.yml)
   [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/gbcpfpcacakaadapjcdchbdmdnfbnbaf?label=Chrome&logo=google-chrome)](https://chrome.google.com/webstore/detail/sendtokodi/gbcpfpcacakaadapjcdchbdmdnfbnbaf)
@@ -18,6 +18,9 @@
 - 📋 **Playlist Support** - Send entire playlists with a single click
 - 🔄 **Multiple Connections** - Save and manage different Kodi instances
 - 🚀 **One-Click Send** - Stream instantly from your browser
+- 🖱️ **Context Menu** - Right-click any link, video or page and choose *Play on Kodi* or *Add to Kodi queue*
+- ⌨️ **Keyboard Shortcuts** - `Alt+Shift+K` plays the current tab, `Alt+Shift+Q` adds it to the queue (customizable in the browser's shortcut settings)
+- 🟢 **Connection Status** - See at a glance whether your Kodi is reachable
 - 🔒 **Privacy-Focused** - No data collection, fully open source
 - 🎨 **Modern UI** - Built with modern web technologies
 
@@ -42,18 +45,9 @@ To use this extension, you need to install the SendToKodi Addon in Kodi:
 
 The addon handles the actual streaming on the Kodi side and must be installed for this extension to work.
 
-## 🔧 Configuration for Firefox
+## 🔐 Permissions
 
-After installing the extension in Firefox, you need to configure permissions to allow access to all website URLs. This is required for the extension to function properly with all supported sites.
-
-1. Open the Firefox Add-ons Manager by navigating to `about:addons`.
-2. Locate the **SendToKodi** extension and click on the gear icon or the settings button.
-3. Go to the **Permissions** tab.
-4. Enable the option **Access your data for all websites**.
-
-Here’s an example of how the permissions screen should look:
-
-![Firefox Settings](./firefox-settings.png)
+The extension only asks for access to your Kodi host (e.g. `http://192.168.1.100`) the first time you play something or test a connection. It does not need access to the websites you visit: the URL of the current tab is only read when you click the extension icon, use the context menu or a keyboard shortcut.
 
 ## 🛠️ Tech Stack
 
@@ -82,7 +76,7 @@ Here’s an example of how the permissions screen should look:
 
 ### Prerequisites
 
-- Node.js 20 or higher
+- Node.js 22.12 or higher (see `.nvmrc`)
 - npm
 
 ### Setup
@@ -99,6 +93,11 @@ npm install
 npm run start
 # For Firefox compatibility
 npm run start:firefox
+
+# Lint, typecheck and test
+npm run check
+npm run typecheck
+npm test
 ```
 
 ### Load Extension
@@ -107,13 +106,13 @@ npm run start:firefox
 1. Open Chrome and navigate to `chrome://extensions/`
 2. Enable **Developer mode** (toggle in top-right)
 3. Click **Load unpacked**
-4. Select the `build` folder from the project
+4. Select the `dist` folder from the project
 
 **Firefox:**
 1. Open Firefox and navigate to `about:debugging`
 2. Click **This Firefox**
 3. Click **Load Temporary Add-on...**
-4. Select any file in the `build` folder
+4. Select the `manifest.json` in the `dist` folder
 
 The extension will hot-reload as you make changes.
 
@@ -136,65 +135,28 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📤 Publishing
 <details>
-<summary><b>How to get the secrets for publishing</b></summary>
+<summary><b>How releases and store uploads work</b></summary>
 
-### Chrome Web Store
+All stores are handled by a single workflow: **Actions → Release → Run workflow**.
 
-GitHub Actions workflow automates publishing to Chrome Web Store.
+- Leave **version** empty to create a new patch release: the workflow lints, tests and builds, then bumps the version, tags it, creates a GitHub release with generated notes and uploads the Chrome and Firefox packages.
+- Enter an existing **version** (e.g. `0.0.51`) to only (re-)submit that release to the stores.
+- Use the **chrome / firefox / edge** checkboxes to choose the stores. The store uploads run in parallel after the release.
 
-**Setup:**
-
-1. Generate API credentials following [chrome-webstore-upload-keys](https://github.com/fregante/chrome-webstore-upload-keys)
-2. Run `npx chrome-webstore-upload-keys` to get your `REFRESH_TOKEN`
-3. Add these secrets to your GitHub repository:
-   - `CHROME_EXTENSION_ID`
-   - `CHROME_CLIENT_ID`
-   - `CHROME_CLIENT_SECRET`
-   - `CHROME_REFRESH_TOKEN`
-
-**Deploy:**
 ```bash
-# Trigger via GitHub Actions workflow
-gh workflow run submit_chrome_webstore.yml
+gh workflow run release.yml                      # new release, all stores
+gh workflow run release.yml -f version=0.0.51 -f edge=false
 ```
 
-### Mozilla Add-ons
+The Chrome package is uploaded as a draft (`publish: false`) and has to be submitted for review in the developer dashboard. Firefox receives the source archive of the tagged commit for the review.
 
-GitHub Actions workflow automates publishing to Mozilla Add-ons store.
+### Secrets
 
-**Setup:**
+**Chrome Web Store** (see [chrome-webstore-upload-keys](https://github.com/fregante/chrome-webstore-upload-keys)): `CHROME_EXTENSION_ID`, `CHROME_CLIENT_ID`, `CHROME_CLIENT_SECRET`, `CHROME_REFRESH_TOKEN`. The publisher ID is not secret and is set in the workflow; it is part of the developer dashboard URL (`https://chrome.google.com/webstore/devconsole/<publisher-id>`).
 
-1. Go to [Mozilla Add-on API Keys](https://addons.mozilla.org/developers/addon/api/key/)
-2. Generate your API credentials (JWT issuer and JWT secret)
-3. Add these secrets to your GitHub repository:
-   - `FIREFOX_EXTENSION_ID`
-   - `FIREFOX_JWT_ISSUER`
-   - `FIREFOX_JWT_SECRET`
+**Mozilla Add-ons** ([API keys](https://addons.mozilla.org/developers/addon/api/key/)): `AMO_JWT_ISSUER`, `AMO_JWT_SECRET`.
 
-**Deploy:**
-```bash
-# Trigger via GitHub Actions workflow
-gh workflow run submit_firefox_addon.yml
-```
-
-### Microsoft Edge Add-ons
-
-GitHub Actions workflow automates publishing to Edge Add-ons store.
-
-**Setup:**
-
-1. Go to [Microsoft Partner Center - Publish API](https://partner.microsoft.com/dashboard/microsoftedge/publishapi)
-2. Generate API credentials
-3. Add these secrets to your GitHub repository:
-   - `EDGE_PRODUCT_ID`
-   - `EDGE_CLIENT_ID`
-   - `EDGE_API_KEY`
-
-**Deploy:**
-```bash
-# Trigger via GitHub Actions workflow
-gh workflow run submit_edge_store.yml
-```
+**Microsoft Edge Add-ons** ([Publish API](https://partner.microsoft.com/dashboard/microsoftedge/publishapi)): `EDGE_PRODUCT_ID`, `EDGE_CLIENT_ID`, `EDGE_API_KEY`.
 </details>
 
 ---
