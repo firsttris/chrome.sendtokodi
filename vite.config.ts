@@ -1,36 +1,36 @@
+import { crx, type ManifestV3Export } from '@crxjs/vite-plugin';
+import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
 import solidPlugin from 'vite-plugin-solid';
-import { crx } from '@crxjs/vite-plugin';
-import tailwindcss from '@tailwindcss/vite';
 import manifest from './manifest.json' with { type: 'json' };
 import pkg from './package.json' with { type: 'json' };
 
 export default defineConfig(({ mode }) => {
   const isFirefox = process.env.TARGET_PLATFORM === 'firefox';
-  
-  // Manifest anpassen für Firefox
+
   const finalManifest = {
     ...manifest,
     version: pkg.version,
     ...(isFirefox && {
+      // Firefox runs MV3 background code as event pages instead of service workers.
+      background: { scripts: [manifest.background.service_worker], type: 'module' },
       browser_specific_settings: {
+        gecko_android: { strict_min_version: '142.0' },
         gecko: {
-          id: "sendtokodi@firsttris.github.io",
-        }
+          id: 'sendtokodi@firsttris.github.io',
+          strict_min_version: '140.0',
+          data_collection_permissions: { required: ['none'] },
+        },
       },
-      host_permissions: [...(manifest.host_permissions || []), "<all_urls>"]
-    })
-  };
+    }),
+  } as ManifestV3Export;
 
   return {
     plugins: [
       solidPlugin(),
       tailwindcss(),
-      crx({ manifest: finalManifest as any }),
+      crx({ manifest: finalManifest, browser: isFirefox ? 'firefox' : 'chrome' }),
     ],
-    resolve: {
-      extensions: ['.ts', '.tsx', '.js', '.jsx']
-    },
     build: {
       sourcemap: mode === 'development',
     },

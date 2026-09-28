@@ -1,81 +1,142 @@
-import { Connection } from './types';
-import { useApi } from ".././provider/ApiProvider";
-import { useStore } from './../provider/StoreProvider';
+import { createEffect, createSignal, on, Show } from 'solid-js';
+import type { Connection } from '../lib/types';
+import { useApi } from '../provider/ApiProvider';
+import { useStore } from '../provider/StoreProvider';
 import { t } from '../utils/i18n';
+import { BoltIcon, Spinner } from './icons';
+import { StatusMessage } from './StatusMessage';
+
+type TextField = 'name' | 'ip' | 'port' | 'login' | 'pw';
 
 type InputFieldProps = {
-  name: keyof Connection;
+  name: TextField;
   type: string;
   placeholder: string;
   label: string;
+  required?: boolean;
+  inputMode?: 'text' | 'numeric';
+  autocomplete?: string;
+  validate?: (value: string) => string | undefined;
+};
+
+const validatePort = (value: string) => {
+  const port = Number(value);
+  return /^\d+$/.test(value.trim()) && port >= 1 && port <= 65535 ? undefined : t('fieldPortInvalid');
 };
 
 const InputField = (props: InputFieldProps) => {
-  const { selectedConnection, updateConnection } = useStore();
-  
-  const handleInputChange = (event: Event) => {
-    const htmlInputElement = (event.target as HTMLInputElement);
-    updateConnection(htmlInputElement.name as keyof Connection, htmlInputElement.value);
+  const { selectedConnection, selectedConnectionId, updateConnection } = useStore();
+  const [touched, setTouched] = createSignal(false);
+  // Holds input the store rejected (e.g. a duplicate name) so the user can keep editing it.
+  const [draft, setDraft] = createSignal<string>();
+  const [rejected, setRejected] = createSignal(false);
+
+  createEffect(
+    on(selectedConnectionId, () => {
+      setTouched(false);
+      setDraft(undefined);
+      setRejected(false);
+    })
+  );
+
+  const value = () => draft() ?? selectedConnection()?.[props.name] ?? '';
+
+  const error = () => {
+    if (rejected()) return value().trim() ? t('nameTaken') : t('fieldRequired');
+    if (!value().trim()) return props.required && touched() ? t('fieldRequired') : undefined;
+    return props.validate?.(value());
   };
 
-  const value = () => {
-    const val = selectedConnection()?.[props.name];
-    if (val) return val;
-    if (props.name === 'port' && !val) {
-      // Port-Standardwert in die Connection schreiben, wenn noch nicht vorhanden
-      updateConnection('port', '8080');
-      return '8080';
-    }
-    return '';
+  const handleInput = (event: InputEvent & { currentTarget: HTMLInputElement }) => {
+    const accepted = updateConnection(props.name, event.currentTarget.value);
+    setRejected(!accepted);
+    setDraft(accepted ? undefined : event.currentTarget.value);
   };
-  const isInvalid = () => !value() && props.name !== 'pw';
+
+  const inputId = () => `field-${props.name}`;
 
   return (
     <div class="mb-4">
-      <label for={props.name} class="block text-sm font-medium text-gray-300 mb-2">{props.label}</label>
+      <label for={inputId()} class="mb-2 block text-sm font-medium text-gray-300">
+        {props.label}
+      </label>
       <input
-        class={`w-full px-3 py-2 bg-gray-800 border ${
-          isInvalid() ? 'border-red-500' : 'border-gray-700'
-        } rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-kodi-blue focus:border-transparent`}
+        class={`input px-3 py-2 ${error() ? 'border-red-500' : ''}`}
         type={props.type}
         name={props.name}
+        id={inputId()}
         placeholder={props.placeholder}
-        id={props.name}
+        inputMode={props.inputMode}
+        autocomplete={props.autocomplete ?? 'off'}
         value={value()}
-        onChange={handleInputChange}
+        aria-invalid={!!error()}
+        aria-describedby={error() ? `${inputId()}-error` : undefined}
+        onInput={handleInput}
+        onBlur={() => setTouched(true)}
       />
-      {isInvalid() && (
-        <p class="mt-1 text-xs text-red-400">{t('fieldRequired')}</p>
-      )}
+      <Show when={error()}>
+        <p id={`${inputId()}-error`} class="mt-1 text-xs text-red-400">
+          {error()}
+        </p>
+      </Show>
     </div>
   );
 };
 
 export const Form = () => {
-  
-  const { loading, status, sendPing: testConnection } = useApi();
+  const { pending, status, sendPing } = useApi();
+  const { selectedConnection, updateConnection } = useStore();
+
+  const setSecure = (secure: boolean) => updateConnection('secure' satisfies keyof Connection, secure);
+
   return (
-    <div>
-      <InputField name="name" type="text" placeholder={t('fieldNamePlaceholder')} label={t('fieldName')} />
-      <InputField name="ip" type="text" placeholder={t('fieldIpPlaceholder')} label={t('fieldIp')} />
-      <InputField name="port" type="text" placeholder={t('fieldPortPlaceholder')} label={t('fieldPort')} />
-      <InputField name="login" type="text" placeholder={t('fieldLoginPlaceholder')} label={t('fieldLogin')} />
-      <InputField name="pw" type="password" placeholder={t('fieldPasswordPlaceholder')} label={t('fieldPassword')} />
-      <div class="pt-4 border-t border-gray-700">
-        <button class="btn-primary flex items-center gap-2" onClick={testConnection} disabled={loading()}>
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-          </svg>
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        sendPing();
+      }}
+    >
+      <InputField name="name" type="text" placeholder={t('fieldNamePlaceholder')} label={t('fieldName')} required />
+      <InputField name="ip" type="text" placeholder={t('fieldIpPlaceholder')} label={t('fieldIp')} required />
+      <InputField
+        name="port"
+        type="text"
+        inputMode="numeric"
+        placeholder={t('fieldPortPlaceholder')}
+        label={t('fieldPort')}
+        required
+        validate={validatePort}
+      />
+      <InputField
+        name="login"
+        type="text"
+        placeholder={t('fieldLoginPlaceholder')}
+        label={t('fieldLogin')}
+        autocomplete="username"
+      />
+      <InputField
+        name="pw"
+        type="password"
+        placeholder={t('fieldPasswordPlaceholder')}
+        label={t('fieldPassword')}
+        autocomplete="current-password"
+      />
+      <label class="mb-4 flex cursor-pointer items-center gap-2 text-sm text-gray-300">
+        <input
+          type="checkbox"
+          class="h-4 w-4 rounded border-gray-600 bg-gray-800 accent-kodi-blue"
+          checked={selectedConnection()?.secure ?? false}
+          onChange={(event) => setSecure(event.currentTarget.checked)}
+        />
+        {t('fieldSecure')}
+      </label>
+      <div class="border-t border-gray-700 pt-4">
+        <button type="submit" class="btn-primary flex items-center gap-2" disabled={!!pending()}>
+          {pending() === 'ping' ? <Spinner /> : <BoltIcon />}
           {t('btnTest')}
         </button>
-        {status() && (
-          <div class="mt-2 text-sm font-medium">
-            <span class={status()?.includes('✓') || status()?.includes('OK') ? 'text-green-400' : 'text-red-400'}>
-              {status()}
-            </span>
-          </div>
-        )}
+        <StatusMessage status={status()} class="mt-2" />
       </div>
-    </div>
+    </form>
   );
 };

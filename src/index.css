@@ -1,31 +1,47 @@
 @import "tailwindcss";
 
-@layer base {
-  body {
-    @apply bg-gray-50 text-gray-900;
-  }
-}
-
-@layer components {
-  .btn-primary {
-    @apply px-4 py-2 bg-kodi-blue text-white font-medium rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
-  }
-  
-  .btn-secondary {
-    @apply px-4 py-2 bg-gray-600 text-white font-medium rounded-lg hover:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
-  }
-  
-  .btn-danger {
-    @apply px-4 py-2 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
-  }
-  
-  .btn-icon {
-    @apply p-2 bg-kodi-blue text-white rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center;
-  }
-}
-
 @theme {
   --color-kodi-blue: #17b3e8;
   --color-kodi-dark: #1e1e1e;
   --color-kodi-darker: #141414;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-gray-900 text-gray-100;
+  }
+
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-kodi-blue;
+  }
+}
+
+@layer components {
+  .input {
+    @apply w-full rounded-lg border border-gray-700 bg-gray-800 text-white placeholder-gray-500 focus:border-transparent focus:ring-2 focus:ring-kodi-blue focus:outline-none;
+  }
+
+  .btn-primary {
+    @apply rounded-lg bg-kodi-blue px-4 py-2 font-semibold text-gray-950 transition-colors hover:bg-sky-300 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-secondary {
+    @apply rounded-lg bg-gray-700 px-4 py-2 font-medium text-white transition-colors hover:bg-gray-600 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-danger {
+    @apply rounded-lg border border-red-500/40 bg-red-500/10 px-4 py-2 font-medium text-red-300 transition-colors hover:bg-red-500/20 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center rounded-lg text-gray-300 transition-colors hover:bg-gray-700 hover:text-white;
+  }
 }

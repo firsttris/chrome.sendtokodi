@@ -1,199 +1,151 @@
-import { createContext, useContext, createSignal, createMemo, onMount, createEffect, batch } from 'solid-js';
-import { Connection } from '../components/types';
 import type { JSX } from 'solid-js';
+import {
+  batch,
+  createContext,
+  createEffect,
+  createMemo,
+  createSignal,
+  on,
+  onCleanup,
+  onMount,
+  useContext,
+} from 'solid-js';
+import { createEmptyConnection, isNameAvailable, loadState } from '../lib/connections';
+import type { Connection } from '../lib/types';
+import { t } from '../utils/i18n';
 
-const createEmptyConnection = (id: string, existingNames: string[]): Connection => {
-    // Finde einen eindeutigen Namen
-    let baseName = 'Neue Verbindung';
-    let name = baseName;
-    let counter = 1;
-    
-    while (existingNames.some(n => n.toLowerCase() === name.toLowerCase())) {
-        counter++;
-        name = `${baseName} ${counter}`;
-    }
-    
-    return {
-        id,
-        name,
-        ip: '',
-        port: '',
-        login: '',
-        pw: ''
-    };
-};
+// chrome.storage.sync allows at most 120 writes per minute, so typing must not write on every keystroke.
+const SAVE_DEBOUNCE_MS = 400;
+
+type ConnectionField = Exclude<keyof Connection, 'id'>;
 
 type Store = {
-    connections: () => Connection[];
-    selectedConnectionId: () => string | undefined;
-    selectedConnection: () => Connection | undefined;
-    setSelectedConnectionId: (id: string | undefined) => void;
-    createNewConnection: () => void;
-    deleteConnection: () => void;
-    updateConnection: (attribute: keyof Connection, value: string) => void;
+  loaded: () => boolean;
+  connections: () => Connection[];
+  selectedConnectionId: () => string | undefined;
+  selectedConnection: () => Connection | undefined;
+  setSelectedConnectionId: (id: string | undefined) => void;
+  createNewConnection: () => void;
+  deleteConnection: () => void;
+  /** Returns false if the change was rejected (e.g. duplicate name). */
+  updateConnection: <K extends ConnectionField>(attribute: K, value: Connection[K]) => boolean;
 };
 
 const StoreContext = createContext<Store>();
 
 type StoreProviderProps = {
-    children: JSX.Element;
-};
-
-type StoredState = {
-    connections?: Connection[];
-    selectedConnectionId?: string;
+  children: JSX.Element;
 };
 
 export const StoreProvider = (props: StoreProviderProps) => {
-    const [connections, setConnections] = createSignal<Connection[]>([]);
-    const [selectedConnectionId, setSelectedConnectionId] = createSignal<string | undefined>();
-    const [isInitialized, setIsInitialized] = createSignal(false);
+  const [connections, setConnections] = createSignal<Connection[]>([]);
+  const [selectedConnectionId, setSelectedConnectionId] = createSignal<string | undefined>();
+  const [loaded, setLoaded] = createSignal(false);
 
-    const selectedConnection = createMemo(() => 
-        connections().find(c => c.id === selectedConnectionId())
+  const selectedConnection = createMemo(() => connections().find((c) => c.id === selectedConnectionId()));
+
+  const createNewConnection = () => {
+    const newConnection = createEmptyConnection(
+      t('newConnectionName'),
+      connections().map((c) => c.name)
     );
-
-    const fixDuplicateNames = (conns: Connection[]): Connection[] => {
-        const usedNames = new Set<string>();
-        
-        return conns.map(conn => {
-            let name = conn.name;
-            let counter = 2;
-            
-            // Wenn der Name schon verwendet wurde, füge eine Nummer hinzu
-            while (usedNames.has(name.toLowerCase())) {
-                name = `${conn.name} ${counter}`;
-                counter++;
-            }
-            
-            usedNames.add(name.toLowerCase());
-            return { ...conn, name };
-        });
-    };
-
-    const saveToStorage = () => {
-        if (!chrome?.storage || !isInitialized()) return;
-        
-        const currentConnections = connections();
-        const currentSelectedId = selectedConnectionId();
-        
-        chrome.storage.sync.set({ 
-            connections: currentConnections, 
-            selectedConnectionId: currentSelectedId 
-        });
-    };
-
-    const createNewConnection = () => {
-        const existingNames = connections().map(c => c.name);
-        const newConnection = createEmptyConnection(Date.now().toString(), existingNames);
-        
-        batch(() => {
-            setConnections(prev => [...prev, newConnection]);
-            setSelectedConnectionId(newConnection.id);
-        });
-    };
-
-    const deleteConnection = () => {
-        const id = selectedConnectionId();
-        if (!id) return;
-        
-        const currentConnections = connections();
-        const updatedConnections = currentConnections.filter(c => c.id !== id);
-        
-        // Verhindere das Löschen der letzten Verbindung
-        if (updatedConnections.length === 0) {
-            alert('Du kannst die letzte Verbindung nicht löschen. Es muss mindestens eine Verbindung vorhanden sein.');
-            return;
-        }
-        
-        batch(() => {
-            setConnections(updatedConnections);
-            setSelectedConnectionId(updatedConnections[0].id);
-        });
-    };
-
-    const updateConnection = (attribute: keyof Connection, value: string) => {
-        const id = selectedConnectionId();
-        if (!id) return;
-        
-        // Prüfe auf doppelte Namen
-        if (attribute === 'name') {
-            const nameExists = connections().some(c => 
-                c.id !== id && c.name.trim().toLowerCase() === value.trim().toLowerCase()
-            );
-            
-            if (nameExists) {
-                alert(`Eine Verbindung mit dem Namen "${value}" existiert bereits. Bitte wähle einen anderen Namen.`);
-                return;
-            }
-        }
-        
-        setConnections(connections().map(c =>
-            c.id === id ? { ...c, [attribute]: value } : c
-        ));
-    };
-
-    onMount(() => {
-        if (!chrome?.storage) {
-            if (connections().length === 0) createNewConnection();
-            setIsInitialized(true);
-            return;
-        }
-    
-        chrome.storage.sync.get(['connections', 'selectedConnectionId'], (result: StoredState) => {
-            const storedConnections = Array.isArray(result.connections) ? result.connections : [];
-            const storedSelectedId = typeof result.selectedConnectionId === 'string'
-                ? result.selectedConnectionId
-                : undefined;
-
-            if (storedConnections.length > 0) {
-                // Behebe existierende doppelte Namen
-                const fixedConnections = fixDuplicateNames(storedConnections);
-                setConnections(fixedConnections);
-                
-                // Stelle sicher, dass eine gültige Connection ausgewählt ist
-                const validId = fixedConnections.find(c => c.id === storedSelectedId)
-                    ? storedSelectedId
-                    : fixedConnections[0]?.id;
-                setSelectedConnectionId(validId);
-            } else {
-                createNewConnection();
-            }
-            
-            setIsInitialized(true);
-        });
+    batch(() => {
+      setConnections((prev) => [...prev, newConnection]);
+      setSelectedConnectionId(newConnection.id);
     });
-    
-    // Auto-save when connections or selectedConnectionId changes
-    createEffect(() => {
-        const conns = connections();
-        const selectedId = selectedConnectionId();
-        
-        // Only save if we're initialized
-        if (isInitialized() && conns.length > 0) {
-            saveToStorage();
-        }
-    });
+  };
 
-    return (
-        <StoreContext.Provider value={{
-            connections,
-            selectedConnectionId,
-            selectedConnection,
-            setSelectedConnectionId,
-            createNewConnection,
-            deleteConnection,
-            updateConnection
-        }}>
-            {props.children}
-        </StoreContext.Provider>
-    );
+  const deleteConnection = () => {
+    const id = selectedConnectionId();
+    if (!id) return;
+    const remaining = connections().filter((c) => c.id !== id);
+    if (remaining.length === 0) {
+      // Keep at least one connection: reset instead of deleting the last one.
+      const fresh = createEmptyConnection(t('newConnectionName'), []);
+      batch(() => {
+        setConnections([fresh]);
+        setSelectedConnectionId(fresh.id);
+      });
+      return;
+    }
+    batch(() => {
+      setConnections(remaining);
+      setSelectedConnectionId(remaining[0].id);
+    });
+  };
+
+  const updateConnection = <K extends ConnectionField>(attribute: K, value: Connection[K]) => {
+    const id = selectedConnectionId();
+    if (!id) return false;
+    if (attribute === 'name' && (!String(value).trim() || !isNameAvailable(connections(), id, String(value)))) {
+      return false;
+    }
+    setConnections((prev) => prev.map((c) => (c.id === id ? { ...c, [attribute]: value } : c)));
+    return true;
+  };
+
+  onMount(async () => {
+    try {
+      const state = await loadState();
+      batch(() => {
+        setConnections(state.connections);
+        setSelectedConnectionId(state.selectedConnectionId);
+      });
+    } catch (error) {
+      console.error('Failed to load connections', error);
+    }
+    if (connections().length === 0) createNewConnection();
+    setLoaded(true);
+  });
+
+  let saveTimer: ReturnType<typeof setTimeout> | undefined;
+  const save = () => {
+    saveTimer = undefined;
+    chrome.storage.sync
+      .set({ connections: connections(), selectedConnectionId: selectedConnectionId() })
+      .catch((error) => console.error('Failed to save connections', error));
+  };
+
+  createEffect(
+    on([connections, selectedConnectionId, loaded], () => {
+      if (!loaded()) return;
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(save, SAVE_DEBOUNCE_MS);
+    })
+  );
+
+  // Flush pending changes when the popup is closed.
+  const flush = () => {
+    if (saveTimer) {
+      clearTimeout(saveTimer);
+      save();
+    }
+  };
+  window.addEventListener('pagehide', flush);
+  onCleanup(() => window.removeEventListener('pagehide', flush));
+
+  return (
+    <StoreContext.Provider
+      value={{
+        loaded,
+        connections,
+        selectedConnectionId,
+        selectedConnection,
+        setSelectedConnectionId,
+        createNewConnection,
+        deleteConnection,
+        updateConnection,
+      }}
+    >
+      {props.children}
+    </StoreContext.Provider>
+  );
 };
 
 export const useStore = () => {
-    const context = useContext(StoreContext);
-    if (!context) {
-        throw new Error('useStore must be used within a StoreProvider');
-    }
-    return context;
+  const context = useContext(StoreContext);
+  if (!context) {
+    throw new Error('useStore must be used within a StoreProvider');
+  }
+  return context;
 };
