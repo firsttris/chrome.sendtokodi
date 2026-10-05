@@ -11,7 +11,11 @@
     "check": "biome check .",
     "format": "biome format --write .",
     "test": "vitest run",
-    "typecheck": "tsc -p ."
+    "typecheck": "tsc -p .",
+    "release:patch": "npm version patch",
+    "release:minor": "npm version minor",
+    "release:major": "npm version major",
+    "postversion": "git push --follow-tags"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.14",

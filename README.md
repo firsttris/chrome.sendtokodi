@@ -137,15 +137,15 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 <details>
 <summary><b>How releases and store uploads work</b></summary>
 
-All stores are handled by a single workflow: **Actions → Release → Run workflow**.
+A release is a tag `vX.Y.Z`, as in the other projects ([firsttris/workflows](https://github.com/firsttris/workflows)):
 
-- Leave **version** empty to create a new patch release: the workflow lints, tests and builds, then bumps the version, tags it, creates a GitHub release with generated notes and uploads the Chrome and Firefox packages.
-- Enter an existing **version** (e.g. `0.0.51`) to only (re-)submit that release to the stores.
-- Use the **chrome / firefox / edge** checkboxes to choose the stores. The store uploads run in parallel after the release.
+- **Actions → Bump version → Run workflow** (patch, minor or major) raises the version in `package.json`, commits it as `Release vX.Y.Z`, tags it and starts the release. On a checkout, `npm run release:patch` (or `:minor`, `:major`) does the same.
+- The tag starts **Release**: lint, typecheck and tests, the Chrome and Firefox builds, then a GitHub release with generated notes and both packages, then the store uploads in parallel.
+- To submit an existing version again, e.g. to one store only, run **Release** by hand on its tag and untick the other stores.
 
 ```bash
-gh workflow run release.yml                      # new release, all stores
-gh workflow run release.yml -f version=0.0.51 -f edge=false
+gh workflow run bump.yml -f bump=minor                          # new release, all stores
+gh workflow run release.yml --ref v0.0.51 -f edge=false      # existing release, again without Edge
 ```
 
 The Chrome package is uploaded as a draft (`publish: false`) and has to be submitted for review in the developer dashboard. Firefox receives the source archive of the tagged commit for the review.
