@@ -1,53 +1,72 @@
+"""Creates the extension icons in public/icons/ (needs Pillow: pip install pillow).
+
+The icon matches the logo in the popup and settings page: the Lucide "tv" glyph with a
+play triangle, drawn in the dark foreground color on a Kodi blue rounded square.
+"""
+
 from PIL import Image, ImageDraw
-import math
 
-def create_kodi_icon(size):
-    # Create image with transparency
-    img = Image.new('RGBA', (size, size), (0, 0, 0, 0))
-    draw = ImageDraw.Draw(img)
-    
-    # Colors
-    bg_color = (21, 101, 192)  # Kodi blue
-    play_color = (255, 255, 255)  # White
-    
-    # Draw rounded rectangle background
-    margin = size // 16
-    corner_radius = size // 8
-    draw.rounded_rectangle(
-        [(margin, margin), (size - margin, size - margin)],
-        radius=corner_radius,
-        fill=bg_color
+PRIMARY = (23, 179, 232)  # --color-primary
+PRIMARY_DARK = (14, 150, 199)  # bottom of the subtle gradient
+FOREGROUND = (4, 19, 26)  # --color-primary-foreground
+
+SUPERSAMPLE = 8
+
+
+def gradient_square(size, margin, radius):
+    """Kodi blue rounded square with a light top-to-bottom gradient."""
+    gradient = Image.new('RGBA', (size, size))
+    draw = ImageDraw.Draw(gradient)
+    for y in range(size):
+        t = y / (size - 1)
+        color = tuple(round(a + (b - a) * t) for a, b in zip(PRIMARY, PRIMARY_DARK))
+        draw.line([(0, y), (size, y)], fill=color + (255,))
+
+    mask = Image.new('L', (size, size), 0)
+    ImageDraw.Draw(mask).rounded_rectangle(
+        [(margin, margin), (size - 1 - margin, size - 1 - margin)], radius=radius, fill=255
     )
-    
-    # Draw play triangle
-    triangle_size = size // 2.5
-    center_x = size // 2 + size // 20  # Slight offset to right
-    center_y = size // 2
-    
-    # Calculate triangle points
-    height = triangle_size * math.sqrt(3) / 2
-    points = [
-        (center_x - height / 2, center_y - triangle_size / 2),  # Top left
-        (center_x - height / 2, center_y + triangle_size / 2),  # Bottom left
-        (center_x + height / 2, center_y)  # Right point
-    ]
-    
-    draw.polygon(points, fill=play_color)
-    
-    return img
+    icon = Image.new('RGBA', (size, size), (0, 0, 0, 0))
+    icon.paste(gradient, (0, 0), mask)
+    return icon
 
-# Create icons in different sizes
-sizes = [16, 48, 128]
-for size in sizes:
-    # Use LANCZOS resampling for high quality
-    if size < 128:
-        # Create at higher resolution and downsample for better quality
-        high_res = create_kodi_icon(size * 4)
-        icon = high_res.resize((size, size), Image.Resampling.LANCZOS)
-    else:
-        icon = create_kodi_icon(size)
-    
-    icon.save(f'public/icons/icon{size}.png', 'PNG', optimize=True)
-    print(f"Created icon{size}.png")
 
-print("All icons created successfully!")
+def create_icon(size, detailed):
+    s = size * SUPERSAMPLE
+    margin = round(s * 0.0625)
+    icon = gradient_square(s, margin, radius=round(s * 0.22))
+    draw = ImageDraw.Draw(icon)
+
+    if not detailed:
+        # At 16 px the TV outline turns into mush, so the toolbar icon is just the play triangle.
+        cx, cy, h = s * 0.54, s * 0.5, s * 0.5
+        w = h * 0.87
+        draw.polygon([(cx - w / 2, cy - h / 2), (cx - w / 2, cy + h / 2), (cx + w / 2, cy)], fill=FOREGROUND)
+        return icon.resize((size, size), Image.Resampling.LANCZOS)
+
+    # Lucide "tv" on a 24 unit grid, scaled into the inner area of the square.
+    glyph = s * 0.62
+    unit = glyph / 24
+    ox, oy = (s - glyph) / 2, (s - glyph) / 2 + unit * 0.4
+
+    def p(x, y):
+        return (ox + x * unit, oy + y * unit)
+
+    stroke = round(unit * 2.2)
+    draw.rounded_rectangle([p(2, 7), p(22, 22)], radius=round(unit * 2.4), outline=FOREGROUND, width=stroke)
+    draw.line([p(7, 2), p(12, 7), p(17, 2)], fill=FOREGROUND, width=stroke, joint='curve')
+    for x, y in (p(7, 2), p(17, 2)):
+        r = stroke / 2
+        draw.ellipse([(x - r, y - r), (x + r, y + r)], fill=FOREGROUND)
+
+    # Play triangle centered in the screen.
+    cx, cy, h = 12.5, 14.5, 7.2
+    w = h * 0.87
+    draw.polygon([p(cx - w / 2, cy - h / 2), p(cx - w / 2, cy + h / 2), p(cx + w / 2, cy)], fill=FOREGROUND)
+
+    return icon.resize((size, size), Image.Resampling.LANCZOS)
+
+
+for size in (16, 32, 48, 128):
+    create_icon(size, detailed=size >= 32).save(f'public/icons/icon{size}.png', 'PNG', optimize=True)
+    print(f'Created icon{size}.png')
