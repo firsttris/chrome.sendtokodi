@@ -1,5 +1,7 @@
 import type { JSX } from 'solid-js';
 
+// Icons from Lucide (https://lucide.dev), the icon set used by shadcn/ui.
+
 type IconProps = { class?: string };
 
 const Svg = (props: IconProps & { children: JSX.Element }) => (
@@ -19,69 +21,100 @@ const Svg = (props: IconProps & { children: JSX.Element }) => (
 
 export const PlayIcon = (props: IconProps) => (
   <Svg {...props}>
-    <path d="M8 6v12l10-6z" fill="currentColor" />
+    <polygon points="6 3 20 12 6 21 6 3" fill="currentColor" />
   </Svg>
 );
 
 export const QueueIcon = (props: IconProps) => (
   <Svg {...props}>
-    <path d="M4 7h10M4 12h10M4 17h7" />
-    <path d="M18 14v6m-3-3h6" />
+    <path d="M11 12H3M16 6H3M16 18H3M18 9v6M21 12h-6" />
   </Svg>
 );
 
 export const StopIcon = (props: IconProps) => (
   <Svg {...props}>
-    <rect x="7" y="7" width="10" height="10" rx="1.5" fill="currentColor" />
+    <rect width="14" height="14" x="5" y="5" rx="2" />
   </Svg>
 );
 
 export const GearIcon = (props: IconProps) => (
   <Svg {...props}>
-    <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-    <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+    <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+    <circle cx="12" cy="12" r="3" />
   </Svg>
 );
 
 export const BackIcon = (props: IconProps) => (
   <Svg {...props}>
-    <path d="M15 19l-7-7 7-7" />
+    <path d="m12 19-7-7 7-7M19 12H5" />
   </Svg>
 );
 
 export const ExternalIcon = (props: IconProps) => (
   <Svg {...props}>
-    <path d="M14 4h6v6M10 14L20 4M18 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1h5" />
+    <path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
   </Svg>
 );
 
 export const PlusIcon = (props: IconProps) => (
   <Svg {...props}>
-    <path d="M12 5v14m7-7H5" />
+    <path d="M5 12h14M12 5v14" />
   </Svg>
 );
 
 export const TrashIcon = (props: IconProps) => (
   <Svg {...props}>
-    <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+    <path d="M3 6h18M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
   </Svg>
 );
 
 export const BoltIcon = (props: IconProps) => (
   <Svg {...props}>
-    <path d="M13 10V3L4 14h7v7l9-11h-7z" />
+    <path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z" />
   </Svg>
 );
 
-export const InfoIcon = (props: IconProps) => (
+export const TvIcon = (props: IconProps) => (
   <Svg {...props}>
-    <path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    <rect width="20" height="15" x="2" y="7" rx="2" />
+    <polyline points="17 2 12 7 7 2" />
+  </Svg>
+);
+
+export const ChevronsUpDownIcon = (props: IconProps) => (
+  <Svg {...props}>
+    <path d="m7 15 5 5 5-5M7 9l5-5 5 5" />
+  </Svg>
+);
+
+export const CheckIcon = (props: IconProps) => (
+  <Svg {...props}>
+    <path d="M20 6 9 17l-5-5" />
+  </Svg>
+);
+
+export const CheckCircleIcon = (props: IconProps) => (
+  <Svg {...props}>
+    <circle cx="12" cy="12" r="10" />
+    <path d="m9 12 2 2 4-4" />
+  </Svg>
+);
+
+export const AlertIcon = (props: IconProps) => (
+  <Svg {...props}>
+    <circle cx="12" cy="12" r="10" />
+    <path d="M12 8v4M12 16h.01" />
+  </Svg>
+);
+
+export const WarningIcon = (props: IconProps) => (
+  <Svg {...props}>
+    <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3M12 9v4M12 17h.01" />
   </Svg>
 );
 
 export const Spinner = (props: IconProps) => (
-  <svg class={`animate-spin ${props.class ?? 'h-4 w-4'}`} fill="none" viewBox="0 0 24 24" aria-hidden="true">
-    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
-    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-  </svg>
+  <Svg class={`animate-spin ${props.class ?? 'h-4 w-4'}`}>
+    <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+  </Svg>
 );

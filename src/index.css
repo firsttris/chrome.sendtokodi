@@ -1,9 +1,24 @@
 @import "tailwindcss";
 
+/* shadcn/ui-style design tokens (zinc, dark) with Kodi blue as the primary color. */
 @theme {
-  --color-kodi-blue: #17b3e8;
-  --color-kodi-dark: #1e1e1e;
-  --color-kodi-darker: #141414;
+  --color-background: #09090b;
+  --color-foreground: #fafafa;
+  --color-card: #0c0c0f;
+  --color-muted: #18181b;
+  --color-muted-foreground: #a1a1aa;
+  --color-accent: #27272a;
+  --color-border: #27272a;
+  --color-input: #27272a;
+  --color-ring: #17b3e8;
+  --color-primary: #17b3e8;
+  --color-primary-foreground: #04131a;
+  --color-destructive: #f87171;
+  --color-success: #34d399;
+  --color-warning: #fbbf24;
+
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, SFMono-Regular, monospace;
 }
 
 @layer base {
@@ -12,7 +27,7 @@
   }
 
   body {
-    @apply bg-gray-900 text-gray-100;
+    @apply bg-background font-sans text-foreground antialiased;
   }
 
   button:not(:disabled) {
@@ -20,28 +35,11 @@
   }
 
   :focus-visible {
-    @apply outline-2 outline-offset-2 outline-kodi-blue;
+    @apply outline-2 outline-offset-2 outline-ring;
   }
 }
 
-@layer components {
-  .input {
-    @apply w-full rounded-lg border border-gray-700 bg-gray-800 text-white placeholder-gray-500 focus:border-transparent focus:ring-2 focus:ring-kodi-blue focus:outline-none;
-  }
-
-  .btn-primary {
-    @apply rounded-lg bg-kodi-blue px-4 py-2 font-semibold text-gray-950 transition-colors hover:bg-sky-300 disabled:cursor-not-allowed disabled:opacity-50;
-  }
-
-  .btn-secondary {
-    @apply rounded-lg bg-gray-700 px-4 py-2 font-medium text-white transition-colors hover:bg-gray-600 disabled:cursor-not-allowed disabled:opacity-50;
-  }
-
-  .btn-danger {
-    @apply rounded-lg border border-red-500/40 bg-red-500/10 px-4 py-2 font-medium text-red-300 transition-colors hover:bg-red-500/20 disabled:cursor-not-allowed disabled:opacity-50;
-  }
-
-  .btn-ghost {
-    @apply inline-flex items-center justify-center rounded-lg text-gray-300 transition-colors hover:bg-gray-700 hover:text-white;
-  }
+/* Unlayered on purpose: browsers inject a default font for extension pages that would beat a layered rule. */
+body {
+  font-family: var(--font-sans);
 }

@@ -140,7 +140,7 @@
     "description": "Footer"
   },
   "fieldSecure": {
-    "message": "HTTPS verwenden (z. B. hinter einem Reverse-Proxy)",
+    "message": "HTTPS verwenden",
     "description": "HTTPS checkbox label"
   },
   "fieldPortInvalid": {
@@ -192,19 +192,19 @@
     "description": "Connection status unknown"
   },
   "successPlay": {
-    "message": "✓ Wiedergabe gestartet",
+    "message": "Wiedergabe gestartet",
     "description": "Play success"
   },
   "successQueue": {
-    "message": "✓ Zur Warteschlange hinzugefügt",
+    "message": "Zur Warteschlange hinzugefügt",
     "description": "Queue success"
   },
   "successStop": {
-    "message": "✓ Wiedergabe gestoppt",
+    "message": "Wiedergabe gestoppt",
     "description": "Stop success"
   },
   "successPing": {
-    "message": "✓ Verbindung erfolgreich",
+    "message": "Verbindung erfolgreich",
     "description": "Ping success"
   },
   "noUrl": {
@@ -259,8 +259,72 @@
     "message": "Aktuellen Tab zur Kodi-Warteschlange hinzufügen",
     "description": "Keyboard shortcut: queue"
   },
-  "hintShortcuts": {
-    "message": "Tipp: Rechtsklick auf einen Link oder ein Video sendet ihn an Kodi, Alt+Shift+K spielt den aktuellen Tab ab.",
-    "description": "Feature hint"
+  "fieldSecureHint": {
+    "message": "z. B. wenn Kodi hinter einem Reverse-Proxy läuft",
+    "description": "fieldSecureHint"
+  },
+  "streamUrlHint": {
+    "message": "Enter zum Abspielen, Shift+Enter für neue Zeile",
+    "description": "streamUrlHint"
+  },
+  "hintContextMenu": {
+    "message": "Tipp: Rechtsklick auf einen Link → „Auf Kodi abspielen“",
+    "description": "hintContextMenu"
+  },
+  "badgeOnline": {
+    "message": "Online",
+    "description": "badgeOnline"
+  },
+  "badgeOffline": {
+    "message": "Offline",
+    "description": "badgeOffline"
+  },
+  "badgeUnknown": {
+    "message": "Unbekannt",
+    "description": "badgeUnknown"
+  },
+  "connectionsTitle": {
+    "message": "Verbindungen",
+    "description": "connectionsTitle"
+  },
+  "btnNewConnection": {
+    "message": "Neue Verbindung",
+    "description": "btnNewConnection"
+  },
+  "connectionCardDescription": {
+    "message": "Zugangsdaten für die HTTP-Fernsteuerung von Kodi",
+    "description": "connectionCardDescription"
+  },
+  "autoSaved": {
+    "message": "Änderungen werden automatisch gespeichert",
+    "description": "autoSaved"
+  },
+  "httpRemoteSubtitle": {
+    "message": "Einmalig in Kodi einrichten",
+    "description": "httpRemoteSubtitle"
+  },
+  "shortcutsTitle": {
+    "message": "Tastenkürzel & Kontextmenü",
+    "description": "shortcutsTitle"
+  },
+  "shortcutsSubtitle": {
+    "message": "Ohne Popup direkt an Kodi senden",
+    "description": "shortcutsSubtitle"
+  },
+  "contextMenuLabel": {
+    "message": "Rechtsklick auf Link oder Video",
+    "description": "contextMenuLabel"
+  },
+  "shortcutNotSet": {
+    "message": "Nicht festgelegt",
+    "description": "shortcutNotSet"
+  },
+  "shortcutsHint": {
+    "message": "Tastenkürzel lassen sich in den Tastenkürzel-Einstellungen der Browser-Erweiterungen ändern.",
+    "description": "shortcutsHint"
+  },
+  "kodiAddon": {
+    "message": "Kodi-Addon",
+    "description": "kodiAddon"
   }
 }

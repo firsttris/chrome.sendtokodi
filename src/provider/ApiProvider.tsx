@@ -84,7 +84,7 @@ export const ApiProvider = (props: ApiProviderProps) => {
 
   const requireUrl = () => {
     if (url().trim()) return true;
-    setStatus({ type: 'error', message: `✗ ${t('noUrl')}` });
+    setStatus({ type: 'error', message: t('noUrl') });
     return false;
   };
 
