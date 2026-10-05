@@ -18,16 +18,16 @@
     "postversion": "git push --follow-tags"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.5.14",
+    "@biomejs/biome": "^2.5.15",
     "@crxjs/vite-plugin": "^3.0.0",
     "@tailwindcss/vite": "^4.3.3",
-    "@types/chrome": "^0.3.0",
-    "@types/node": "^24.19.0",
+    "@types/chrome": "^0.3.4",
+    "@types/node": "^24.19.1",
     "tailwindcss": "^4.3.3",
     "typescript": "^7.0.2",
-    "vite": "^8.3.1",
+    "vite": "^8.3.2",
     "vite-plugin-solid": "^2.11.14",
-    "vitest": "^5.0.2"
+    "vitest": "^5.0.3"
   },
   "dependencies": {
     "@fontsource-variable/geist": "^5.3.0",
