@@ -5,6 +5,8 @@ on:
     branches:
       - master
   pull_request:
+  # The release workflow runs the same checks and publishes the packages built here
+  workflow_call:
 
 permissions:
   contents: read
@@ -42,8 +44,22 @@ jobs:
       - name: Build Chrome extension
         run: npm run build
 
+      - name: Package Chrome extension
+        run: (cd dist && zip -qr "../sendToKodi-chrome-$(node -p "require('../package.json').version").zip" .)
+
       - name: Build Firefox extension
         run: npm run build:firefox
 
+      - name: Package Firefox extension
+        run: (cd dist && zip -qr "../sendToKodi-firefox-$(node -p "require('../package.json').version").zip" .)
+
       - name: Lint Firefox extension
         run: npx --yes web-ext@10 lint --source-dir dist
+
+      # Installable from a pull request; the release attaches them and uploads them to the stores
+      - name: Upload packages
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: extension
+          path: sendToKodi-*.zip
+          if-no-files-found: error
