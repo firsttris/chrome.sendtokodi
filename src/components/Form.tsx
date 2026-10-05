@@ -4,7 +4,9 @@ import { useApi } from '../provider/ApiProvider';
 import { useStore } from '../provider/StoreProvider';
 import { t } from '../utils/i18n';
 import { BoltIcon, Spinner } from './icons';
-import { StatusMessage } from './StatusMessage';
+import { Button, Input, Label, Switch } from './ui';
+
+export const CONNECTION_FORM_ID = 'connection-form';
 
 type TextField = 'name' | 'ip' | 'port' | 'login' | 'pw';
 
@@ -13,6 +15,8 @@ type InputFieldProps = {
   type: string;
   placeholder: string;
   label: string;
+  class: string;
+  mono?: boolean;
   required?: boolean;
   inputMode?: 'text' | 'numeric';
   autocomplete?: string;
@@ -56,12 +60,13 @@ const InputField = (props: InputFieldProps) => {
   const inputId = () => `field-${props.name}`;
 
   return (
-    <div class="mb-4">
-      <label for={inputId()} class="mb-2 block text-sm font-medium text-gray-300">
+    <div class={`flex min-w-0 flex-col gap-1.5 ${props.class}`}>
+      <Label for={inputId()} invalid={!!error()}>
         {props.label}
-      </label>
-      <input
-        class={`input px-3 py-2 ${error() ? 'border-red-500' : ''}`}
+      </Label>
+      <Input
+        class={props.mono ? 'font-mono text-xs' : ''}
+        invalid={!!error()}
         type={props.type}
         name={props.name}
         id={inputId()}
@@ -69,13 +74,12 @@ const InputField = (props: InputFieldProps) => {
         inputMode={props.inputMode}
         autocomplete={props.autocomplete ?? 'off'}
         value={value()}
-        aria-invalid={!!error()}
         aria-describedby={error() ? `${inputId()}-error` : undefined}
         onInput={handleInput}
         onBlur={() => setTouched(true)}
       />
       <Show when={error()}>
-        <p id={`${inputId()}-error`} class="mt-1 text-xs text-red-400">
+        <p id={`${inputId()}-error`} class="text-xs text-destructive">
           {error()}
         </p>
       </Show>
@@ -83,27 +87,47 @@ const InputField = (props: InputFieldProps) => {
   );
 };
 
+/** The fields of the selected connection. Submitting the form (Enter or TestConnectionButton) tests the connection. */
 export const Form = () => {
-  const { pending, status, sendPing } = useApi();
+  const { sendPing } = useApi();
   const { selectedConnection, updateConnection } = useStore();
 
   const setSecure = (secure: boolean) => updateConnection('secure' satisfies keyof Connection, secure);
 
   return (
     <form
+      id={CONNECTION_FORM_ID}
+      class="grid grid-cols-6 gap-x-3 gap-y-4"
       onSubmit={(event) => {
         event.preventDefault();
         sendPing();
       }}
     >
-      <InputField name="name" type="text" placeholder={t('fieldNamePlaceholder')} label={t('fieldName')} required />
-      <InputField name="ip" type="text" placeholder={t('fieldIpPlaceholder')} label={t('fieldIp')} required />
+      <InputField
+        name="name"
+        type="text"
+        placeholder={t('fieldNamePlaceholder')}
+        label={t('fieldName')}
+        class="col-span-6"
+        required
+      />
+      <InputField
+        name="ip"
+        type="text"
+        placeholder={t('fieldIpPlaceholder')}
+        label={t('fieldIp')}
+        class="col-span-4"
+        mono
+        required
+      />
       <InputField
         name="port"
         type="text"
         inputMode="numeric"
         placeholder={t('fieldPortPlaceholder')}
         label={t('fieldPort')}
+        class="col-span-2"
+        mono
         required
         validate={validatePort}
       />
@@ -112,6 +136,7 @@ export const Form = () => {
         type="text"
         placeholder={t('fieldLoginPlaceholder')}
         label={t('fieldLogin')}
+        class="col-span-3"
         autocomplete="username"
       />
       <InputField
@@ -119,24 +144,39 @@ export const Form = () => {
         type="password"
         placeholder={t('fieldPasswordPlaceholder')}
         label={t('fieldPassword')}
+        class="col-span-3"
         autocomplete="current-password"
       />
-      <label class="mb-4 flex cursor-pointer items-center gap-2 text-sm text-gray-300">
-        <input
-          type="checkbox"
-          class="h-4 w-4 rounded border-gray-600 bg-gray-800 accent-kodi-blue"
+      <div class="col-span-6 flex items-center gap-3 rounded-lg border border-border p-3">
+        <label for="field-secure" class="min-w-0 flex-1 cursor-pointer">
+          <span class="block text-[13px] font-medium">{t('fieldSecure')}</span>
+          <span class="block text-xs text-muted-foreground">{t('fieldSecureHint')}</span>
+        </label>
+        <Switch
+          id="field-secure"
+          label={t('fieldSecure')}
           checked={selectedConnection()?.secure ?? false}
-          onChange={(event) => setSecure(event.currentTarget.checked)}
+          onChange={setSecure}
         />
-        {t('fieldSecure')}
-      </label>
-      <div class="border-t border-gray-700 pt-4">
-        <button type="submit" class="btn-primary flex items-center gap-2" disabled={!!pending()}>
-          {pending() === 'ping' ? <Spinner /> : <BoltIcon />}
-          {t('btnTest')}
-        </button>
-        <StatusMessage status={status()} class="mt-2" />
       </div>
     </form>
+  );
+};
+
+export const TestConnectionButton = (props: { class?: string }) => {
+  const { pending } = useApi();
+  return (
+    <Button
+      type="submit"
+      form={CONNECTION_FORM_ID}
+      variant="secondary"
+      size="md"
+      class={props.class}
+      disabled={!!pending()}
+      aria-busy={pending() === 'ping'}
+    >
+      {pending() === 'ping' ? <Spinner class="h-3.5 w-3.5" /> : <BoltIcon class="h-3.5 w-3.5" />}
+      {t('btnTest')}
+    </Button>
   );
 };

@@ -11,6 +11,6 @@ export const t = (messageName: string, substitutions?: string | string[]): strin
 };
 
 export const errorMessage = (error: unknown) => {
-  if (error instanceof KodiError) return `✗ ${t(`error_${error.code}`, error.detail)}`;
-  return `✗ ${t('error_unknown', (error as Error)?.message ?? String(error))}`;
+  if (error instanceof KodiError) return t(`error_${error.code}`, error.detail);
+  return t('error_unknown', (error as Error)?.message ?? String(error));
 };
