@@ -146,6 +146,8 @@ SendToKodi collects **no data**. There is no tracking and no analytics, and no s
 
 The extension does **not** need access to the websites you visit. All code is open source and can be reviewed in this repository.
 
+Full details: [Privacy Policy](./PRIVACY.md)
+
 ## 🤝 Contributing
 
 Bug reports, ideas and pull requests are welcome! See [CONTRIBUTING.md](./CONTRIBUTING.md) for how to build and run the extension locally and how releases work.
