@@ -5,6 +5,7 @@ on:
     branches:
       - master
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
   # The release workflow runs the same checks and publishes the packages built here
   workflow_call:
 
@@ -17,6 +18,8 @@ concurrency:
 
 jobs:
   check:
+    # Draft pull requests do not build; "Ready for review" starts the run
+    if: ${{ !github.event.pull_request.draft }}
     runs-on: ubuntu-latest
 
     steps:
