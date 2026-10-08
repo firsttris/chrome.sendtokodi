@@ -20,3 +20,6 @@ coverage/
 yarn-debug.log*
 yarn-error.log*
 src/components/__snapshots__/
+
+# MkDocs build (mkdocs build)
+site/

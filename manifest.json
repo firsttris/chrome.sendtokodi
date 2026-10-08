@@ -4,6 +4,7 @@
   "description": "__MSG_extDescription__",
   "short_name": "__MSG_extName__",
   "default_locale": "en",
+  "homepage_url": "https://firsttris.github.io/chrome.sendtokodi/",
   "icons": {
     "16": "icons/icon16.png",
     "32": "icons/icon32.png",
