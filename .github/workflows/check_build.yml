@@ -1,11 +1,20 @@
 name: Check Build
 
+# Changes to documentation alone don't build.
 on:
   push:
     branches:
       - master
+    paths-ignore:
+      - "**.md"
+      - "docs/**"
+      - "LICENSE"
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
+    paths-ignore:
+      - "**.md"
+      - "docs/**"
+      - "LICENSE"
   # The release workflow runs the same checks and publishes the packages built here
   workflow_call:
 
