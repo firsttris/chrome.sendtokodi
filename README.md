@@ -184,15 +184,14 @@ the extension locally and how releases work.
 - [@eeshugerman](https://github.com/eeshugerman): Mozilla support ([#3](https://github.com/firsttris/chrome.sendtokodi/pull/3))
 - [@mauman](https://github.com/mauman): Firefox manifest fixes ([#14](https://github.com/firsttris/chrome.sendtokodi/pull/14))
 
-## 📄 License
-
-[MIT](./LICENSE.md). Kodi is a trademark of the XBMC Foundation; this project is not affiliated with the XBMC
-Foundation, Google, Mozilla or Microsoft.
-
 ---
 
 <div align="center">
 
-⭐ Like SendToKodi? [Star it on GitHub](https://github.com/firsttris/chrome.sendtokodi) • 🐛 [Report a bug](https://github.com/firsttris/chrome.sendtokodi/issues) • 💡 [Request a feature](https://github.com/firsttris/chrome.sendtokodi/issues)
+⭐ Like SendToKodi? A [star on GitHub](https://github.com/firsttris/chrome.sendtokodi) helps others find it.<br>
+🐛 [Report a bug](https://github.com/firsttris/chrome.sendtokodi/issues/new) · 💡 [Request a feature](https://github.com/firsttris/chrome.sendtokodi/issues/new)
+
+<sub>License: <a href="LICENSE.md">MIT</a> · © Tristan Teufel and contributors<br>
+Kodi is a trademark of the XBMC Foundation. This project is not affiliated with the XBMC Foundation, Google, Mozilla or Microsoft.</sub>
 
 </div>
