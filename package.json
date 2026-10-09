@@ -15,11 +15,13 @@
     "release:patch": "npm version patch",
     "release:minor": "npm version minor",
     "release:major": "npm version major",
-    "postversion": "git push --follow-tags"
+    "postversion": "git push --follow-tags",
+    "screenshots": "playwright test -c playwright.screenshots.config.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.15",
     "@crxjs/vite-plugin": "^3.0.0",
+    "@playwright/test": "1.56.1",
     "@tailwindcss/vite": "^4.3.3",
     "@types/chrome": "^0.3.4",
     "@types/node": "^24.19.1",

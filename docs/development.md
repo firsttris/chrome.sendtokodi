@@ -114,3 +114,19 @@ which becomes the page's meta description for search engines. Links between page
 (`setup.md#several-kodi-devices`), which work on GitHub and on the site alike. Screenshots live in `docs/` next to the
 pages (copies of `store-assets/screenshots/`). `--strict` fails on broken links; CI runs it on every pull request that
 touches the docs. The README on GitHub stays the short overview and links here for details.
+
+## Screenshots
+
+The pictures of the popup and the options page (`docs/*.png` and `store-assets/screenshots/`) are
+taken by `screenshots/screenshots.spec.ts`: the built pages run as plain pages in Chromium, with a
+stand-in for the extension API (`screenshots/chrome-stub.ts`: two Kodi connections, the English
+messages, a YouTube video in the active tab) and Kodi's JSON-RPC answered by the test.
+
+```bash
+npm run screenshots
+```
+
+After a change to the look, run **Update screenshots** (Actions → Run workflow,
+`.github/workflows/screenshots.yml`) on the branch: it takes the pictures in the official
+Playwright image and commits the ones that changed. The banners in `store-assets/banner/` are made
+by hand.

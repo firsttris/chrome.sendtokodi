@@ -23,3 +23,6 @@ src/components/__snapshots__/
 
 # MkDocs build (mkdocs build)
 site/
+
+# Playwright (npm run screenshots)
+test-results/
