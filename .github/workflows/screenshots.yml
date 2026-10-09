@@ -1,0 +1,19 @@
+name: Update screenshots
+
+# Takes the pictures of the popup and the options page (docs/, store-assets/screenshots/,
+# npm run screenshots) and commits the ones that changed. Run it after a change to the look.
+on:
+  workflow_dispatch:
+
+jobs:
+  screenshots:
+    uses: firsttris/workflows/.github/workflows/screenshots.yml@v1
+    with:
+      command: npm run screenshots
+      paths: |
+        docs/options.png
+        docs/popup.png
+        docs/popup-settings.png
+        store-assets/screenshots
+    permissions:
+      contents: write
