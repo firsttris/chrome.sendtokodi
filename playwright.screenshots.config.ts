@@ -14,7 +14,7 @@ export default defineConfig({
   },
   webServer: {
     // The built popup and options page, served as plain pages
-    command: 'npm run build && npx vite preview --port 4319 --strictPort',
+    command: 'npm run build && npx vite preview --host 127.0.0.1 --port 4319 --strictPort',
     url: 'http://127.0.0.1:4319/popup.html',
     reuseExistingServer: false,
     timeout: 120_000,
