@@ -13,7 +13,7 @@ YouTube, Twitch, Vimeo, SoundCloud and [1000+ other websites](https://github.com
 [![Mozilla Add-on Users](https://img.shields.io/amo/users/sendtokodi?label=Firefox%20Users)](https://addons.mozilla.org/firefox/addon/sendtokodi/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow)](LICENSE.md)
 <br>
-[![Manifest V3](https://img.shields.io/badge/Manifest-V3-17b2e7)](docs/how-it-works.md)
+[![Manifest V3](https://img.shields.io/badge/Manifest-V3-17b2e7)](https://firsttris.github.io/chrome.sendtokodi/how-it-works.html)
 [![No tracking](https://img.shields.io/badge/Tracking-none-brightgreen)](PRIVACY.md)
 [![Kodi 19+](https://img.shields.io/badge/Kodi-19%2B-17B2E7?logo=kodi&logoColor=white)](https://github.com/firsttris/plugin.video.sendtokodi)
 
@@ -172,7 +172,7 @@ The full documentation is at **[firsttris.github.io/chrome.sendtokodi](https://f
 [privacy & permissions](https://firsttris.github.io/chrome.sendtokodi/privacy.html),
 [how it works](https://firsttris.github.io/chrome.sendtokodi/how-it-works.html),
 [development](https://firsttris.github.io/chrome.sendtokodi/development.html) and
-[releases](https://firsttris.github.io/chrome.sendtokodi/releases.html). The source is in [docs/](docs/README.md).
+[releases](https://firsttris.github.io/chrome.sendtokodi/releases.html). The source is in [docs/](docs/).
 
 ## 🤝 Contributing
 
