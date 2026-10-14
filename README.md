@@ -7,11 +7,13 @@ SendToKodi for Chrome, Firefox and Edge sends the video you are watching to [Kod
 YouTube, Twitch, Vimeo, SoundCloud and [1000+ other websites](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md).
 
 [![Check Build](https://github.com/firsttris/chrome.sendtokodi/actions/workflows/check_build.yml/badge.svg)](https://github.com/firsttris/chrome.sendtokodi/actions/workflows/check_build.yml)
+[![Release](https://img.shields.io/github/v/release/firsttris/chrome.sendtokodi?logo=github&label=release)](https://github.com/firsttris/chrome.sendtokodi/releases/latest)
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/gbcpfpcacakaadapjcdchbdmdnfbnbaf?label=Chrome&logo=googlechrome&logoColor=white)](https://chrome.google.com/webstore/detail/sendtokodi/gbcpfpcacakaadapjcdchbdmdnfbnbaf)
 [![Chrome Web Store Users](https://img.shields.io/chrome-web-store/users/gbcpfpcacakaadapjcdchbdmdnfbnbaf?label=Chrome%20Users)](https://chrome.google.com/webstore/detail/sendtokodi/gbcpfpcacakaadapjcdchbdmdnfbnbaf)
 [![Mozilla Add-on](https://img.shields.io/amo/v/sendtokodi?label=Firefox&logo=firefox&logoColor=white)](https://addons.mozilla.org/firefox/addon/sendtokodi/)
 [![Mozilla Add-on Users](https://img.shields.io/amo/users/sendtokodi?label=Firefox%20Users)](https://addons.mozilla.org/firefox/addon/sendtokodi/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow)](LICENSE.md)
+[![Docs](https://img.shields.io/badge/docs-firsttris.github.io%2Fchrome.sendtokodi-4f46e5?logo=materialformkdocs&logoColor=white)](https://firsttris.github.io/chrome.sendtokodi/)
 <br>
 [![Manifest V3](https://img.shields.io/badge/Manifest-V3-17b2e7)](https://firsttris.github.io/chrome.sendtokodi/how-it-works.html)
 [![No tracking](https://img.shields.io/badge/Tracking-none-brightgreen)](PRIVACY.md)
