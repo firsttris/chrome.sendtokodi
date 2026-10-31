@@ -21,7 +21,7 @@
   "devDependencies": {
     "@biomejs/biome": "^2.5.15",
     "@crxjs/vite-plugin": "^3.0.0",
-    "@playwright/test": "1.56.1",
+    "@playwright/test": "1.64.1",
     "@tailwindcss/vite": "^4.3.3",
     "@types/chrome": "^0.3.4",
     "@types/node": "^26.0.0",
