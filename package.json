@@ -3,20 +3,21 @@
   "version": "0.0.52",
   "type": "module",
   "description": "send almost every stream from chrome to kodi with SendToKodi",
+  "packageManager": "bun@1.4.4",
   "scripts": {
-    "build": "vite build",
-    "build:firefox": "TARGET_PLATFORM=firefox vite build",
-    "start": "vite",
-    "start:firefox": "TARGET_PLATFORM=firefox vite",
+    "build": "bun --bun vite build",
+    "build:firefox": "TARGET_PLATFORM=firefox bun --bun vite build",
+    "start": "bun --bun vite",
+    "start:firefox": "TARGET_PLATFORM=firefox bun --bun vite",
     "check": "biome check .",
     "format": "biome format --write .",
-    "test": "vitest run",
+    "test": "bun --bun vitest run",
     "typecheck": "tsc -p .",
-    "release:patch": "npm version patch",
-    "release:minor": "npm version minor",
-    "release:major": "npm version major",
+    "release:patch": "bun pm version patch",
+    "release:minor": "bun pm version minor",
+    "release:major": "bun pm version major",
     "postversion": "git push --follow-tags",
-    "screenshots": "playwright test -c playwright.screenshots.config.ts"
+    "screenshots": "bun --bun playwright test -c playwright.screenshots.config.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.15",
@@ -35,8 +36,5 @@
     "@fontsource-variable/geist": "^5.3.0",
     "@fontsource-variable/geist-mono": "^5.3.0",
     "solid-js": "^1.9.15"
-  },
-  "engines": {
-    "node": ">=22.12"
   }
 }

@@ -1,6 +1,6 @@
 name: Release
 
-# A tag vX.Y.Z (the button in bump.yml or npm run release:patch|minor|major) publishes that
+# A tag vX.Y.Z (the button in bump.yml or bun run release:patch|minor|major) publishes that
 # version: the checks and both builds from check_build.yml, then the shared GitHub release and
 # store upload from firsttris/workflows. Started by hand on an existing tag, it publishes that
 # version again, to the stores ticked below; on master it only runs the checks.

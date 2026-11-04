@@ -18,20 +18,20 @@ The UI follows the [shadcn/ui](https://ui.shadcn.com/) look: the design tokens l
 
 ## Setup
 
-Requirements: Node.js 22.12 or newer (see `.nvmrc`) and npm.
+Requirements: [Bun](https://bun.sh/) (the version in `packageManager` in `package.json`; CI uses the same).
 
 ```bash
 git clone https://github.com/firsttris/chrome.sendtokodi.git
 cd chrome.sendtokodi
-npm install
+bun install
 
 # Development build with hot reload
-npm run start
-npm run start:firefox   # Firefox variant
+bun run start
+bun run start:firefox   # Firefox variant
 
 # Production builds into dist/
-npm run build
-npm run build:firefox
+bun run build
+bun run build:firefox
 ```
 
 ## Load the extension
@@ -48,16 +48,16 @@ npm run build:firefox
     2. Click **This Firefox** → **Load Temporary Add-on…**.
     3. Pick `dist/manifest.json`.
 
-During `npm run start` the extension reloads automatically when you change code. A temporary add-on in Firefox is
+During `bun run start` the extension reloads automatically when you change code. A temporary add-on in Firefox is
 removed when the browser closes; load it again next time.
 
 ## Checks and tests
 
 ```bash
-npm run check       # lint & format (Biome)
-npm run format      # apply Biome's formatting
-npm run typecheck   # tsc
-npm test            # Vitest
+bun run check       # lint & format (Biome)
+bun run format      # apply Biome's formatting
+bun run typecheck   # tsc
+bun run test        # Vitest
 ```
 
 CI runs the same checks, both builds and `web-ext lint` on the Firefox build for every pull request (see
@@ -92,7 +92,7 @@ values. The extension name and description in the stores come from `extName` and
 
 ## Conventions
 
-- Biome formats and lints; run `npm run format` before committing. Single quotes, 120 columns, two spaces.
+- Biome formats and lints; run `bun run format` before committing. Single quotes, 120 columns, two spaces.
 - No content scripts and no new permissions without a strong reason; the permission list is part of what users trust.
 - Keep the Kodi protocol in `src/lib/kodi.ts` and test it. UI components should not build plugin URLs themselves.
 - Error messages are keys in `messages.json` (`error_<code>`), so every new `KodiErrorCode` needs a message in every
@@ -123,7 +123,7 @@ stand-in for the extension API (`screenshots/chrome-stub.ts`: two Kodi connectio
 messages, a YouTube video in the active tab) and Kodi's JSON-RPC answered by the test.
 
 ```bash
-npm run screenshots
+bun run screenshots
 ```
 
 After a change to the look, run **Update screenshots** (Actions → Run workflow,
