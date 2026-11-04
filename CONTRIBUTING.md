@@ -10,17 +10,17 @@ TypeScript · [Solid.js](https://www.solidjs.com/) · [Vite](https://vite.dev/) 
 
 ## 💻 Development
 
-Node.js 22.12 or higher (see `.nvmrc`) and npm.
+[Bun](https://bun.sh/) (the version in `packageManager` in `package.json`).
 
 ```bash
 git clone https://github.com/firsttris/chrome.sendtokodi.git
 cd chrome.sendtokodi
-npm install
+bun install
 
-npm run start           # development build with hot reload
-npm run start:firefox   # Firefox variant
-npm run build           # production builds into dist/
-npm run build:firefox
+bun run start           # development build with hot reload
+bun run start:firefox   # Firefox variant
+bun run build           # production builds into dist/
+bun run build:firefox
 ```
 
 Load the `dist` folder as an unpacked extension (`chrome://extensions/` → *Developer mode* → *Load unpacked*; Firefox: `about:debugging` → *This Firefox* → *Load Temporary Add-on…* → `dist/manifest.json`).
@@ -28,9 +28,9 @@ Load the `dist` folder as an unpacked extension (`chrome://extensions/` → *Dev
 ### Before you open a pull request
 
 ```bash
-npm run check       # lint & format (Biome)
-npm run typecheck
-npm test
+bun run check       # lint & format (Biome)
+bun run typecheck
+bun run test
 ```
 
 CI runs the same checks and both builds on every pull request.
@@ -40,4 +40,4 @@ The project structure, translations, conventions and how to work on the document
 
 ## 📤 Publishing
 
-A release is a tag `vX.Y.Z`: *Actions → Bump version → Run workflow* (or `npm run release:patch|minor|major`) raises the version, tags it and starts the release, which builds both packages, creates the GitHub release and uploads to the Chrome Web Store, Mozilla Add-ons and Microsoft Edge Add-ons. Details and the required secrets: [Releases](https://firsttris.github.io/chrome.sendtokodi/releases.html) ([source](docs/releases.md)).
+A release is a tag `vX.Y.Z`: *Actions → Bump version → Run workflow* (or `bun run release:patch|minor|major`) raises the version, tags it and starts the release, which builds both packages, creates the GitHub release and uploads to the Chrome Web Store, Mozilla Add-ons and Microsoft Edge Add-ons. Details and the required secrets: [Releases](https://firsttris.github.io/chrome.sendtokodi/releases.html) ([source](docs/releases.md)).

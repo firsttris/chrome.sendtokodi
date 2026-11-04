@@ -35,38 +35,37 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - name: Set up Node.js
-        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
         with:
-          node-version-file: .nvmrc
-          cache: npm
+          bun-version-file: package.json
 
       - name: Install dependencies
-        run: npm ci
+        run: bun install --frozen-lockfile
 
       - name: Lint & format
-        run: npm run check
+        run: bun run check
 
       - name: Typecheck
-        run: npm run typecheck
+        run: bun run typecheck
 
       - name: Unit tests
-        run: npm test
+        run: bun run test
 
       - name: Build Chrome extension
-        run: npm run build
+        run: bun run build
 
       - name: Package Chrome extension
-        run: (cd dist && zip -qr "../sendToKodi-chrome-$(node -p "require('../package.json').version").zip" .)
+        run: (cd dist && zip -qr "../sendToKodi-chrome-$(bun -p "require('../package.json').version").zip" .)
 
       - name: Build Firefox extension
-        run: npm run build:firefox
+        run: bun run build:firefox
 
       - name: Package Firefox extension
-        run: (cd dist && zip -qr "../sendToKodi-firefox-$(node -p "require('../package.json').version").zip" .)
+        run: (cd dist && zip -qr "../sendToKodi-firefox-$(bun -p "require('../package.json').version").zip" .)
 
       - name: Lint Firefox extension
-        run: npx --yes web-ext@10 lint --source-dir dist
+        run: bunx --bun web-ext@10 lint --source-dir dist
 
       # Installable from a pull request; the release attaches them and uploads them to the stores
       - name: Upload packages

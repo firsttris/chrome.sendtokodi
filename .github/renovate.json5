@@ -2,16 +2,25 @@
 // settings of firsttris/workflows (renovate/default.json5), as in every project. The packages and
 // the actions: minor and patch updates once a month in one pull request that merges itself when CI
 // is green, majors on request in the "Dependency Dashboard" issue, security fixes at once.
-// Check with `npx --package renovate renovate-config-validator .github/renovate.json5`.
+// Bun has its own pull request: Renovate's npm manager reads "packageManager": "bun@x.y.z" in
+// package.json itself, the Bun of every CI job.
+// Check with `bunx --package renovate renovate-config-validator .github/renovate.json5`.
 {
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
   extends: ["github>firsttris/workflows//renovate/default.json5"],
   packageRules: [
     {
-      // The Node typings follow the Node of .nvmrc: a new major of both in one pull request
-      matchPackageNames: ["node", "@types/node"],
-      matchUpdateTypes: ["major"],
-      groupName: "Node",
+      // packageManager in package.json: setup-bun's bun-version-file in check_build.yml and the
+      // npm-installed Bun of the screenshots job in the Playwright image
+      matchPackageNames: ["bun"],
+      groupName: "Bun",
+      sourceUrl: "https://github.com/oven-sh/bun",
+      prBodyNotes: [
+        "`packageManager` in package.json is the Bun of every CI job. Bun installs the packages (`bun.lock`), runs Vite, Vitest and Playwright (`bun --bun`) and builds the Chrome and Firefox packages: check that `check_build.yml` stays green and run `bun install` locally if `bun.lock` changes.",
+      ],
+      schedule: ["at any time"],
+      automerge: false,
+      dependencyDashboardApproval: false,
     },
   ],
 }

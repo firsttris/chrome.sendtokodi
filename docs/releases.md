@@ -11,7 +11,7 @@ Everything after the tag is automated: checks, builds, the GitHub release and th
 
 **Check Build** (`.github/workflows/check_build.yml`) runs on every push to `master` and every pull request:
 
-1. `npm run check` (Biome lint and format), `npm run typecheck`, `npm test`
+1. `bun run check` (Biome lint and format), `bun run typecheck`, `bun run test`
 2. The Chrome build and the Firefox build, each packaged as `sendToKodi-<browser>-<version>.zip`
 3. `web-ext lint` on the Firefox build, which is what Mozilla's review runs
 
@@ -23,7 +23,7 @@ touch it and publishes it on `master`.
 ## Making a release
 
 1. *Actions → Bump version → Run workflow* and choose `patch`, `minor` or `major`. The workflow raises the version in
-   `package.json`, commits it as `Release vX.Y.Z`, tags the commit and pushes both. On a checkout, `npm run
+   `package.json`, commits it as `Release vX.Y.Z`, tags the commit and pushes both. On a checkout, `bun run
    release:patch` (or `:minor`, `:major`) does the same.
 2. The tag starts **Release** (`.github/workflows/release.yml`): the checks and both builds from *Check Build*, then
    a GitHub release with generated notes and both packages, then the store uploads in parallel.
