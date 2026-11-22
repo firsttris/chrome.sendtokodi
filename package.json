@@ -3,7 +3,7 @@
   "version": "0.0.52",
   "type": "module",
   "description": "send almost every stream from chrome to kodi with SendToKodi",
-  "packageManager": "bun@1.4.4",
+  "packageManager": "bun@1.4.5",
   "scripts": {
     "build": "bun --bun vite build",
     "build:firefox": "TARGET_PLATFORM=firefox bun --bun vite build",
